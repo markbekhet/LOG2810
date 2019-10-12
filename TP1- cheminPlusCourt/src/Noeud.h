@@ -14,6 +14,7 @@ public:
 	int getLeNombredeC() const;
 	std::map<Noeud*,int> getVoisins() const;
 	void setVoisin(Noeud* unNoeud, int distance);
+	~Noeud();
 	friend std::ostream& operator<<(std::ostream& os, const Noeud* unNoeud);
 private:
 	std::map<Noeud*, int> lesVoisins_;

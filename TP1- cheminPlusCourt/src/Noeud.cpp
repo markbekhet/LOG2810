@@ -12,13 +12,14 @@ Noeud::Noeud(std::istream& fichier)
 	int nombreC;
 	fichier >> id;
 	id_ = id;
-	//fichier >> virgule;
+	fichier >> virgule;
 	fichier >> nombreA;
 	objetA_= new ObjetA(nombreA);
-	//fichier >> virgule;
+	fichier >> virgule;
 	fichier >> nombreB;
 	objetB_ = new ObjetB(nombreB);
-	//fichier >> virgule;
+	
+	fichier >> virgule;
 	fichier >> nombreC;
 	objetC_ = new ObjetC(nombreC);
 
@@ -52,15 +53,22 @@ void Noeud::setVoisin(Noeud* unNoeud, int distance)
 
 }
 
+Noeud::~Noeud()
+{
+	delete objetA_;
+	delete objetB_;
+	delete objetC_;
+}
+
 std::ostream& operator<<(std::ostream& os, const Noeud* unNoeud)
 {
 	// TODO: insert return statement here
 	os << "Noeud " << unNoeud->id_ << " nbObjetA: " <<
 		unNoeud->getLeNombredeA() << " ,nbObjetB: " << unNoeud->getLeNombredeB() <<
-		" nbObjetC: " << unNoeud->getLeNombredeC()<<"ses voisoins sont : ";
+		" nbObjetC: " << unNoeud->getLeNombredeC()<<" ses voisoins sont : ";
 
 	for (auto pair : unNoeud->lesVoisins_) {
-		os << "( " << pair.first->id_ << "," << pair.second << ")";
+		os << "(" << pair.first->id_ << "," << pair.second << ") ";
 	}
 	os << std::endl;
 	return os;

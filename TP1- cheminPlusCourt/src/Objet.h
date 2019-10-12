@@ -2,9 +2,9 @@
 class Objet {
 public:
 	Objet(int nombre);
-	virtual int getNombre();
-	virtual int getMasse();
+	int getNombre();
+	int getMasse();
 protected:
-	int nombre;
-	int masse;
+	int nombre_;
+	int masse_;
 };
