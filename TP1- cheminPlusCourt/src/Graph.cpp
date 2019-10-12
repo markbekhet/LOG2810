@@ -27,11 +27,12 @@ Graph::Graph(std::istream& fichier)
 			
 			std::cout << unNoeud << std::endl;
 			lesNoeuds.push_back(unNoeud);
+			std::getline(fichier, ligne);
 		}
 		else {
 			finish = true;
 		}
-		std::getline(fichier, ligne);
+		
 		
 	} while (!finish);
 	//std::getline(fichier, ligne);
