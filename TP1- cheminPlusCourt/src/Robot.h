@@ -7,11 +7,12 @@ class Robot {
 public:
 	Robot();
 	virtual void setConstanteK(Commande* uneCommande);
-	virtual int getChargeMaximale();
-	virtual int getConstanteK();
+	int getConstanteK() const;
+	int getChargeMaximale() const;
+	
 
-private:
-	double constanteK;
-	int chargeMaximale;
+protected:
+	double constanteK_;
+	int chargeMaximale_;
 
 };

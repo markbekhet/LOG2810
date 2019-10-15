@@ -1,6 +1,6 @@
 #include "ObjetA.h"
 
-ObjetA::ObjetA(int nombre):Objet(nombre)
+ObjetA::ObjetA(int nombre):Objet(nombre , 1)
 {
-	masse_ = 1;
+	
 }

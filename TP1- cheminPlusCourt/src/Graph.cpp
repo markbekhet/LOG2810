@@ -18,20 +18,21 @@ Graph::Graph(std::istream& fichier)
 		
 		int position = fichier.tellg();
 		std::getline(fichier, ligne);
-		std::cout << "Le fichier est rendu "<<fichier.tellg() << std::endl;
+		
 		
 		if (!isEmpty(ligne) ) {
 			finish = false;
 			fichier.seekg(position, fichier.beg);
 			Noeud* unNoeud = new Noeud(fichier);
 			
-			std::cout << unNoeud << std::endl;
+			
 			lesNoeuds.push_back(unNoeud);
 			std::getline(fichier, ligne);
 		}
 		else {
 			finish = true;
 		}
+
 		
 		
 	} while (!finish);
@@ -50,7 +51,7 @@ Graph::Graph(std::istream& fichier)
 		//fichier >> nodeOne;
 		//fichier >> nodeTwo;
 		fichier >> distance;
-		std::cout << "node One : " << nodeOne << " ,node Two : " << nodeTwo << std::endl;
+		
 		lesNoeuds[nodeOne]->setVoisin(lesNoeuds[nodeTwo], distance);
 		lesNoeuds[nodeTwo]->setVoisin(lesNoeuds[nodeOne], distance);
 		std::getline(fichier, ligne);

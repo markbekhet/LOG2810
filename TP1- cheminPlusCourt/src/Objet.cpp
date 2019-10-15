@@ -1,8 +1,8 @@
 #include "Objet.h"
 
-Objet::Objet(int nombre):nombre_(nombre)
+Objet::Objet(int nombre, int masse):nombre_(nombre), masse_(masse)
 {
-	masse_ = 0;
+	
 }
 
 int Objet::getNombre()
@@ -12,5 +12,10 @@ int Objet::getNombre()
 
 int Objet::getMasse()
 {
-	return masse_;
+	return masse_*nombre_;
+}
+
+void Objet::diminuerNombre(int facteur)
+{
+	nombre_ -= facteur;
 }
