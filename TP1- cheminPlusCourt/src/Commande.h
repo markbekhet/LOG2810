@@ -2,6 +2,7 @@
 #include "ObjetA.h"
 #include "ObjetB.h"
 #include "ObjetC.h"
+#include <iostream>
 class Commande {
 public:
 	Commande(int nombreA, int nombreB, int nombreC);
@@ -12,6 +13,9 @@ public:
 	void diminuerNombreObjetB(int facteur);
 	int getNombreObjetC();
 	void diminuerNombreObjetC(int facteur);
+	
+	void afficher();
+	friend std::ostream& operator<<(std::ostream& os, Commande* commande);
 
 
 private:

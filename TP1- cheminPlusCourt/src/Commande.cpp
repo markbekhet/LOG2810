@@ -42,3 +42,17 @@ void Commande::diminuerNombreObjetC(int facteur)
 	objetC->diminuerNombre(facteur);
 }
 
+void Commande::afficher()
+{
+	std::cout << this << std::endl;
+}
+
+std::ostream& operator<<(std::ostream& os, Commande* commande)
+{
+	// TODO: insert return statement here
+	os << "Le nombre d'objet de type A dans votre commande est: " << commande->objetA->getNombre() << "\n"
+		<< "Le nombre d'objet de type B dans votre commande est: " << commande->objetB->getNombre() << "\n"
+		<< "Le nombre d'objet de type C dans votre commande est: " << commande->objetC->getNombre() << "\n"
+		<< "pour une masse totale de " << commande->getMasseTotale() ;
+	return os;
+}
