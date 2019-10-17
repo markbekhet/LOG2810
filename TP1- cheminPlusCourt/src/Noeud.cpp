@@ -6,12 +6,12 @@
 Noeud::Noeud(std::istream& fichier)
 {
 	char virgule;
-	int id;
+	//int id;
 	int nombreA;
 	int nombreB;
 	int nombreC;
-	fichier >> id;
-	id_ = id;
+	fichier >> id_;
+	//id_ = id;
 	fichier >> virgule;
 	fichier >> nombreA;
 	objetA_= new ObjetA(nombreA);
@@ -53,11 +53,85 @@ void Noeud::setVoisin(Noeud* unNoeud, int distance)
 
 }
 
+int Noeud::getId() const
+{
+	return id_;
+}
+
+bool appartient(std::vector<Noeud*>& precedent, Noeud* noeud) {
+	for (auto node : precedent) {
+		if (noeud->getId() == node->getId()) return true;
+	}
+	return false;
+}
+void Noeud::insererChemin(std::map<std::vector<Noeud*>, int>& tousLesChemins, std::vector<Noeud*>& precedent, Noeud* but, int& distance)
+{
+	int copyDistance = distance;
+	std::vector<Noeud*> copyPrecedent = precedent;
+	for (auto unVoisin : lesVoisins_) {
+		distance = copyDistance;
+		precedent = copyPrecedent;
+		if (!appartient(precedent, unVoisin.first)) {
+			distance += unVoisin.second;
+			precedent.push_back(unVoisin.first);
+
+
+			if (unVoisin.first->getId() == but->getId()) {
+				std::pair<std::vector<Noeud*>, int> pairAjoute = std::make_pair(precedent, distance);
+
+				tousLesChemins.insert(pairAjoute);
+				
+
+
+
+			}
+
+			else {
+				unVoisin.first->insererChemin(tousLesChemins, precedent, but, distance);
+			}
+		}
+
+	}
+}
+
+
+std::pair<std::vector<Noeud*>,int> Noeud::cheminMin( std::vector<Noeud*>& precedent, Noeud* but, int& distance)
+{
+	std::map<std::vector<Noeud*> , int> tousLesChemins;
+	
+	insererChemin(tousLesChemins, precedent, but, distance);
+	//s'il arrive a terminer cette boucle
+	std::cout << "La taille de la map est " << tousLesChemins.size() << std::endl;
+	
+	return PlusCourtChemin(tousLesChemins);
+}
+
 Noeud::~Noeud()
 {
 	delete objetA_;
 	delete objetB_;
 	delete objetC_;
+}
+
+std::pair<std::vector<Noeud*>, int> Noeud::PlusCourtChemin(std::map<std::vector<Noeud*>, int>& map)
+{
+	int distance = 0;
+	int nombre = 0;
+	std::vector<Noeud*> listVoulu;
+	for (auto element : map) {
+		//std::cout << element.second << std::endl;
+		if (nombre == 0) {
+			distance = element.second;
+			listVoulu = element.first;
+		}
+		else if (distance > element.second) {
+			distance = element.second;
+			listVoulu = element.first;
+		}
+		++nombre;
+	}
+	
+	return std::make_pair(listVoulu, distance);
 }
 
 std::ostream& operator<<(std::ostream& os, const Noeud* unNoeud)

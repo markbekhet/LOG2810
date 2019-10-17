@@ -47,6 +47,13 @@ void Commande::afficher()
 	std::cout << this << std::endl;
 }
 
+Commande::~Commande()
+{
+	delete objetA;
+	delete objetB;
+	delete objetC;
+}
+
 std::ostream& operator<<(std::ostream& os, Commande* commande)
 {
 	// TODO: insert return statement here

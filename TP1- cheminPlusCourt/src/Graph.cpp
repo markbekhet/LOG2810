@@ -65,6 +65,11 @@ void Graph::afficher() const
 	}
 }
 
+Noeud* Graph::getNoeud(int index) const
+{
+	return lesNoeuds[index];
+}
+
 Graph::~Graph()
 {
 	for (auto noeud : lesNoeuds) {

@@ -15,6 +15,7 @@ public:
 	void diminuerNombreObjetC(int facteur);
 	
 	void afficher();
+	~Commande();
 	friend std::ostream& operator<<(std::ostream& os, Commande* commande);
 
 
