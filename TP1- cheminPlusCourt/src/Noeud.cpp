@@ -95,13 +95,16 @@ void Noeud::insererChemin(std::map<std::vector<Noeud*>, int>& tousLesChemins, st
 }
 
 
-std::pair<std::vector<Noeud*>,int> Noeud::cheminMin( std::vector<Noeud*>& precedent, Noeud* but, int& distance)
+std::pair<std::vector<Noeud*>,int> Noeud::cheminMin(Noeud* but)
 {
+	std::vector<Noeud*> precedent;
+	precedent.push_back(this);
+	int distance = 0;
 	std::map<std::vector<Noeud*> , int> tousLesChemins;
 	
 	insererChemin(tousLesChemins, precedent, but, distance);
 	//s'il arrive a terminer cette boucle
-	std::cout << "La taille de la map est " << tousLesChemins.size() << std::endl;
+	//std::cout << "La taille de la map est " << tousLesChemins.size() << std::endl;
 	
 	return PlusCourtChemin(tousLesChemins);
 }
