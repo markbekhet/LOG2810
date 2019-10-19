@@ -1,2 +1,6 @@
-vector noeud
-noeud
+1- Mais dans le cas plus complexe,par exemple 5 objets de type B, la fonctions tousLesChemins va me donner beaucoup plus de possibilités que la fonction cheminMin permettant une 
+analyse sur une plus grande plage de possibilité.
+2- D'apres moi dans la classe Parcours,on va appeller tousLesChemins dans une fonctions qui nous permet de faire l'analyse vers le chemin le plus cours qui va nous permettre de faire la commande
+et qui va nous retourner une pair<vector<Noeud*>,int> qui va reprenter le vecteur de noeud du chemin et la distance de tous le chemin
+3- Une fois, on a le vecteur on peut se deplacer d'un noeud vers son voisin facilement en utilisant CheminVoisin.
+

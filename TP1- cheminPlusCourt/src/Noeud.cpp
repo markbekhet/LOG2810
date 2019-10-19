@@ -64,6 +64,7 @@ bool appartient(std::vector<Noeud*>& precedent, Noeud* noeud) {
 	}
 	return false;
 }
+// Cela est la fonction recurive qui me permet d'avoir toutes les possibilites
 void Noeud::insererChemin(std::map<std::vector<Noeud*>, int>& tousLesChemins, std::vector<Noeud*>& precedent, Noeud* but, int& distance)
 {
 	int copyDistance = distance;
@@ -74,16 +75,9 @@ void Noeud::insererChemin(std::map<std::vector<Noeud*>, int>& tousLesChemins, st
 		if (!appartient(precedent, unVoisin.first)) {
 			distance += unVoisin.second;
 			precedent.push_back(unVoisin.first);
-
-
 			if (unVoisin.first->getId() == but->getId()) {
 				std::pair<std::vector<Noeud*>, int> pairAjoute = std::make_pair(precedent, distance);
-
 				tousLesChemins.insert(pairAjoute);
-				
-
-
-
 			}
 
 			else {
@@ -93,20 +87,35 @@ void Noeud::insererChemin(std::map<std::vector<Noeud*>, int>& tousLesChemins, st
 
 	}
 }
+/*
+	* Cette fonction va me donner le chemin la distance d<un noeud a son voisin selon le 
+	* resultat final
+ */
 
 
-std::pair<std::vector<Noeud*>,int> Noeud::cheminMin(Noeud* but)
+std::pair<Noeud*,int> Noeud::cheminVoisin(Noeud* but)
+{
+	std::pair<Noeud*, int> resultat;
+	for (auto voisin : lesVoisins_) {
+		if (voisin.first->getId() == but->getId()) {
+			resultat = voisin;
+		}
+	}
+	return resultat;
+}
+/*
+	* Cette fonction va me donner tous les chemins possibles vers un 
+*/
+std::map<std::vector<Noeud*>, int> Noeud::tousLesChemins(Noeud* but)
 {
 	std::vector<Noeud*> precedent;
 	precedent.push_back(this);
 	int distance = 0;
-	std::map<std::vector<Noeud*> , int> tousLesChemins;
-	
+	std::map<std::vector<Noeud*>, int> tousLesChemins;
+
 	insererChemin(tousLesChemins, precedent, but, distance);
-	//s'il arrive a terminer cette boucle
-	//std::cout << "La taille de la map est " << tousLesChemins.size() << std::endl;
-	
-	return PlusCourtChemin(tousLesChemins);
+
+	return tousLesChemins;
 }
 
 Noeud::~Noeud()
@@ -116,26 +125,6 @@ Noeud::~Noeud()
 	delete objetC_;
 }
 
-std::pair<std::vector<Noeud*>, int> Noeud::PlusCourtChemin(std::map<std::vector<Noeud*>, int>& map)
-{
-	int distance = 0;
-	int nombre = 0;
-	std::vector<Noeud*> listVoulu;
-	for (auto element : map) {
-		//std::cout << element.second << std::endl;
-		if (nombre == 0) {
-			distance = element.second;
-			listVoulu = element.first;
-		}
-		else if (distance > element.second) {
-			distance = element.second;
-			listVoulu = element.first;
-		}
-		++nombre;
-	}
-	
-	return std::make_pair(listVoulu, distance);
-}
 
 std::ostream& operator<<(std::ostream& os, const Noeud* unNoeud)
 {

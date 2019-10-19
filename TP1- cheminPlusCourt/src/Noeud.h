@@ -17,7 +17,8 @@ public:
 	void setVoisin(Noeud* unNoeud, int distance);
 	int getId() const;
 	void insererChemin(std::map<std::vector<Noeud*>, int>& tousLesChemins, std::vector<Noeud*>& previous, Noeud* but, int& distance);
-	std::pair<std::vector<Noeud*>,int> cheminMin( Noeud* but);
+	std::pair<Noeud*,int> cheminVoisin( Noeud* but);
+	std::map<std::vector<Noeud*>, int> tousLesChemins(Noeud* but);
 	~Noeud();
 	friend std::ostream& operator<<(std::ostream& os, const Noeud* unNoeud);
 private:
@@ -26,7 +27,7 @@ private:
 	ObjetA* objetA_;
 	ObjetB* objetB_;
 	ObjetC* objetC_;
-	std::pair<std::vector<Noeud*>, int> PlusCourtChemin(std::map<std::vector<Noeud*>,int>& map);
+	
 
 
 

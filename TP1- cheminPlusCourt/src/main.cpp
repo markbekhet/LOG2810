@@ -3,6 +3,22 @@
 #include "Noeud.h"
 #include <chrono>
 #include <ctime>
+
+Commande* entrerUneCommande() {
+	int nombreObjetA;
+	int nombreObjetB;
+	int nombreObjetC;
+	std::cout << "Entrer le nombre d'objet A : ";
+	std::cin >> nombreObjetA;
+	std::cout << "\n";
+	std::cout << "Entrer le nombre d'objet B : ";
+	std::cin >> nombreObjetB;
+	std::cout << "\n";
+	std::cout << "Entrer le nombre d'objet C : ";
+	std::cin >> nombreObjetC;
+	std::cout << "\n";
+	return new Commande(nombreObjetA, nombreObjetB, nombreObjetC);
+}
 int main() {
 	//Le chrono va m'aider a savoir la vitesse de l'execution du programme
 	std::chrono::time_point<std::chrono::system_clock> start, end;
@@ -10,26 +26,34 @@ int main() {
 	//test de l'affichage du graph
 	std::ifstream fichier("entrepot.txt");
 	
-	Graph leGraph(fichier);
-	leGraph.afficher();
+	Graph* leGraph = new Graph(fichier);
+	leGraph->afficher();
 
 	//test de l'affichage de la commande
-	Commande uneCommande(5, 6, 2);
-	uneCommande.afficher();
-	//test de l'implementation de l'algo de Djikstra
-	// Celui la est un test pour voir le fonctionnement de l'algorithm ecrit hier et c'est l'implementation de la fonction pour collecter tous les chemins possibles 
-	//du parcours
-	Noeud* unNoeud = leGraph.getNoeud(0);
-	for (auto Node : leGraph.getLesNoeuds()) {
-		
-		std::pair<std::vector<Noeud*>, int> test = unNoeud->cheminMin(Node);
-		//affichage de tous les noeud du chemin afin de le comparer avec le Graph de l'enonce
-		for (auto noeud : test.first) {
-			std::cout << noeud << std::endl;
+	/*Commande* uneCommande = entrerUneCommande();
+	uneCommande->afficher();*/
+	//test de la fonction recursive qui nous donne tous les chemins possibles d'un noeud a un autre
+	Noeud* unNoeud = leGraph->getNoeud(0);
+	Noeud* autreNoeud = leGraph->getNoeud(6);
+	std::map<std::vector<Noeud*>, int> NoeudVersAutreNoeud = unNoeud->tousLesChemins(autreNoeud);
+	for (auto possibility : NoeudVersAutreNoeud) {
+		std::cout << " Le chemin du ";
+		for (auto Node : possibility.first) {
+			std::cout << Node->getId() << " vers ";
 		}
-
-		std::cout << "La distance : " << test.second << std::endl;
+		std::cout << "\n . La distance totale de cette possibilite est " << possibility.second<<std::endl;
 	}
+	
+	
+	/*
+		* Test de la fonction qui nous donne la distance vers le voisin. Cette fonction va etre utile dans le retour du robot.
+	*/
+	for (auto Node : leGraph->getLesNoeuds()) {
+		
+		std::pair<Noeud*, int> test = unNoeud->cheminVoisin(Node);
+		std::cout << "La distance du noeud " <<unNoeud->getId()<<" jusqu'a "<<Node->getId()<<" est : "<< test.second << std::endl;
+	}
+	// Ce bloc sert seulement pour mesurer le temps d'execution du programme , ce code se trouve sur geeksforgeeks en ligne
 	end = std::chrono::system_clock::now();
 	std::chrono::duration<double> elapsed_seconds = end - start;
 	std::cout << "Le temps d'execution en seconde = " << elapsed_seconds.count() <<" s" <<std::endl;
