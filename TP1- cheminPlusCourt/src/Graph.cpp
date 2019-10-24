@@ -70,6 +70,11 @@ Noeud* Graph::getNoeud(int index) const
 	return lesNoeuds[index];
 }
 
+std::vector<Noeud*> Graph::getLesNoeuds() const
+{
+	return lesNoeuds;
+}
+
 Graph::~Graph()
 {
 	for (auto noeud : lesNoeuds) {

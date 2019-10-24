@@ -48,11 +48,11 @@ int main() {
 	/*
 		* Test de la fonction qui nous donne la distance vers le voisin. Cette fonction va etre utile dans le retour du robot.
 	*/
-	for (auto Node : leGraph->getLesNoeuds()) {
+	/*for (auto Node : leGraph->getLesNoeuds()) {
 		
 		std::pair<Noeud*, int> test = unNoeud->cheminVoisin(Node);
 		std::cout << "La distance du noeud " <<unNoeud->getId()<<" jusqu'a "<<Node->getId()<<" est : "<< test.second << std::endl;
-	}
+	}*/
 	// Ce bloc sert seulement pour mesurer le temps d'execution du programme , ce code se trouve sur geeksforgeeks en ligne
 	end = std::chrono::system_clock::now();
 	std::chrono::duration<double> elapsed_seconds = end - start;
