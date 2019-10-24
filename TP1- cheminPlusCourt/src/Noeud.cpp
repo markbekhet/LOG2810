@@ -128,24 +128,32 @@ Noeud::~Noeud()
 
 std::pair<std::vector<Noeud*>, int> Noeud::analyserSelonCommande(std::map<std::vector<Noeud*>, int> map, Commande* commande)
 {
-	int distance = (2 ^ 31) - 1;
+	int distance = INT_MAX;
 	std::pair<std::vector<Noeud*>, int> resultat;
-	for (auto possibilite : map) {
+	
+	
+	for (std::pair<std::vector<Noeud*>, int> possibilite : map) {
 		int nombreA = 0;
 		int nombreB = 0;
 		int nombreC = 0;
+		
 		for (auto noeud : possibilite.first) {
 			nombreA += noeud->getLeNombredeA();
 			nombreB += noeud->getLeNombredeB();
 			nombreC += noeud->getLeNombredeC();
+			
 		}
-		if (nombreA >= commande->getNombreObjetA() &&
-			nombreB >= commande->getNombreObjetB() &&
-			nombreC >= commande->getNombreObjetC() &&
-			possibilite.second < distance) {
+		
+		
+		
+		
+		if (nombreA >= commande->getNombreObjetA() && nombreB >= commande->getNombreObjetB() &&	nombreC >= commande->getNombreObjetC() && distance > possibilite.second) {
+			
 			resultat = possibilite;
 			distance = possibilite.second;
+			
 		}
+		
 	}
 	return resultat;
 }

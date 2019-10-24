@@ -31,12 +31,12 @@ int main() {
 	std::ifstream fichier("entrepot.txt");
 	
 	Graph* leGraph = new Graph(fichier);
-	leGraph->afficher();
+	//leGraph->afficher();
 
 	//test de l'affichage de la commande
-	Commande* uneCommande = new Commande(1,1,1);
+	Commande* uneCommande = new Commande(2,1,1);
 	
-	//uneCommande->afficher();*/
+	//uneCommande->afficher();
 	
 	RobotX* robotX = new RobotX();
 	RobotY* robotY = new RobotY();

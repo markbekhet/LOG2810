@@ -11,6 +11,11 @@ void RobotY::setConstanteK(Commande* commande)
 	
 }
 
+void RobotY::afficher()
+{
+	std::cout << this << std::endl;
+}
+
 std::ostream& operator<<(std::ostream& os, RobotY* robot)
 {
 	// TODO: insert return statement here

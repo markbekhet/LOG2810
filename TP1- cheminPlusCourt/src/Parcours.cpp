@@ -4,22 +4,27 @@
 Parcours::Parcours(Graph* graph, Commande* commande, std::vector<Robot*> listeRobot): graph_(graph),commande_(commande),listeRobot_(listeRobot)
 {
 	choisirRobotSelonMasse();
+	
 }
 
 std::pair<std::vector<Noeud*>, int> Parcours::plusCourtChemin()
 {
 	std::pair<std::vector<Noeud*>, int> resultat;
-	int distance = (2 ^ 31) - 1;
+	int distance = INT_MAX;
 	Noeud* noeudZero = graph_->getNoeud(0);
-	int n = 0;
+	
 	for (auto noeud : graph_->getLesNoeuds()) {
 		if (noeudZero->getId() != noeud->getId()) {
+			
 			std::pair<std::vector<Noeud*>, int> temp = noeudZero->LesCheminsSelonLaCommande(noeud, commande_);
+			
+			
 			if (temp.second < distance) {
 				resultat = temp;
+				distance = temp.second;
 			}
 		}
-		++n;
+		
 	}
 	return resultat;
 }
@@ -28,17 +33,17 @@ Robot* Parcours::choisirRobotSelonMasse()
 {
 	int masseTotale = commande_->getMasseTotale();
 	std::vector<Robot*> temp;
-	Robot* robotChoisi = NULL;
+	Robot* robotChoisi= NULL ;
 	for (auto robot : listeRobot_) {
 		if (robot->getChargeMaximale() >= masseTotale) {
 			temp.push_back(robot);
 		}
 	}
 
-	int tempsMax = (2 ^ 31) - 1;
+	int tempsMax = INT_MAX;
 	for (auto robot : temp) {
 		int temps = calculerTemps(robot);
-		if (tempsMax >= temps) {
+		if (tempsMax > temps) {
 			tempsMax = temps;
 			robotChoisi = robot;
 		}
@@ -93,9 +98,10 @@ void Parcours::afficher()
 
 std::ostream& operator<<(std::ostream& os, Parcours* parcours)
 {
+	Commande* copie = new Commande(parcours->commande_->getNombreObjetA(),parcours->commande_->getNombreObjetB(),parcours->commande_->getNombreObjetC());
 	os << "Le type de robot choisir est: ";
 	Robot* robotChoisi = parcours->choisirRobotSelonMasse();
-	if (dynamic_cast<RobotY*> (robotChoisi) ) {
+	/*if (dynamic_cast<RobotY*> (robotChoisi) ) {
 		os << dynamic_cast<RobotY*> (robotChoisi) << "\n";
 	}
 	else if (dynamic_cast<RobotZ*>(robotChoisi)) {
@@ -103,14 +109,16 @@ std::ostream& operator<<(std::ostream& os, Parcours* parcours)
 	}
 	else if (dynamic_cast<RobotX*>(robotChoisi)) {
 		os << dynamic_cast<RobotX*>(robotChoisi) << "\n";
-	}
+	}*/
+	 robotChoisi->afficher();
 
 		os<< "Il passera par les noeuds suivants: " ;
-		Commande* copie = parcours->commande_;
+		
 		for (auto noeud : parcours->plusCourtChemin().first) {
-			os << "Noeud " << noeud->getId() << " collecte " << parcours->getMin(copie, noeud)[0] << " objets A, "
-				<< parcours->getMin(copie, noeud)[1] << " objets B, " 
-				<< parcours->getMin(copie, noeud)[2] << " objets C." << "\n";
+			std::vector<int> minimes = parcours->getMin(copie, noeud);
+			os << "Noeud " << noeud->getId() << " collecte " << minimes[0] << " objets A, "
+				<< minimes[1] << " objets B, " 
+				<< minimes[2] << " objets C." << "\n";
 		}
 		os << "Le robot a collecte la commande en " << parcours->calculerTemps(parcours->choisirRobotSelonMasse()) << " secondes." << "\n";
 		return os;

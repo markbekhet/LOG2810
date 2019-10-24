@@ -16,3 +16,8 @@ int Robot::getChargeMaximale() const
 {
 	return chargeMaximale_;;
 }
+
+void Robot::afficher()
+{
+	std::cout << "Robot \n";
+}
