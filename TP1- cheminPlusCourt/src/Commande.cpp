@@ -22,6 +22,11 @@ void Commande::diminuerNombreObjetA(int facteur)
 	objetA->diminuerNombre(facteur);
 }
 
+void Commande::augmenterNombreObjetA(int facteur) 
+{
+	objetA->augmenterNombre(facteur);
+}
+
 int Commande::getNombreObjetB()
 {
 	return objetB->getNombre();
@@ -32,6 +37,11 @@ void Commande::diminuerNombreObjetB(int facteur)
 	objetB->diminuerNombre(facteur);
 }
 
+void Commande::augmenterNombreObjetB(int facteur)
+{
+	objetB->augmenterNombre(facteur);
+}
+
 int Commande::getNombreObjetC()
 {
 	return objetC->getNombre();
@@ -40,6 +50,11 @@ int Commande::getNombreObjetC()
 void Commande::diminuerNombreObjetC(int facteur)
 {
 	objetC->diminuerNombre(facteur);
+}
+
+void Commande::augmenterNombreObjetC(int facteur)
+{
+	objetC->augmenterNombre(facteur);
 }
 
 void Commande::afficher()

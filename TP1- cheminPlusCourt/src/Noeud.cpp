@@ -93,12 +93,12 @@ void Noeud::insererChemin(std::map<std::vector<Noeud*>, int>& tousLesChemins, st
  */
 
 
-std::pair<Noeud*,int> Noeud::cheminVoisin(Noeud* but)
+int Noeud::cheminVoisin(Noeud* but)
 {
-	std::pair<Noeud*, int> resultat;
+	int resultat= 0;
 	for (auto voisin : lesVoisins_) {
 		if (voisin.first->getId() == but->getId()) {
-			resultat = voisin;
+			resultat = voisin.second;
 		}
 	}
 	return resultat;
@@ -106,7 +106,7 @@ std::pair<Noeud*,int> Noeud::cheminVoisin(Noeud* but)
 /*
 	* Cette fonction va me donner tous les chemins possibles vers un 
 */
-std::map<std::vector<Noeud*>, int> Noeud::tousLesChemins(Noeud* but)
+std::pair<std::vector<Noeud*>, int> Noeud::LesCheminsSelonLaCommande(Noeud* but, Commande* commande)
 {
 	std::vector<Noeud*> precedent;
 	precedent.push_back(this);
@@ -115,7 +115,8 @@ std::map<std::vector<Noeud*>, int> Noeud::tousLesChemins(Noeud* but)
 
 	insererChemin(tousLesChemins, precedent, but, distance);
 
-	return tousLesChemins;
+
+	return analyserSelonCommande(tousLesChemins,commande);
 }
 
 Noeud::~Noeud()
@@ -123,6 +124,30 @@ Noeud::~Noeud()
 	delete objetA_;
 	delete objetB_;
 	delete objetC_;
+}
+
+std::pair<std::vector<Noeud*>, int> Noeud::analyserSelonCommande(std::map<std::vector<Noeud*>, int> map, Commande* commande)
+{
+	int distance = (2 ^ 31) - 1;
+	std::pair<std::vector<Noeud*>, int> resultat;
+	for (auto possibilite : map) {
+		int nombreA = 0;
+		int nombreB = 0;
+		int nombreC = 0;
+		for (auto noeud : possibilite.first) {
+			nombreA += noeud->getLeNombredeA();
+			nombreB += noeud->getLeNombredeB();
+			nombreC += noeud->getLeNombredeC();
+		}
+		if (nombreA >= commande->getNombreObjetA() &&
+			nombreB >= commande->getNombreObjetB() &&
+			nombreC >= commande->getNombreObjetC() &&
+			possibilite.second < distance) {
+			resultat = possibilite;
+			distance = possibilite.second;
+		}
+	}
+	return resultat;
 }
 
 

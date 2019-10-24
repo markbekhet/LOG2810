@@ -3,6 +3,10 @@
 #include "Noeud.h"
 #include <chrono>
 #include <ctime>
+#include "Parcours.h"
+#include "RobotX.h"
+#include "RobotY.h"
+#include "RobotZ.h"
 
 Commande* entrerUneCommande() {
 	int nombreObjetA;
@@ -30,11 +34,31 @@ int main() {
 	leGraph->afficher();
 
 	//test de l'affichage de la commande
-	/*Commande* uneCommande = entrerUneCommande();
-	uneCommande->afficher();*/
+	Commande* uneCommande = new Commande(1,1,1);
+	
+	//uneCommande->afficher();*/
+	
+	RobotX* robotX = new RobotX();
+	RobotY* robotY = new RobotY();
+	RobotZ* robotZ = new RobotZ();
+	std::vector<Robot*> robot;
+	robot.push_back(robotX);
+	robot.push_back(robotY);
+	robot.push_back(robotZ);
+	Parcours* parcours = new Parcours(leGraph, uneCommande, robot);
+
+	std::cout << "La charge maximale du robot X est " << robot[0]->getChargeMaximale() << std::endl;
+	std::cout << "La charge maximale du robot Y est " << robot[1]->getChargeMaximale() << std::endl;
+	std::cout << "La charge maximale du robot Z est " << robot[2]->getChargeMaximale() << std::endl;
+
+
 	//test de la fonction recursive qui nous donne tous les chemins possibles d'un noeud a un autre
-	Noeud* unNoeud = leGraph->getNoeud(0);
+	
+	
+	/*Noeud* unNoeud = leGraph->getNoeud(0);
 	Noeud* autreNoeud = leGraph->getNoeud(6);
+	
+	
 	std::map<std::vector<Noeud*>, int> NoeudVersAutreNoeud = unNoeud->tousLesChemins(autreNoeud);
 	for (auto possibility : NoeudVersAutreNoeud) {
 		std::cout << " Le chemin du ";
@@ -42,7 +66,7 @@ int main() {
 			std::cout << Node->getId() << " vers ";
 		}
 		std::cout << "\n . La distance totale de cette possibilite est " << possibility.second<<std::endl;
-	}
+	}*/
 	
 	
 	/*

@@ -9,11 +9,14 @@ public:
 	int getMasseTotale();
 	int getNombreObjetA();
 	void diminuerNombreObjetA(int facteur);
+	void augmenterNombreObjetA(int facteur);
 	int getNombreObjetB();
 	void diminuerNombreObjetB(int facteur);
+	void augmenterNombreObjetB(int facteur);
 	int getNombreObjetC();
 	void diminuerNombreObjetC(int facteur);
-	
+	void augmenterNombreObjetC(int facteur);
+
 	void afficher();
 	~Commande();
 	friend std::ostream& operator<<(std::ostream& os, Commande* commande);

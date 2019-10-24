@@ -7,6 +7,7 @@
 #include <map>
 #include <utility>
 #include <vector>
+#include "Commande.h"
 class Noeud {
 public:
 	Noeud(std::istream& fichier);
@@ -17,12 +18,13 @@ public:
 	void setVoisin(Noeud* unNoeud, int distance);
 	int getId() const;
 	void insererChemin(std::map<std::vector<Noeud*>, int>& tousLesChemins, std::vector<Noeud*>& previous, Noeud* but, int& distance);
-	std::pair<Noeud*,int> cheminVoisin( Noeud* but);
-	std::map<std::vector<Noeud*>, int> tousLesChemins(Noeud* but);
+	int cheminVoisin( Noeud* but);
+	std::pair<std::vector<Noeud*>, int> LesCheminsSelonLaCommande(Noeud* but  ,Commande* commande);
 	~Noeud();
 	friend std::ostream& operator<<(std::ostream& os, const Noeud* unNoeud);
 private:
 	std::map<Noeud*, int> lesVoisins_;
+	std::pair<std::vector<Noeud*>, int> analyserSelonCommande(std::map<std::vector<Noeud*>,int> map, Commande* commande);
 	int id_;
 	ObjetA* objetA_;
 	ObjetB* objetB_;

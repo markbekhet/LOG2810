@@ -19,3 +19,8 @@ void Objet::diminuerNombre(int facteur)
 {
 	nombre_ -= facteur;
 }
+
+void Objet::augmenterNombre(int facteur) 
+{
+	nombre_ += facteur;
+}
