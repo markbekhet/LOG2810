@@ -6,10 +6,6 @@ Robot::Robot()
 	chargeMaximale_ = 0;
 }
 
-void Robot::setConstanteK(Commande* uneCommande)
-{
-	constanteK_ = 0;
-}
 
 int Robot::getConstanteK() const
 {

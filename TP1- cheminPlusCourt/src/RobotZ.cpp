@@ -8,4 +8,9 @@ RobotZ::RobotZ()
 void RobotZ::setConstanteK(Commande* commande)
 {
 	constanteK_ = 2.5 + 0.2 * commande->getMasseTotale();
+	
+}
+std::ostream& operator<<(std::ostream& os, RobotZ* robot) {
+	os << "Robot Z" << std::endl;
+	return os;
 }

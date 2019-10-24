@@ -46,6 +46,7 @@ int main() {
 	robot.push_back(robotY);
 	robot.push_back(robotZ);
 	Parcours* parcours = new Parcours(leGraph, uneCommande, robot);
+	parcours->afficher();
 
 	std::cout << "La charge maximale du robot X est " << robot[0]->getChargeMaximale() << std::endl;
 	std::cout << "La charge maximale du robot Y est " << robot[1]->getChargeMaximale() << std::endl;

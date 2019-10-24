@@ -2,6 +2,9 @@
 #include "Robot.h"
 #include "Graph.h"
 #include "Commande.h"
+#include "RobotX.h"
+#include "RobotY.h"
+#include "RobotZ.h"
 class Parcours{
 public:
 	Parcours(Graph* graph , Commande* commande, std::vector<Robot*> listeRobot);

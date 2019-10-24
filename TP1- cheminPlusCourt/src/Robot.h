@@ -6,7 +6,7 @@
 class Robot {
 public:
 	Robot();
-	virtual void setConstanteK(Commande* uneCommande);
+	virtual void setConstanteK(Commande* uneCommande) = 0;
 	int getConstanteK() const;
 	int getChargeMaximale() const;
 	
