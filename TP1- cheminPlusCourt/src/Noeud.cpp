@@ -147,7 +147,7 @@ std::pair<std::vector<Noeud*>, int> Noeud::analyserSelonCommande(std::map<std::v
 		
 		
 		
-		if (nombreA >= commande->getNombreObjetA() && nombreB >= commande->getNombreObjetB() &&	nombreC >= commande->getNombreObjetC() && distance > possibilite.second) {
+		if (nombreA >= commande->getNombreObjetA() && nombreB >= commande->getNombreObjetB() &&	nombreC >= commande->getNombreObjetC() && distance >= possibilite.second) {
 			
 			resultat = possibilite;
 			distance = possibilite.second;

@@ -3,7 +3,16 @@
 
 Parcours::Parcours(Graph* graph, Commande* commande, std::vector<Robot*> listeRobot): graph_(graph),commande_(commande),listeRobot_(listeRobot)
 {
-	choisirRobotSelonMasse();
+	if (commande_->getMasseTotale() > std::max( listeRobot_[1]->getChargeMaximale(), listeRobot_[2]->getChargeMaximale())) {
+		throw PasDeRobot();
+	}
+	else {
+		
+			choisirRobotSelonMasse();
+		
+		
+	}
+	
 	
 }
 
@@ -19,7 +28,8 @@ std::pair<std::vector<Noeud*>, int> Parcours::plusCourtChemin()
 			std::pair<std::vector<Noeud*>, int> temp = noeudZero->LesCheminsSelonLaCommande(noeud, commande_);
 			
 			
-			if (temp.second < distance) {
+			
+			if (distance > temp.second) {
 				resultat = temp;
 				distance = temp.second;
 			}
@@ -42,12 +52,20 @@ Robot* Parcours::choisirRobotSelonMasse()
 
 	int tempsMax = INT_MAX;
 	for (auto robot : temp) {
-		int temps = calculerTemps(robot);
-		if (tempsMax > temps) {
-			tempsMax = temps;
-			robotChoisi = robot;
+		try {
+			int temps = calculerTemps(robot);
+			if (tempsMax > temps) {
+				tempsMax = temps;
+				robotChoisi = robot;
+			}
 		}
+		catch (PasDeChemin e) {
+			std::cout << e.what() << "\n";
+		}
+		
+		//std::cout << "Le temps de retour selon le robot est " << temps << " s" << std::endl;
 	}
+	
 
 	return robotChoisi;
 }
@@ -55,6 +73,10 @@ Robot* Parcours::choisirRobotSelonMasse()
 int Parcours::calculerTemps(Robot* robot)
 {
 	std::pair <std::vector<Noeud*>, int> chemin = plusCourtChemin();
+	if (chemin.first.size() == 0) {
+		throw PasDeChemin();
+		
+	}
 	Commande* commandeCollectee = new Commande(0, 0, 0);
 	Commande* commandeBase = new Commande(commande_->getNombreObjetA() , commande_->getNombreObjetB(),commande_->getNombreObjetC());
 	robot->setConstanteK(commandeCollectee);
@@ -69,7 +91,9 @@ int Parcours::calculerTemps(Robot* robot)
 		int distanceVoisin = chemin.first[i]->cheminVoisin(chemin.first[i-1]);
 		robot->setConstanteK(commandeCollectee);
 		retourTemps += robot->getConstanteK() * distanceVoisin;
+		
 	}
+	
 
 	int tempsFinal = allerTemps + retourTemps;
 
@@ -114,7 +138,8 @@ std::ostream& operator<<(std::ostream& os, Parcours* parcours)
 
 		os<< "Il passera par les noeuds suivants: " ;
 		
-		for (auto noeud : parcours->plusCourtChemin().first) {
+		for (int i = parcours->plusCourtChemin().first.size() - 1; i >= 0;--i) {
+			auto noeud =  parcours->plusCourtChemin().first[i];
 			std::vector<int> minimes = parcours->getMin(copie, noeud);
 			os << "Noeud " << noeud->getId() << " collecte " << minimes[0] << " objets A, "
 				<< minimes[1] << " objets B, " 

@@ -34,7 +34,7 @@ int main() {
 	//leGraph->afficher();
 
 	//test de l'affichage de la commande
-	Commande* uneCommande = new Commande(2,1,1);
+	Commande* uneCommande = new Commande(5,0,0);
 	
 	//uneCommande->afficher();
 	
@@ -45,40 +45,23 @@ int main() {
 	robot.push_back(robotX);
 	robot.push_back(robotY);
 	robot.push_back(robotZ);
-	Parcours* parcours = new Parcours(leGraph, uneCommande, robot);
-	parcours->afficher();
-
-	std::cout << "La charge maximale du robot X est " << robot[0]->getChargeMaximale() << std::endl;
-	std::cout << "La charge maximale du robot Y est " << robot[1]->getChargeMaximale() << std::endl;
-	std::cout << "La charge maximale du robot Z est " << robot[2]->getChargeMaximale() << std::endl;
-
-
-	//test de la fonction recursive qui nous donne tous les chemins possibles d'un noeud a un autre
-	
-	
-	/*Noeud* unNoeud = leGraph->getNoeud(0);
-	Noeud* autreNoeud = leGraph->getNoeud(6);
-	
-	
-	std::map<std::vector<Noeud*>, int> NoeudVersAutreNoeud = unNoeud->tousLesChemins(autreNoeud);
-	for (auto possibility : NoeudVersAutreNoeud) {
-		std::cout << " Le chemin du ";
-		for (auto Node : possibility.first) {
-			std::cout << Node->getId() << " vers ";
+	try {
+		Parcours* parcours = new Parcours(leGraph, uneCommande, robot);
+		if (parcours->choisirRobotSelonMasse() != NULL) {
+			parcours->afficher();
 		}
-		std::cout << "\n . La distance totale de cette possibilite est " << possibility.second<<std::endl;
-	}*/
-	
-	
-	/*
-		* Test de la fonction qui nous donne la distance vers le voisin. Cette fonction va etre utile dans le retour du robot.
-	*/
-	/*for (auto Node : leGraph->getLesNoeuds()) {
 		
-		std::pair<Noeud*, int> test = unNoeud->cheminVoisin(Node);
-		std::cout << "La distance du noeud " <<unNoeud->getId()<<" jusqu'a "<<Node->getId()<<" est : "<< test.second << std::endl;
-	}*/
-	// Ce bloc sert seulement pour mesurer le temps d'execution du programme , ce code se trouve sur geeksforgeeks en ligne
+	}
+	catch (PasDeRobot e) {
+		std::cout << e.what() << "\n";
+	}
+	
+	
+
+	
+
+
+	
 	end = std::chrono::system_clock::now();
 	std::chrono::duration<double> elapsed_seconds = end - start;
 	std::cout << "Le temps d'execution en seconde = " << elapsed_seconds.count() <<" s" <<std::endl;

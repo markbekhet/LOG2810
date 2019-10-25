@@ -5,6 +5,18 @@
 #include "RobotX.h"
 #include "RobotY.h"
 #include "RobotZ.h"
+class PasDeRobot : public std::exception {
+public:
+	virtual const char* what() {
+		return "Il n'existe pas de robots capable de faire cette commande";
+	}
+};
+class PasDeChemin : public std::exception {
+public:
+	virtual const char* what() {
+		return "Il n'y a pas de chemin possible";
+	}
+};
 class Parcours{
 public:
 	Parcours(Graph* graph , Commande* commande, std::vector<Robot*> listeRobot);
