@@ -50,12 +50,15 @@ int main() {
 		if (parcours->choisirRobotSelonMasse() != NULL) {
 			parcours->afficher();
 		}
-		
+		delete parcours;
 	}
 	catch (PasDeRobot e) {
 		std::cout << e.what() << "\n";
 	}
-	
+	delete uneCommande;
+	delete robotX;
+	delete robotY;
+	delete robotZ;
 	
 
 	
