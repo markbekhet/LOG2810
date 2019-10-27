@@ -34,7 +34,7 @@ int main() {
 	//leGraph->afficher();
 
 	//test de l'affichage de la commande
-	Commande* uneCommande = new Commande(5,0,0);
+	Commande* uneCommande = new Commande(0,0,3);
 	
 	//uneCommande->afficher();
 	
@@ -47,10 +47,12 @@ int main() {
 	robot.push_back(robotZ);
 	try {
 		Parcours* parcours = new Parcours(leGraph, uneCommande, robot);
-		if (parcours->choisirRobotSelonMasse() != NULL) {
+		if (parcours->plusCourtChemin().first.size() != NULL) {
 			parcours->afficher();
+			//std::cout << "I'm here \n";
 		}
 		delete parcours;
+		
 	}
 	catch (PasDeRobot e) {
 		std::cout << e.what() << "\n";
@@ -59,7 +61,6 @@ int main() {
 	delete robotX;
 	delete robotY;
 	delete robotZ;
-	
 
 	
 

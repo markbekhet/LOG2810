@@ -1,5 +1,9 @@
 #include "Commande.h"
 
+Commande::Commande():objetA(new ObjetA(0)), objetB(new ObjetB(0)), objetC(new ObjetC(0))
+{
+}
+
 Commande::Commande(int nombreA, int nombreB, int nombreC)
 {
 	objetA = new ObjetA(nombreA);
@@ -7,12 +11,19 @@ Commande::Commande(int nombreA, int nombreB, int nombreC)
 	objetC = new ObjetC(nombreC);
 }
 
+Commande::Commande(Commande* commande): objetA (new ObjetA(commande->getNombreObjetA())),objetB(new ObjetB(commande->getNombreObjetB())),
+objetC(new ObjetC(commande->getNombreObjetC()))
+{
+	
+
+}
+
 int Commande::getMasseTotale() {
 	
 	return objetA->getMasse() + objetB->getMasse() + objetC->getMasse();
 }
 
-int Commande::getNombreObjetA()
+int Commande::getNombreObjetA() const
 {
 	return objetA->getNombre();
 }
@@ -27,7 +38,7 @@ void Commande::augmenterNombreObjetA(int facteur)
 	objetA->augmenterNombre(facteur);
 }
 
-int Commande::getNombreObjetB()
+int Commande::getNombreObjetB() const
 {
 	return objetB->getNombre();
 }
@@ -42,7 +53,7 @@ void Commande::augmenterNombreObjetB(int facteur)
 	objetB->augmenterNombre(facteur);
 }
 
-int Commande::getNombreObjetC()
+int Commande::getNombreObjetC() const
 {
 	return objetC->getNombre();
 }
@@ -57,6 +68,12 @@ void Commande::augmenterNombreObjetC(int facteur)
 	objetC->augmenterNombre(facteur);
 }
 
+Commande Commande::operator=(Commande* commande)
+{
+	 
+	return Commande(commande->getNombreObjetA(), commande->getNombreObjetB(), commande->getNombreObjetC());
+}
+
 void Commande::afficher()
 {
 	std::cout << this << std::endl;
@@ -69,6 +86,8 @@ Commande::~Commande()
 	delete objetC;
 }
 
+
+
 std::ostream& operator<<(std::ostream& os, Commande* commande)
 {
 	// TODO: insert return statement here
@@ -77,4 +96,12 @@ std::ostream& operator<<(std::ostream& os, Commande* commande)
 		<< "Le nombre d'objet de type C dans votre commande est: " << commande->objetC->getNombre() << "\n"
 		<< "pour une masse totale de " << commande->getMasseTotale() ;
 	return os;
+}
+
+bool plusGrandOuEgal(const Commande* commandeCollecte, const Commande* commandeVoulue)
+{
+	bool nombreObjetA = commandeCollecte->getNombreObjetA() >= commandeVoulue->getNombreObjetA();
+	bool nombreObjetB = commandeCollecte->getNombreObjetB() >= commandeVoulue->getNombreObjetB();
+	bool nombreObjetC = commandeCollecte->getNombreObjetC() >= commandeVoulue->getNombreObjetC();
+	return nombreObjetA && nombreObjetB && nombreObjetC;
 }

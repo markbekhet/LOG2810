@@ -2,24 +2,30 @@
 #include "ObjetA.h"
 #include "ObjetB.h"
 #include "ObjetC.h"
+#include "Noeud.h"
 #include <iostream>
 class Commande {
 public:
+	
+	Commande();
 	Commande(int nombreA, int nombreB, int nombreC);
+	Commande(Commande* commande);
 	int getMasseTotale();
-	int getNombreObjetA();
+	int getNombreObjetA() const;
 	void diminuerNombreObjetA(int facteur);
 	void augmenterNombreObjetA(int facteur);
-	int getNombreObjetB();
+	int getNombreObjetB() const;
 	void diminuerNombreObjetB(int facteur);
 	void augmenterNombreObjetB(int facteur);
-	int getNombreObjetC();
+	int getNombreObjetC() const;
 	void diminuerNombreObjetC(int facteur);
 	void augmenterNombreObjetC(int facteur);
-
+	Commande operator = (Commande* commande);
 	void afficher();
 	~Commande();
-	friend std::ostream& operator<<(std::ostream& os, Commande* commande);
+	
+	friend std::ostream& operator <<(std::ostream& os, Commande* commande);
+	friend bool plusGrandOuEgal (const Commande* commandeCollecte, const Commande* commandeVoulue);
 
 
 private:
