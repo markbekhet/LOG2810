@@ -98,10 +98,10 @@ std::ostream& operator<<(std::ostream& os, Commande* commande)
 	return os;
 }
 
-bool plusGrandOuEgal(const Commande* commandeCollecte, const Commande* commandeVoulue)
+bool Commande::plusGrandOuEgal( const Commande* commandeVoulue)
 {
-	bool nombreObjetA = commandeCollecte->getNombreObjetA() >= commandeVoulue->getNombreObjetA();
-	bool nombreObjetB = commandeCollecte->getNombreObjetB() >= commandeVoulue->getNombreObjetB();
-	bool nombreObjetC = commandeCollecte->getNombreObjetC() >= commandeVoulue->getNombreObjetC();
+	bool nombreObjetA = objetA->getNombre() >= commandeVoulue->getNombreObjetA();
+	bool nombreObjetB = objetB->getNombre() >= commandeVoulue->getNombreObjetB();
+	bool nombreObjetC = objetC->getNombre() >= commandeVoulue->getNombreObjetC();
 	return nombreObjetA && nombreObjetB && nombreObjetC;
 }

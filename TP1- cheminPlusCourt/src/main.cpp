@@ -34,7 +34,7 @@ int main() {
 	//leGraph->afficher();
 
 	//test de l'affichage de la commande
-	Commande* uneCommande = new Commande(0,0,3);
+	Commande* uneCommande = new Commande(0,0,4);
 	
 	//uneCommande->afficher();
 	

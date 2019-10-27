@@ -2,7 +2,7 @@
 #include "ObjetA.h"
 #include "ObjetB.h"
 #include "ObjetC.h"
-#include "Noeud.h"
+
 #include <iostream>
 class Commande {
 public:
@@ -25,7 +25,7 @@ public:
 	~Commande();
 	
 	friend std::ostream& operator <<(std::ostream& os, Commande* commande);
-	friend bool plusGrandOuEgal (const Commande* commandeCollecte, const Commande* commandeVoulue);
+	bool plusGrandOuEgal (const Commande* commandeVoulue);
 
 
 private:
