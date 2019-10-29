@@ -28,7 +28,7 @@ std::pair<std::vector<Noeud*>, int> Parcours::plusCourtChemin()
 			
 			std::pair<std::vector<Noeud*>, int> temp = noeudZero->LesCheminsSelonLaCommande(noeud, copieCommande);
 			
-			if (distance > temp.second) {
+			if (distance >= temp.second) {
 				resultat = temp;
 				distance = temp.second;
 			}

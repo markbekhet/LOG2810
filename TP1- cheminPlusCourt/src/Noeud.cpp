@@ -96,15 +96,17 @@ void Noeud::insererChemin(std::pair<std::vector<Noeud*>, int>& tousLesChemins, s
 			commandeCollectee->augmenterNombreObjetC(unVoisin.first->getLeNombredeC());
 			
 			
-			
-			if (unVoisin.first->getId() == but->getId() && commandeCollectee->plusGrandOuEgal(commandeVoulue) && tousLesChemins.second >= distancePrecedente) {
-				tousLesChemins = std::make_pair(precedent, distancePrecedente);
-				
-			}
-			
-			else {
+			if (tousLesChemins.second >= distancePrecedente) {
+				if (/*unVoisin.first->getId() == but->getId() &&*/ commandeCollectee->plusGrandOuEgal(commandeVoulue) /*&& tousLesChemins.second >= distancePrecedente*/) {
+					tousLesChemins = std::make_pair(precedent, distancePrecedente);
+
+				}
+
+				else {
 					unVoisin.first->insererChemin(tousLesChemins, precedent, but, distancePrecedente, commandeVoulue, commandeCollectee);
+				}
 			}
+			
 			
 		}
 		
