@@ -68,7 +68,7 @@ bool appartient(std::vector<Noeud*>& precedent, Noeud* noeud) {
 // Je veux recuperer la distance minimale que je veux directement.
 
 // Il reste de s'assurer de cette fonction le reste se passe bien
-void Noeud::insererChemin(std::pair<std::vector<Noeud*>, int>& tousLesChemins, std::vector<Noeud*>& precedent, Noeud* but, int& distancePrecedente ,const Commande* commandeVoulue, Commande* commandeCollectee)
+void Noeud::insererChemin(std::pair<std::vector<Noeud*>, int>& tousLesChemins, std::vector<Noeud*>& precedent,/* Noeud* but,*/ int& distancePrecedente ,const Commande* commandeVoulue, Commande* commandeCollectee)
 {
 	// Je fais une copie de la distance actuelle et des noeud precedent ainsi que la commande collectee pour savoir reutilisee la meme distance en faisant la recursivite
 	int copyDistance = distancePrecedente;
@@ -103,7 +103,7 @@ void Noeud::insererChemin(std::pair<std::vector<Noeud*>, int>& tousLesChemins, s
 				}
 
 				else {
-					unVoisin.first->insererChemin(tousLesChemins, precedent, but, distancePrecedente, commandeVoulue, commandeCollectee);
+					unVoisin.first->insererChemin(tousLesChemins, precedent, /*but,*/ distancePrecedente, commandeVoulue, commandeCollectee);
 				}
 			}
 			
@@ -132,7 +132,7 @@ int Noeud::cheminVoisin(Noeud* but)
 /*
 	* Cette fonction va me donner tous les chemins possibles vers un 
 */
-std::pair<std::vector<Noeud*>, int> Noeud::LesCheminsSelonLaCommande(Noeud* but, Commande* commande)
+std::pair<std::vector<Noeud*>, int> Noeud::LesCheminsSelonLaCommande(/*Noeud* but,*/ Commande* commande)
 {
 	std::vector<Noeud*> precedent;
 	precedent.push_back(this);
@@ -140,7 +140,7 @@ std::pair<std::vector<Noeud*>, int> Noeud::LesCheminsSelonLaCommande(Noeud* but,
 	Commande* commandeCollectee = new Commande();
 	std::pair<std::vector<Noeud*>, int> tousLesChemins = { {},INT_MAX };
 
-	insererChemin(tousLesChemins, precedent, but, distance,commande, commandeCollectee);
+	insererChemin(tousLesChemins, precedent, /*but,*/ distance,commande, commandeCollectee);
 
 
 	return tousLesChemins;

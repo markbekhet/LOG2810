@@ -17,9 +17,9 @@ public:
 	std::map<Noeud*,int> getVoisins() const;
 	void setVoisin(Noeud* unNoeud, int distance);
 	int getId() const;
-	void insererChemin(std::pair<std::vector<Noeud*>, int>& tousLesChemins, std::vector<Noeud*>& previous, Noeud* but, int& distancePrecedente, const Commande* commandeVoulue, Commande* commandeCollectee);
+	void insererChemin(std::pair<std::vector<Noeud*>, int>& tousLesChemins, std::vector<Noeud*>& previous, /*Noeud* but,*/ int& distancePrecedente, const Commande* commandeVoulue, Commande* commandeCollectee);
 	int cheminVoisin( Noeud* but);
-	std::pair<std::vector<Noeud*>, int> LesCheminsSelonLaCommande(Noeud* but  ,Commande* commande);
+	std::pair<std::vector<Noeud*>, int> LesCheminsSelonLaCommande(/*Noeud* but,*/  Commande* commande);
 	~Noeud();
 	friend std::ostream& operator<<(std::ostream& os, const Noeud* unNoeud);
 private:

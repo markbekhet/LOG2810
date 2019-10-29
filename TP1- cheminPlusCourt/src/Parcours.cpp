@@ -23,7 +23,7 @@ std::pair<std::vector<Noeud*>, int> Parcours::plusCourtChemin()
 	Noeud* noeudZero = graph_->getNoeud(0);
 	Commande* copieCommande = new Commande(commande_);
 	
-	for (auto noeud : graph_->getLesNoeuds()) {
+	/*for (auto noeud : graph_->getLesNoeuds()) {
 		if (noeudZero->getId() != noeud->getId()) {
 			
 			std::pair<std::vector<Noeud*>, int> temp = noeudZero->LesCheminsSelonLaCommande(noeud, copieCommande);
@@ -34,8 +34,8 @@ std::pair<std::vector<Noeud*>, int> Parcours::plusCourtChemin()
 			}
 		}
 		
-	}
-	
+	}*/
+	resultat= noeudZero->LesCheminsSelonLaCommande(/*noeud,*/ copieCommande);
 	return resultat;
 }
 
