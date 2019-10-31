@@ -53,6 +53,7 @@ void Noeud::setVoisin(Noeud* unNoeud, int distance)
 
 }
 
+
 int Noeud::getId() const
 {
 	return id_;
@@ -70,48 +71,56 @@ bool appartient(std::vector<Noeud*>& precedent, Noeud* noeud) {
 // Il reste de s'assurer de cette fonction le reste se passe bien
 void Noeud::insererChemin(std::pair<std::vector<Noeud*>, int>& tousLesChemins, std::vector<Noeud*>& precedent,/* Noeud* but,*/ int& distancePrecedente ,const Commande* commandeVoulue, Commande* commandeCollectee)
 {
-	// Je fais une copie de la distance actuelle et des noeud precedent ainsi que la commande collectee pour savoir reutilisee la meme distance en faisant la recursivite
-	int copyDistance = distancePrecedente;
-	std::vector<Noeud*> copyPrecedent = precedent;
-	Commande* copyCommandeCollectee = new Commande(commandeCollectee);
-	for (auto unVoisin : lesVoisins_) {
-		// Je veux garder une distance qui sera un repere en cas que la commande est realise par le voisin sinon on continue
-		//commande potentielle accumulee et commande voulue sont deux parametres necessaires
-		
-		
-		distancePrecedente = copyDistance;
-		precedent = copyPrecedent;
-		commandeCollectee = new Commande(copyCommandeCollectee);
-		if (!appartient(precedent, unVoisin.first)) {
-			//Je recupere les informations precedentes
-			
-			//std::cout <<unVoisin.first->getId()<<" Le pointeur ici est : " <<&commandeCollectee << std::endl;
-			//J'additionne les distances qinsi que je mets le voisin en precedent et j'a
-			distancePrecedente += unVoisin.second;
-			precedent.push_back(unVoisin.first);
+	if (commandeVoulue->getNombreObjetA() == 0 && commandeVoulue->getNombreObjetB() == 0 && commandeVoulue->getNombreObjetC() == 0) { tousLesChemins = std::make_pair(precedent, 0); }
+	else {
+		// Je fais une copie de la distance actuelle et des noeud precedent ainsi que la commande collectee pour savoir reutilisee la meme distance en faisant la recursivite
+		int copyDistance = distancePrecedente;
+		std::vector<Noeud*> copyPrecedent = precedent;
+		Commande* copyCommandeCollectee = new Commande(commandeCollectee);
 
-			//Augmenter les donnees de la commande collectee
-			commandeCollectee->augmenterNombreObjetA(unVoisin.first->getLeNombredeA());
-			commandeCollectee->augmenterNombreObjetB(unVoisin.first->getLeNombredeB());
-			commandeCollectee->augmenterNombreObjetC(unVoisin.first->getLeNombredeC());
-			
-			
-			if (tousLesChemins.second >= distancePrecedente) {
-				if (/*unVoisin.first->getId() == but->getId() &&*/ commandeCollectee->plusGrandOuEgal(commandeVoulue) /*&& tousLesChemins.second >= distancePrecedente*/) {
-					tousLesChemins = std::make_pair(precedent, distancePrecedente);
 
+		for (auto unVoisin : lesVoisins_) {
+			// Je veux garder une distance qui sera un repere en cas que la commande est realise par le voisin sinon on continue
+			//commande potentielle accumulee et commande voulue sont deux parametres necessaires
+
+
+			distancePrecedente = copyDistance;
+			precedent = copyPrecedent;
+			commandeCollectee = new Commande(copyCommandeCollectee);
+
+			if (!appartient(precedent, unVoisin.first)) {
+				//Je recupere les informations precedentes
+
+				//std::cout <<unVoisin.first->getId()<<" Le pointeur ici est : " <<&commandeCollectee << std::endl;
+				//J'additionne les distances qinsi que je mets le voisin en precedent et j'a
+				distancePrecedente += unVoisin.second;
+				precedent.push_back(unVoisin.first);
+
+				//Augmenter les donnees de la commande collectee
+				commandeCollectee->augmenterNombreObjetA(unVoisin.first->getLeNombredeA());
+				commandeCollectee->augmenterNombreObjetB(unVoisin.first->getLeNombredeB());
+				commandeCollectee->augmenterNombreObjetC(unVoisin.first->getLeNombredeC());
+
+
+				if (tousLesChemins.second >= distancePrecedente) {
+					if (/*unVoisin.first->getId() == but->getId() &&*/ commandeCollectee->plusGrandOuEgal(commandeVoulue)/* && tousLesChemins.second >= distancePrecedente*/) {
+						tousLesChemins = std::make_pair(precedent, distancePrecedente);
+
+					}
+
+					else {
+						unVoisin.first->insererChemin(tousLesChemins, precedent,/* but,*/ distancePrecedente, commandeVoulue, commandeCollectee);
+					}
 				}
 
-				else {
-					unVoisin.first->insererChemin(tousLesChemins, precedent, /*but,*/ distancePrecedente, commandeVoulue, commandeCollectee);
-				}
+
 			}
-			
-			
-		}
-		
 
+
+		}
 	}
+	
+
 }
 /*
 	* Cette fonction va me donner le chemin la distance d<un noeud a son voisin selon le 
@@ -144,6 +153,21 @@ std::pair<std::vector<Noeud*>, int> Noeud::LesCheminsSelonLaCommande(/*Noeud* bu
 
 
 	return tousLesChemins;
+}
+
+void Noeud::diminuerNombreObjetA(int facteur)
+{
+	objetA_->diminuerNombre(facteur);
+}
+
+void Noeud::diminuerNombreObjetB(int facteur)
+{
+	objetB_->diminuerNombre(facteur);
+}
+
+void Noeud::diminuerNombreObjetC(int facteur)
+{
+	objetC_->diminuerNombre(facteur);
 }
 
 Noeud::~Noeud()

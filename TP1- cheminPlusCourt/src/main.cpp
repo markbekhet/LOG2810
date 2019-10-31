@@ -23,6 +23,10 @@ Commande* entrerUneCommande() {
 	std::cout << "\n";
 	return new Commande(nombreObjetA, nombreObjetB, nombreObjetC);
 }
+
+void afficherOption() {
+	std::cout << "Choisir entre afficher graph (a) , entrer une commande (b) et afficher la commande (c), afficher le parcours (d) ou quitter (q). \n";
+}
 int main() {
 	//Le chrono va m'aider a savoir la vitesse de l'execution du programme
 	std::chrono::time_point<std::chrono::system_clock> start, end;
@@ -34,8 +38,8 @@ int main() {
 	//leGraph->afficher();
 
 	//test de l'affichage de la commande
-	Commande* uneCommande = new Commande(5,0,0);
 	
+	bool quitter = false;
 	//uneCommande->afficher();
 	
 	RobotX* robotX = new RobotX();
@@ -45,24 +49,105 @@ int main() {
 	robot.push_back(robotX);
 	robot.push_back(robotY);
 	robot.push_back(robotZ);
-	try {
-		Parcours* parcours = new Parcours(leGraph, uneCommande, robot);
-		if (parcours->plusCourtChemin().first.size() != NULL) {
-			parcours->afficher();
-			//std::cout << "I'm here \n";
-		}
-		delete parcours;
+
+
+	// Le code pour le main
+	
+	/*Commande* uneCommande = NULL;
+	Parcours* parcours = NULL;
+	
+	while (!quitter) {
+		afficherOption();
+		char choix;
+		std::cin >> choix;
 		
+		if (choix == 'a') {
+			if (parcours != NULL) {
+				parcours->diminuerNoeud();
+				parcours = NULL;
+			}
+			leGraph->afficher();
+
+		}
+			
+		else if (choix == 'b') {
+			//if (parcours != NULL) delete parcours;
+			
+			
+			if (parcours != NULL) {
+				parcours->diminuerNoeud();
+				parcours = NULL;
+			}
+			if (uneCommande != NULL) delete uneCommande;
+
+			uneCommande = entrerUneCommande();
+			try {
+				parcours = new Parcours(leGraph, uneCommande, robot);
+				
+			}
+			catch (PasDeRobot e) {
+				std::cout << e.what() << "\n";
+			}
+
+		}
+		else if (choix == 'c') {
+			if (uneCommande != NULL) {
+				uneCommande->afficher();
+				
+			}
+			else {
+				std::cout << "Faites une commande d'abord. \n";
+			}
+		}
+		else if (choix == 'd') {
+			if (parcours != NULL && !parcours->getException() ) {
+				parcours->afficher();
+				
+			}
+			else {
+				std::cout << "Faites une commande d'abord. \n";
+			}
+		}
+		else if (choix == 'q') {
+			
+			
+			if (uneCommande != NULL) delete uneCommande;
+			
+			quitter = true;
+		}
+		
+
+	}//*/
+	
+	// Test de performance
+
+	Commande* commande = new Commande(5, 0, 0);
+	Parcours* parcours = NULL;
+	try {
+		parcours = new Parcours(leGraph, commande, robot);
 	}
 	catch (PasDeRobot e) {
-		std::cout << e.what() << "\n";
+		std::cout << e.what() << std::endl;
+		parcours = NULL;
 	}
-	delete uneCommande;
+	if (parcours != NULL && !parcours->getException()) {
+		parcours->afficher();
+	}
+	
+	
+	delete commande;
+	delete parcours;
+	
+	
 	delete robotX;
 	delete robotY;
 	delete robotZ;
+	delete leGraph;
+	
 
 	
+
+
 
 
 	

@@ -3,6 +3,7 @@
 
 Parcours::Parcours(Graph* graph, Commande* commande, std::vector<Robot*> listeRobot): graph_(graph),commande_(commande),listeRobot_(listeRobot)
 {
+	exception = false;
 	if (commande_->getMasseTotale() > std::max( listeRobot_[1]->getChargeMaximale(), listeRobot_[2]->getChargeMaximale())) {
 		throw PasDeRobot();
 	}
@@ -36,6 +37,7 @@ std::pair<std::vector<Noeud*>, int> Parcours::plusCourtChemin()
 		
 	}*/
 	resultat= noeudZero->LesCheminsSelonLaCommande(/*noeud,*/ copieCommande);
+	delete copieCommande;
 	return resultat;
 }
 
@@ -70,6 +72,7 @@ Robot* Parcours::choisirRobotSelonMasse()
 	
 	
 	
+	
 
 	return robotChoisi;
 }
@@ -80,7 +83,9 @@ int Parcours::calculerTemps(Robot* robot)
 	
 	
 	if (chemin.first.size() == 0) {
+		exception = true;
 		throw PasDeChemin();
+		
 		
 	}
 	Commande* commandeCollectee = new Commande(0, 0, 0);
@@ -101,7 +106,8 @@ int Parcours::calculerTemps(Robot* robot)
 		
 	}
 	
-
+	delete commandeCollectee;
+	delete commandeBase;
 	int tempsFinal = allerTemps + retourTemps;
 
 	return tempsFinal;
@@ -127,6 +133,22 @@ void Parcours::afficher()
 	std::cout << this << std::endl;
 }
 
+void Parcours::diminuerNoeud()
+{
+	std::pair<std::vector<Noeud*>, int> chemin = plusCourtChemin();
+	for (auto noeud : chemin.first) {
+		std::vector<int> minimums = getMin(commande_, noeud);
+		graph_->getNoeud(noeud->getId())->diminuerNombreObjetA(minimums[0]);
+		graph_->getNoeud(noeud->getId())->diminuerNombreObjetB(minimums[1]);
+		graph_->getNoeud(noeud->getId())->diminuerNombreObjetC(minimums[2]);
+	}
+}
+
+bool Parcours::getException() const
+{
+	return exception;
+}
+
 std::ostream& operator<<(std::ostream& os, Parcours* parcours)
 {
 	Commande* copie = new Commande(parcours->commande_);
@@ -149,5 +171,6 @@ std::ostream& operator<<(std::ostream& os, Parcours* parcours)
 	}
 	//std::cout << "La commande avant d'appeller le temps du parcours est : " << parcours->commande_;
 	os << "Le robot a collecte la commande en " << parcours->calculerTemps(parcours->choisirRobotSelonMasse()) << " secondes." << "\n";
+	delete copie;
 	return os;
 }

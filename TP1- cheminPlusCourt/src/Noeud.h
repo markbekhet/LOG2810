@@ -20,6 +20,9 @@ public:
 	void insererChemin(std::pair<std::vector<Noeud*>, int>& tousLesChemins, std::vector<Noeud*>& previous, /*Noeud* but,*/ int& distancePrecedente, const Commande* commandeVoulue, Commande* commandeCollectee);
 	int cheminVoisin( Noeud* but);
 	std::pair<std::vector<Noeud*>, int> LesCheminsSelonLaCommande(/*Noeud* but,*/  Commande* commande);
+	void diminuerNombreObjetA(int facteur);
+	void diminuerNombreObjetB(int facteur);
+	void diminuerNombreObjetC(int facteur);
 	~Noeud();
 	friend std::ostream& operator<<(std::ostream& os, const Noeud* unNoeud);
 private:
