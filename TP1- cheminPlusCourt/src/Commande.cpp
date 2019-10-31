@@ -94,7 +94,7 @@ std::ostream& operator<<(std::ostream& os, Commande* commande)
 	os << "Le nombre d'objet de type A dans votre commande est: " << commande->objetA->getNombre() << "\n"
 		<< "Le nombre d'objet de type B dans votre commande est: " << commande->objetB->getNombre() << "\n"
 		<< "Le nombre d'objet de type C dans votre commande est: " << commande->objetC->getNombre() << "\n"
-		<< "pour une masse totale de " << commande->getMasseTotale() ;
+		<< "pour une masse totale de " << commande->getMasseTotale()<<" kg" ;
 	return os;
 }
 
