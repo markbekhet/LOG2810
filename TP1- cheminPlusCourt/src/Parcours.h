@@ -21,10 +21,11 @@ class Parcours{
 public:
 	Parcours(Graph* graph , Commande* commande, std::vector<Robot*> listeRobot);
 	std::pair<std::vector<Noeud*>, int> plusCourtChemin();
-	std::pair<Noeud*, int> prochainNoeud(std::pair<Noeud*, int> noeud,
+	std::pair<std::vector<Noeud*>, int> prochainNoeud(std::pair<Noeud*, int> noeud,
 		std::map<std::vector<Noeud*>, int>* cheminPossible,
 		std::vector<Noeud*>* cheminActuelle);
 	std::pair<std::vector<Noeud*>, int> findMin(std::map<std::vector<Noeud*>, int>* cheminPossible);
+	bool verifieCommande(std::vector<Noeud*>* chemin);
 
 	Robot* choisirRobotSelonMasse();
 

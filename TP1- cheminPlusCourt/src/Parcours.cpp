@@ -18,34 +18,38 @@ Parcours::Parcours(Graph* graph, Commande* commande, std::vector<Robot*> listeRo
 
 std::pair<std::vector<Noeud*>, int> Parcours::plusCourtChemin()
 {
-	Noeud noeudDepart = graph_->getNoeud[0];
-	std::pair<Noeud*, int> noeudCourant(graph_->getNoeud[0], 0);
+	Noeud* noeudDepart = graph_->getNoeud(0);
+	std::pair<Noeud*, int> noeudCourant(graph_->getNoeud(0), 0);
 	std::pair<std::vector<Noeud*>, int>  noeudFixe;
-	std::map<std::vector<Noeud*>, int>* cheminNonVisite;
-	std::vector<Noeud*>* chemin;
-	chemin->push_back(&noeudDepart);
+	std::map<std::vector<Noeud*>, int>* cheminNonVisite = NULL;
+	std::vector<Noeud*>* chemin = {};
+	chemin->push_back(noeudDepart);
 	Commande verifCommande(0, 0, 0);
-	bool cible = verifCommande.getNombreObjetA() <= commande_->getNombreObjetA() &&
-		verifCommande.getNombreObjetB() <= commande_->getNombreObjetB() &&
-		verifCommande.getNombreObjetC() <= commande_->getNombreObjetC();
+	bool cible = true;
+
 	while (cible) {
-		noeudCourant = prochainNoeud(noeudCourant, cheminNonVisite, chemin);
-		
+		std::pair<std::vector<Noeud*>, int> temp = prochainNoeud(noeudCourant, cheminNonVisite, chemin);
+		Noeud* noeudVoulu = temp.first[temp.first.size()-1];
+		*chemin = temp.first;
+		noeudCourant = {noeudVoulu, temp.second};
+		cible = verifieCommande(chemin);
 	}
 	return noeudFixe;
 }
 
-std::pair<Noeud*, int> Parcours::prochainNoeud(std::pair<Noeud*, int> noeud,
+std::pair<std::vector<Noeud*>, int> Parcours::prochainNoeud(std::pair<Noeud*, int> noeud,
 	std::map<std::vector<Noeud*>, int>* cheminPossible,
 	std::vector<Noeud*>* cheminActuelle) {
 	int distanceMin = 0xFF;
-	std::pair<Noeud*, int> prochainNoeud;
+	std::pair<std::vector<Noeud*>, int> prochainNoeud;
 
 	for (auto voisin : noeud.first->getVoisins()) {
 		int newDistance = noeud.second + voisin.second;
-		std::pair<std::vector<Noeud*>, int> newChemin = {cheminActuelle->push_back(noeud.first), newDistance };
+		cheminActuelle->push_back(noeud.first);
+		std::pair<std::vector<Noeud*>, int> newChemin = {*cheminActuelle, newDistance};
 		cheminPossible->insert(newChemin);
 	}
+	prochainNoeud = findMin(cheminPossible);
 	return prochainNoeud;
 }
 
@@ -59,9 +63,23 @@ std::pair< std::vector<Noeud*>, int> Parcours::findMin(std::map<std::vector<Noeu
 			cheminChoisi = chemin;
 		}
 	}
+	cheminPossible->erase(cheminChoisi.first);
 	return  cheminChoisi;
 }
 
+bool Parcours::verifieCommande(std::vector<Noeud*>* chemin) {
+	Commande verifCommande = { 0,0,0 };
+	for (auto noeud : *chemin) {
+		verifCommande.augmenterNombreObjetA(noeud->getLeNombredeA());
+		verifCommande.augmenterNombreObjetB(noeud->getLeNombredeB());
+		verifCommande.augmenterNombreObjetC(noeud->getLeNombredeC());
+	}
+	bool cible = verifCommande.getNombreObjetA() < commande_->getNombreObjetA() &&
+		verifCommande.getNombreObjetB() < commande_->getNombreObjetB() &&
+		verifCommande.getNombreObjetC() < commande_->getNombreObjetC();
+
+	return cible;
+}
 
 
 Robot* Parcours::choisirRobotSelonMasse()
