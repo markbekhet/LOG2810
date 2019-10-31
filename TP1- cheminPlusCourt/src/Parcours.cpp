@@ -18,26 +18,51 @@ Parcours::Parcours(Graph* graph, Commande* commande, std::vector<Robot*> listeRo
 
 std::pair<std::vector<Noeud*>, int> Parcours::plusCourtChemin()
 {
-	std::pair<std::vector<Noeud*>, int> resultat;
-	int distance = INT_MAX;
-	Noeud* noeudZero = graph_->getNoeud(0);
-	
-	for (auto noeud : graph_->getLesNoeuds()) {
-		if (noeudZero->getId() != noeud->getId()) {
-			
-			std::pair<std::vector<Noeud*>, int> temp = noeudZero->LesCheminsSelonLaCommande(noeud, commande_);
-			
-			
-			
-			if (distance > temp.second) {
-				resultat = temp;
-				distance = temp.second;
-			}
-		}
+	Noeud noeudDepart = graph_->getNoeud[0];
+	std::pair<Noeud*, int> noeudCourant(graph_->getNoeud[0], 0);
+	std::pair<std::vector<Noeud*>, int>  noeudFixe;
+	std::map<std::vector<Noeud*>, int>* cheminNonVisite;
+	std::vector<Noeud*>* chemin;
+	chemin->push_back(&noeudDepart);
+	Commande verifCommande(0, 0, 0);
+	bool cible = verifCommande.getNombreObjetA() <= commande_->getNombreObjetA() &&
+		verifCommande.getNombreObjetB() <= commande_->getNombreObjetB() &&
+		verifCommande.getNombreObjetC() <= commande_->getNombreObjetC();
+	while (cible) {
+		noeudCourant = prochainNoeud(noeudCourant, cheminNonVisite, chemin);
 		
 	}
-	return resultat;
+	return noeudFixe;
 }
+
+std::pair<Noeud*, int> Parcours::prochainNoeud(std::pair<Noeud*, int> noeud,
+	std::map<std::vector<Noeud*>, int>* cheminPossible,
+	std::vector<Noeud*>* cheminActuelle) {
+	int distanceMin = 0xFF;
+	std::pair<Noeud*, int> prochainNoeud;
+
+	for (auto voisin : noeud.first->getVoisins()) {
+		int newDistance = noeud.second + voisin.second;
+		std::pair<std::vector<Noeud*>, int> newChemin = {cheminActuelle->push_back(noeud.first), newDistance };
+		cheminPossible->insert(newChemin);
+	}
+	return prochainNoeud;
+}
+
+
+std::pair< std::vector<Noeud*>, int> Parcours::findMin(std::map<std::vector<Noeud*>, int>* cheminPossible) {
+
+	std::pair<std::vector<Noeud*>, int> cheminChoisi = { {},INT_MAX };
+	for (auto chemin : *cheminPossible) {
+		
+		if (chemin.second < cheminChoisi.second) {
+			cheminChoisi = chemin;
+		}
+	}
+	return  cheminChoisi;
+}
+
+
 
 Robot* Parcours::choisirRobotSelonMasse()
 {
