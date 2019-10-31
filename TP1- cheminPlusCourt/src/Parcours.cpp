@@ -136,8 +136,9 @@ void Parcours::afficher()
 void Parcours::diminuerNoeud(Graph* unGraph)
 {
 	std::pair<std::vector<Noeud*>, int> chemin = plusCourtChemin();
+	Commande* copieCommande  = new Commande(commande_);
 	for (auto noeud : chemin.first) {
-		std::vector<int> minimums = getMin(commande_, noeud);
+		std::vector<int> minimums = getMin(copieCommande, noeud);
 		unGraph->getNoeud(noeud->getId())->diminuerNombreObjetA(minimums[0]);
 		unGraph->getNoeud(noeud->getId())->diminuerNombreObjetB(minimums[1]);
 		unGraph->getNoeud(noeud->getId())->diminuerNombreObjetC(minimums[2]);
