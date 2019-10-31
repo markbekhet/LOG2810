@@ -32,10 +32,31 @@ int main() {
 	std::chrono::time_point<std::chrono::system_clock> start, end;
 	start = std::chrono::system_clock::now();
 	//test de l'affichage du graph
-	std::ifstream fichier("entrepot.txt");
+	bool continuer = false;
+	std::string nom = "";
+	Graph* leGraph = NULL;
+	while (!continuer) {
+		std::wcout << "Veuillez entrer le nom de votre fichier incluant l'extension \n";
+		std::cin >> nom;
+		
+		std::ifstream fichier;
+		
+		fichier.open(nom);
+		if (fichier.fail()) {
+			std::cout << "Le nom de votre fichier semble incorrect  ou le format du fichier n'est pas bon \n";
+		}
+		else {
+			leGraph = new Graph(fichier);
+			continuer = true;
+
+		}
+
+	}
 	
-	Graph* leGraph = new Graph(fichier);
+	
+	 
 	//leGraph->afficher();
+	//Graph* copieGraph = new Graph(leGraph);
 
 	//test de l'affichage de la commande
 	
@@ -53,7 +74,7 @@ int main() {
 
 	// Le code pour le main
 	
-	/*Commande* uneCommande = NULL;
+	Commande* uneCommande = NULL;
 	Parcours* parcours = NULL;
 	
 	while (!quitter) {
@@ -63,7 +84,7 @@ int main() {
 		
 		if (choix == 'a') {
 			if (parcours != NULL) {
-				parcours->diminuerNoeud();
+				parcours->diminuerNoeud(leGraph);
 				parcours = NULL;
 			}
 			leGraph->afficher();
@@ -75,7 +96,7 @@ int main() {
 			
 			
 			if (parcours != NULL) {
-				parcours->diminuerNoeud();
+				parcours->diminuerNoeud(leGraph);
 				parcours = NULL;
 			}
 			if (uneCommande != NULL) delete uneCommande;
@@ -83,7 +104,7 @@ int main() {
 			uneCommande = entrerUneCommande();
 			try {
 				parcours = new Parcours(leGraph, uneCommande, robot);
-				
+				//parcours->diminuerNoeud(copieGraph);
 			}
 			catch (PasDeRobot e) {
 				std::cout << e.what() << "\n";
@@ -110,7 +131,7 @@ int main() {
 		}
 		else if (choix == 'q') {
 			
-			
+			if (parcours != NULL) delete parcours;
 			if (uneCommande != NULL) delete uneCommande;
 			
 			quitter = true;
@@ -121,7 +142,7 @@ int main() {
 	
 	// Test de performance
 
-	Commande* commande = new Commande(5, 0, 0);
+	/*Commande* commande = new Commande(5, 0, 0);
 	Parcours* parcours = NULL;
 	try {
 		parcours = new Parcours(leGraph, commande, robot);
@@ -137,7 +158,7 @@ int main() {
 	
 	delete commande;
 	delete parcours;
-	
+	*/
 	
 	delete robotX;
 	delete robotY;

@@ -133,14 +133,14 @@ void Parcours::afficher()
 	std::cout << this << std::endl;
 }
 
-void Parcours::diminuerNoeud()
+void Parcours::diminuerNoeud(Graph* unGraph)
 {
 	std::pair<std::vector<Noeud*>, int> chemin = plusCourtChemin();
 	for (auto noeud : chemin.first) {
 		std::vector<int> minimums = getMin(commande_, noeud);
-		graph_->getNoeud(noeud->getId())->diminuerNombreObjetA(minimums[0]);
-		graph_->getNoeud(noeud->getId())->diminuerNombreObjetB(minimums[1]);
-		graph_->getNoeud(noeud->getId())->diminuerNombreObjetC(minimums[2]);
+		unGraph->getNoeud(noeud->getId())->diminuerNombreObjetA(minimums[0]);
+		unGraph->getNoeud(noeud->getId())->diminuerNombreObjetB(minimums[1]);
+		unGraph->getNoeud(noeud->getId())->diminuerNombreObjetC(minimums[2]);
 	}
 }
 
@@ -159,8 +159,13 @@ std::ostream& operator<<(std::ostream& os, Parcours* parcours)
 	 robotChoisi->afficher();
 	 
 
-	os<< "Il passera par les noeuds suivants: " ;
+	
 	std::pair<std::vector<Noeud*>, int> chemin = parcours->plusCourtChemin();
+	os << "Au debut le robot passera par les noeud suivante sans rien collecter ";
+	for (auto noeud : chemin.first) {
+		os << noeud->getId() << " , ";
+	}
+	os << ". Ensuite en revenant , il collectera la commande \n";
 		
 	for (int i = chemin.first.size()-1 ; i >= 0;--i) {
 		auto noeud =  chemin.first[i];

@@ -11,6 +11,7 @@
 class Noeud {
 public:
 	Noeud(std::istream& fichier);
+	Noeud(Noeud* noeud);
 	int getLeNombredeA() const;
 	int getLeNombredeB() const;
 	int getLeNombredeC() const;

@@ -58,6 +58,24 @@ Graph::Graph(std::istream& fichier)
 	}
 }
 
+Graph::Graph(Graph* graph)
+{
+	for (auto noeud : graph->getLesNoeuds()) {
+		Noeud* nouveauNoeud = new Noeud(noeud);
+		lesNoeuds.push_back(nouveauNoeud);
+		
+		
+	}
+	for (auto noeud : lesNoeuds) {
+		std::map<Noeud*, int> lesVoisins = graph->getNoeud(noeud->getId())->getVoisins();
+		for (auto noeudVoisins : lesVoisins) {
+			noeud->setVoisin(lesNoeuds[noeudVoisins.first->getId()], noeudVoisins.second);
+		}
+
+	}
+	
+}
+
 void Graph::afficher() const
 {
 	for (auto node : lesNoeuds) {

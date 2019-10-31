@@ -26,6 +26,16 @@ Noeud::Noeud(std::istream& fichier)
 
 }
 
+Noeud::Noeud(Noeud* noeud)
+{
+	id_ = noeud->getId();
+	objetA_ = new ObjetA(noeud->getLeNombredeA());
+	objetB_ = new ObjetB(noeud->getLeNombredeB());
+	objetC_ = new ObjetC(noeud->getLeNombredeC());
+	
+
+}
+
 int Noeud::getLeNombredeA() const
 {
 	return objetA_->getNombre();
