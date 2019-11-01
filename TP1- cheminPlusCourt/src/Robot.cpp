@@ -7,7 +7,7 @@ Robot::Robot()
 }
 
 
-int Robot::getConstanteK() const
+double Robot::getConstanteK() const
 {
 	return constanteK_;
 }

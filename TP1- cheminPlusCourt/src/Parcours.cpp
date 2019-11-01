@@ -30,7 +30,7 @@ std::pair<std::vector<Noeud*>, int> Parcours::plusCourtChemin()
 	return resultat;
 }
 
-Robot* Parcours::choisirRobotSelonMasse()
+std::pair<Robot*,bool> Parcours::choisirRobotSelonMasse()
 {
 	int masseTotale = commande_->getMasseTotale();
 	std::vector<Robot*> temp = {};
@@ -42,14 +42,14 @@ Robot* Parcours::choisirRobotSelonMasse()
 	}
 
 	int tempsMax = INT_MAX;
-	Robot* robotChoisi = NULL ;
+	std::pair<Robot*,bool> robotChoisi ;
 	for (auto robot : temp) {
 		try {
-			int temps = calculerTemps(robot);
+			std::pair<double,bool> temps = calculerTemps(robot);
 			
-			if (tempsMax > temps) {
-				tempsMax = temps;
-				robotChoisi = robot;
+			if (tempsMax > temps.first) {
+				tempsMax = temps.first;
+				robotChoisi = { robot,temps.second };
 			}
 		}
 		catch (PasDeChemin e) {
@@ -66,7 +66,12 @@ Robot* Parcours::choisirRobotSelonMasse()
 	return robotChoisi;
 }
 
-int Parcours::calculerTemps(Robot* robot)
+
+//ca c'est un test
+// retourne un booleen a cote du temps qui sert a dire s'il fait la commande en allant ou en retournant
+// s'il decide de faire la commande en allant il retourne false
+// s'il decide de faire la commande en retournant il retourne true
+std::pair<double, bool> Parcours::calculerTemps(Robot* robot)
 {
 	std::pair <std::vector<Noeud*>, int> chemin = plusCourtChemin();
 	
@@ -80,12 +85,13 @@ int Parcours::calculerTemps(Robot* robot)
 	}
 	Noeud* noeudZero = graph_->getNoeud(0);
 	std::pair<std::vector<Noeud*>, int> cheminPlusCourt = noeudZero->LesCheminsSelonLeNoeudFinal(chemin.first[chemin.first.size() - 1]);
+	// 1 er option faire la commande en retournant
 	Commande* commandeCollectee = new Commande(0, 0, 0);
 	Commande* commandeBase = new Commande(commande_);
 	// En allant le robot ne collecte pas d'objet
 	robot->setConstanteK(commandeCollectee);
-	int allerTemps = robot->getConstanteK() * cheminPlusCourt.second;
-	int retourTemps = 0;
+	double allerTemps = robot->getConstanteK() * cheminPlusCourt.second;
+	double retourTemps = 0;
 	for (int i = chemin.first.size() - 1; i > 0; --i) {
 		std::vector<int> minimums = getMin(commandeBase, chemin.first[i]);
 		commandeCollectee->augmenterNombreObjetA(minimums[0]);
@@ -98,11 +104,44 @@ int Parcours::calculerTemps(Robot* robot)
 		
 	}
 	
+	
 	delete commandeCollectee;
 	delete commandeBase;
-	int tempsFinal = allerTemps + retourTemps;
+	double tempsFinalOptionRetournant= allerTemps + retourTemps;
 
-	return tempsFinal;
+
+	// 2 eme option faire la commande en allant 
+	Commande* commandeCollecteeOption2 = new Commande(0, 0, 0);
+	Commande* commandeBaseOption2 = new Commande(commande_);
+	
+	robot->setConstanteK(commandeCollecteeOption2);
+	double allerTempsOption2 = 0;
+	
+	for (int i = 0; i < chemin.first.size() - 1; ++i) {
+		std::vector<int> minimums = getMin(commandeBaseOption2, chemin.first[i]);
+		commandeCollecteeOption2->augmenterNombreObjetA(minimums[0]);
+		commandeCollecteeOption2->augmenterNombreObjetB(minimums[1]);
+		commandeCollecteeOption2->augmenterNombreObjetC(minimums[2]);
+
+		int distanceVoisin = chemin.first[i]->cheminVoisin(chemin.first[i+1]);
+		robot->setConstanteK(commandeCollecteeOption2);
+		allerTempsOption2 += robot->getConstanteK() * distanceVoisin;
+
+	}
+	double retourTempsOption2 = robot->getConstanteK() * cheminPlusCourt.second;
+	delete commandeCollecteeOption2;
+	delete commandeBaseOption2;
+	double tempsFinalOptionAllant = allerTempsOption2 + retourTempsOption2;
+
+	if (tempsFinalOptionAllant <= tempsFinalOptionRetournant) {
+		return std::pair<double, bool>(tempsFinalOptionAllant, false);
+	}
+	else {
+		return std::pair<double,bool>(tempsFinalOptionRetournant,true);
+	}
+
+
+	
 }
 
 std::vector<int> Parcours::getMin(Commande* commande, Noeud* noeud)
@@ -147,30 +186,53 @@ std::ostream& operator<<(std::ostream& os, Parcours* parcours)
 	Commande* copie = new Commande(parcours->commande_);
 	
 	os << "Le type de robot choisir est: ";
-	Robot* robotChoisi = parcours->choisirRobotSelonMasse();
+	std::pair<Robot*,bool> robotChoisi = parcours->choisirRobotSelonMasse();
 	
-	 robotChoisi->afficher();
+	 robotChoisi.first->afficher();
 	 
 
 	
 	std::pair<std::vector<Noeud*>, int> chemin = parcours->plusCourtChemin();
 	Noeud* noeudZero = parcours->graph_->getNoeud(0);
 	std::pair<std::vector<Noeud*>, int> cheminPlusCourt = noeudZero->LesCheminsSelonLeNoeudFinal(chemin.first[chemin.first.size() - 1]);
-	os << "Au debut le robot passera par les noeud suivante sans rien collecter ";
-	for (auto noeud : cheminPlusCourt.first) {
-		os << noeud->getId() << " , ";
+	if (robotChoisi.second) {
+		os << "Au debut le robot passera par les noeud suivante sans rien collecter ";
+		for (auto noeud : cheminPlusCourt.first) {
+			os << noeud->getId() << " , ";
+		}
+		os << ". Ensuite en revenant , il collectera la commande \n";
+
+		for (int i = chemin.first.size() - 1; i >= 0; --i) {
+			auto noeud = chemin.first[i];
+			std::vector<int> minimes = parcours->getMin(copie, noeud);
+			os << "Noeud " << noeud->getId() << " collecte " << minimes[0] << " objets A, "
+				<< minimes[1] << " objets B, "
+				<< minimes[2] << " objets C." << "\n";
+		}
 	}
-	os << ". Ensuite en revenant , il collectera la commande \n";
+
+	else {
+		os << "Au debut le robot passera par les noeud suivante en collectant la commande "; 
+		for (int i =0; i < chemin.first.size() ; ++i) {
+			auto noeud = chemin.first[i];
+			std::vector<int> minimes = parcours->getMin(copie, noeud);
+			os << "Noeud " << noeud->getId() << " collecte " << minimes[0] << " objets A, "
+				<< minimes[1] << " objets B, "
+				<< minimes[2] << " objets C." << "\n";
+		}
+
+		os << " Ensuite en revenant , il passera par les noeud suivante sans rien collecter \n";
+		for (int i = cheminPlusCourt.first.size()-1; i >= 0; --i) {
+			auto noeud = cheminPlusCourt.first[i];
+			os << noeud->getId() << " , ";
+		}
+		os << "\n";
 		
-	for (int i = chemin.first.size()-1 ; i >= 0;--i) {
-		auto noeud =  chemin.first[i];
-		std::vector<int> minimes = parcours->getMin(copie, noeud);
-		os << "Noeud " << noeud->getId() << " collecte " << minimes[0] << " objets A, "
-			<< minimes[1] << " objets B, " 
-			<< minimes[2] << " objets C." << "\n";
+
 	}
 	
-	os << "Le robot a collecte la commande en " << parcours->calculerTemps(parcours->choisirRobotSelonMasse()) << " secondes." << "\n";
+	
+	os << "Le robot a collecte la commande en " << parcours->calculerTemps(parcours->choisirRobotSelonMasse().first).first << " secondes." << "\n";
 	delete copie;
 	return os;
 }
