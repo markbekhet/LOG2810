@@ -128,7 +128,7 @@ void Noeud::insererChemin(std::pair<std::vector<Noeud*>, int>& tousLesChemins, s
 
 
 		}
-		//delete copyCommandeCollectee;
+		delete copyCommandeCollectee;
 	}
 	
 

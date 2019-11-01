@@ -114,7 +114,7 @@ std::pair<double, bool> Parcours::calculerTemps(Robot* robot)
 	Commande* commandeCollecteeOption2 = new Commande(0, 0, 0);
 	Commande* commandeBaseOption2 = new Commande(commande_);
 	
-	robot->setConstanteK(commandeCollecteeOption2);
+	
 	double allerTempsOption2 = 0;
 	
 	for (int i = 0; i < chemin.first.size() - 1; ++i) {
@@ -128,6 +128,7 @@ std::pair<double, bool> Parcours::calculerTemps(Robot* robot)
 		allerTempsOption2 += robot->getConstanteK() * distanceVoisin;
 
 	}
+	robot->setConstanteK(commandeCollecteeOption2);
 	double retourTempsOption2 = robot->getConstanteK() * cheminPlusCourt.second;
 	delete commandeCollecteeOption2;
 	delete commandeBaseOption2;
