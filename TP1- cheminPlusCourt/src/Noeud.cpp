@@ -128,6 +128,7 @@ void Noeud::insererChemin(std::pair<std::vector<Noeud*>, int>& tousLesChemins, s
 
 
 		}
+		//delete copyCommandeCollectee;
 	}
 	
 
@@ -163,6 +164,72 @@ std::pair<std::vector<Noeud*>, int> Noeud::LesCheminsSelonLaCommande(/*Noeud* bu
 
 
 	return tousLesChemins;
+}
+
+void Noeud::insererChemin(std::pair<std::vector<Noeud*>, int>& tousLesChemins, std::vector<Noeud*>& previous, int& distancePrecedente, const Noeud* noeudFinal)
+{
+	if (noeudFinal->getId() == id_) { tousLesChemins = std::make_pair(previous, 0); }
+	else {
+		// Je fais une copie de la distance actuelle et des noeud precedent ainsi que la commande collectee pour savoir reutilisee la meme distance en faisant la recursivite
+		int copyDistance = distancePrecedente;
+		std::vector<Noeud*> copyPrecedent = previous;
+		
+
+
+		for (auto unVoisin : lesVoisins_) {
+			// Je veux garder une distance qui sera un repere en cas que la commande est realise par le voisin sinon on continue
+			//commande potentielle accumulee et commande voulue sont deux parametres necessaires
+
+
+			distancePrecedente = copyDistance;
+			previous = copyPrecedent;
+			
+
+			if (!appartient(previous, unVoisin.first)) {
+				//Je recupere les informations precedentes
+
+				//std::cout <<unVoisin.first->getId()<<" Le pointeur ici est : " <<&commandeCollectee << std::endl;
+				//J'additionne les distances qinsi que je mets le voisin en precedent et j'a
+				distancePrecedente += unVoisin.second;
+				previous.push_back(unVoisin.first);
+
+				
+				
+
+
+				if (tousLesChemins.second >= distancePrecedente) {
+					if (unVoisin.first->getId() == noeudFinal->getId() ) {
+						tousLesChemins = std::make_pair(previous, distancePrecedente);
+
+					}
+
+					else {
+						unVoisin.first->insererChemin(tousLesChemins, previous, distancePrecedente, noeudFinal);
+					}
+				}
+
+
+			}
+
+
+		}
+		
+	}
+}
+
+std::pair<std::vector<Noeud*>, int> Noeud::LesCheminsSelonLeNoeudFinal(const Noeud* noeudFinal)
+{
+	std::vector<Noeud*> precedent;
+	precedent.push_back(this);
+	int distance = 0;
+	
+	std::pair<std::vector<Noeud*>, int> tousLesChemins = { {},INT_MAX };
+
+	insererChemin(tousLesChemins, precedent,  distance, noeudFinal);
+
+
+	return tousLesChemins;
+	
 }
 
 void Noeud::diminuerNombreObjetA(int facteur)

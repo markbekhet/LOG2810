@@ -18,9 +18,15 @@ public:
 	std::map<Noeud*,int> getVoisins() const;
 	void setVoisin(Noeud* unNoeud, int distance);
 	int getId() const;
-	void insererChemin(std::pair<std::vector<Noeud*>, int>& tousLesChemins, std::vector<Noeud*>& previous, /*Noeud* but,*/ int& distancePrecedente, const Commande* commandeVoulue, Commande* commandeCollectee);
+
 	int cheminVoisin( Noeud* but);
-	std::pair<std::vector<Noeud*>, int> LesCheminsSelonLaCommande(/*Noeud* but,*/  Commande* commande);
+	//Ces deux fonctions sont pour la commande Dijkstra
+	void insererChemin(std::pair<std::vector<Noeud*>, int>& tousLesChemins, std::vector<Noeud*>& previous,  int& distancePrecedente, const Commande* commandeVoulue, Commande* commandeCollectee);
+	std::pair<std::vector<Noeud*>, int> LesCheminsSelonLaCommande(  Commande* commande);
+	// Ces deux fonctions sont pour le noeud final Dijkstra
+	void insererChemin(std::pair<std::vector<Noeud*>, int>& tousLesChemins, std::vector<Noeud*>& previous, int& distancePrecedente, const Noeud* noeudFinal);
+	std::pair<std::vector<Noeud*>, int> LesCheminsSelonLeNoeudFinal( const Noeud* noeudFinal);
+	//fonctions globale
 	void diminuerNombreObjetA(int facteur);
 	void diminuerNombreObjetB(int facteur);
 	void diminuerNombreObjetC(int facteur);

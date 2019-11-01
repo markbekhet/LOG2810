@@ -29,7 +29,8 @@ void afficherOption() {
 }
 int main() {
 	//Le chrono va m'aider a savoir la vitesse de l'execution du programme
-	
+	std::chrono::time_point<std::chrono::system_clock> start, end;
+
 	//test de l'affichage du graph
 	bool continuer = false;
 	std::string nom = "";
@@ -47,10 +48,13 @@ int main() {
 			std::cout << "Le nom de votre fichier semble incorrect  ou le format du fichier n'est pas bon \n";
 		}
 		else {
+			start = std::chrono::system_clock::now();
 			leGraph = new Graph(fichier);
 			copieGraph = new Graph(leGraph);
 			continuer = true;
-
+			end = std::chrono::system_clock::now();
+			std::chrono::duration<double> elapsed_seconds = end - start;
+			std::cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
 		}
 
 	}
@@ -83,7 +87,7 @@ int main() {
 		afficherOption();
 		char choix;
 		std::cin >> choix;
-		
+		start = std::chrono::system_clock::now();
 		if (choix == 'a') {
 			
 			copieGraph->afficher();
@@ -136,30 +140,14 @@ int main() {
 			
 			quitter = true;
 		}
-		
+		end = std::chrono::system_clock::now();
+		std::chrono::duration<double> elapsed_seconds = end - start;
+		std::cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
 
 	}//*/
 	
-	// Test de performance
-
-	/*Commande* commande = new Commande(5, 0, 0);
-	Parcours* parcours = NULL;
-	try {
-		parcours = new Parcours(leGraph, commande, robot);
-	}
-	catch (PasDeRobot e) {
-		std::cout << e.what() << std::endl;
-		parcours = NULL;
-	}
-	if (parcours != NULL && !parcours->getException()) {
-		parcours->afficher();
-	}
 	
-	
-	delete commande;
-	delete parcours;
-	*/
-	
+	robot.clear();
 	delete robotX;
 	delete robotY;
 	delete robotZ;
@@ -168,7 +156,7 @@ int main() {
 	
 
 	
-
+	
 
 
 

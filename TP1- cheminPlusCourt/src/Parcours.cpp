@@ -24,18 +24,7 @@ std::pair<std::vector<Noeud*>, int> Parcours::plusCourtChemin()
 	Noeud* noeudZero = graph_->getNoeud(0);
 	Commande* copieCommande = new Commande(commande_);
 	
-	/*for (auto noeud : graph_->getLesNoeuds()) {
-		if (noeudZero->getId() != noeud->getId()) {
-			
-			std::pair<std::vector<Noeud*>, int> temp = noeudZero->LesCheminsSelonLaCommande(noeud, copieCommande);
-			
-			if (distance >= temp.second) {
-				resultat = temp;
-				distance = temp.second;
-			}
-		}
-		
-	}*/
+	
 	resultat= noeudZero->LesCheminsSelonLaCommande(/*noeud,*/ copieCommande);
 	delete copieCommande;
 	return resultat;
@@ -67,7 +56,7 @@ Robot* Parcours::choisirRobotSelonMasse()
 			std::cout << e.what() << "\n";
 		}
 		
-		//std::cout << "Le temps de retour selon le robot est " << temps << " s" << std::endl;
+		
 	}
 	
 	
@@ -82,17 +71,20 @@ int Parcours::calculerTemps(Robot* robot)
 	std::pair <std::vector<Noeud*>, int> chemin = plusCourtChemin();
 	
 	
+	
 	if (chemin.first.size() == 0) {
 		exception = true;
 		throw PasDeChemin();
 		
 		
 	}
+	Noeud* noeudZero = graph_->getNoeud(0);
+	std::pair<std::vector<Noeud*>, int> cheminPlusCourt = noeudZero->LesCheminsSelonLeNoeudFinal(chemin.first[chemin.first.size() - 1]);
 	Commande* commandeCollectee = new Commande(0, 0, 0);
 	Commande* commandeBase = new Commande(commande_);
 	// En allant le robot ne collecte pas d'objet
 	robot->setConstanteK(commandeCollectee);
-	int allerTemps = robot->getConstanteK() * chemin.second;
+	int allerTemps = robot->getConstanteK() * cheminPlusCourt.second;
 	int retourTemps = 0;
 	for (int i = chemin.first.size() - 1; i > 0; --i) {
 		std::vector<int> minimums = getMin(commandeBase, chemin.first[i]);
@@ -162,8 +154,10 @@ std::ostream& operator<<(std::ostream& os, Parcours* parcours)
 
 	
 	std::pair<std::vector<Noeud*>, int> chemin = parcours->plusCourtChemin();
+	Noeud* noeudZero = parcours->graph_->getNoeud(0);
+	std::pair<std::vector<Noeud*>, int> cheminPlusCourt = noeudZero->LesCheminsSelonLeNoeudFinal(chemin.first[chemin.first.size() - 1]);
 	os << "Au debut le robot passera par les noeud suivante sans rien collecter ";
-	for (auto noeud : chemin.first) {
+	for (auto noeud : cheminPlusCourt.first) {
 		os << noeud->getId() << " , ";
 	}
 	os << ". Ensuite en revenant , il collectera la commande \n";
@@ -175,7 +169,7 @@ std::ostream& operator<<(std::ostream& os, Parcours* parcours)
 			<< minimes[1] << " objets B, " 
 			<< minimes[2] << " objets C." << "\n";
 	}
-	//std::cout << "La commande avant d'appeller le temps du parcours est : " << parcours->commande_;
+	
 	os << "Le robot a collecte la commande en " << parcours->calculerTemps(parcours->choisirRobotSelonMasse()) << " secondes." << "\n";
 	delete copie;
 	return os;
