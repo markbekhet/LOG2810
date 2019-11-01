@@ -29,12 +29,13 @@ void afficherOption() {
 }
 int main() {
 	//Le chrono va m'aider a savoir la vitesse de l'execution du programme
-	std::chrono::time_point<std::chrono::system_clock> start, end;
-	start = std::chrono::system_clock::now();
+	
 	//test de l'affichage du graph
 	bool continuer = false;
 	std::string nom = "";
 	Graph* leGraph = NULL;
+	Graph* copieGraph = NULL;
+
 	while (!continuer) {
 		std::wcout << "Veuillez entrer le nom de votre fichier incluant l'extension \n";
 		std::cin >> nom;
@@ -47,6 +48,7 @@ int main() {
 		}
 		else {
 			leGraph = new Graph(fichier);
+			copieGraph = new Graph(leGraph);
 			continuer = true;
 
 		}
@@ -55,8 +57,7 @@ int main() {
 	
 	
 	 
-	//leGraph->afficher();
-	//Graph* copieGraph = new Graph(leGraph);
+	
 
 	//test de l'affichage de la commande
 	
@@ -77,34 +78,33 @@ int main() {
 	Commande* uneCommande = NULL;
 	Parcours* parcours = NULL;
 	
+	
 	while (!quitter) {
 		afficherOption();
 		char choix;
 		std::cin >> choix;
 		
 		if (choix == 'a') {
-			if (parcours != NULL) {
-				parcours->diminuerNoeud(leGraph);
-				parcours = NULL;
-			}
-			leGraph->afficher();
+			
+			copieGraph->afficher();
 
 		}
 			
 		else if (choix == 'b') {
-			//if (parcours != NULL) delete parcours;
+			
 			
 			
 			if (parcours != NULL) {
 				parcours->diminuerNoeud(leGraph);
-				parcours = NULL;
+				delete parcours;
+				
 			}
 			if (uneCommande != NULL) delete uneCommande;
 
 			uneCommande = entrerUneCommande();
 			try {
 				parcours = new Parcours(leGraph, uneCommande, robot);
-				//parcours->diminuerNoeud(copieGraph);
+				parcours->diminuerNoeud(copieGraph);
 			}
 			catch (PasDeRobot e) {
 				std::cout << e.what() << "\n";
@@ -126,7 +126,7 @@ int main() {
 				
 			}
 			else {
-				std::cout << "Faites une commande d'abord. \n";
+				std::cout << "Faites une commande valide d'abord. \n";
 			}
 		}
 		else if (choix == 'q') {
@@ -164,6 +164,7 @@ int main() {
 	delete robotY;
 	delete robotZ;
 	delete leGraph;
+	delete copieGraph;
 	
 
 	
@@ -172,8 +173,6 @@ int main() {
 
 
 	
-	end = std::chrono::system_clock::now();
-	std::chrono::duration<double> elapsed_seconds = end - start;
-	std::cout << "Le temps d'execution en seconde = " << elapsed_seconds.count() <<" s" <<std::endl;
+	
 	return 0;
 }
