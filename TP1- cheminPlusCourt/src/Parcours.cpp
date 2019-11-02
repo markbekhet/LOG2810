@@ -73,6 +73,7 @@ std::pair<Robot*,bool> Parcours::choisirRobotSelonMasse()
 // s'il decide de faire la commande en retournant il retourne true
 std::pair<double, bool> Parcours::calculerTemps(Robot* robot)
 {
+	//std::cout << "Pour le "; robot->afficher();
 	std::pair <std::vector<Noeud*>, int> chemin = plusCourtChemin();
 	
 	
@@ -93,6 +94,7 @@ std::pair<double, bool> Parcours::calculerTemps(Robot* robot)
 	double allerTemps = robot->getConstanteK() * cheminPlusCourt.second;
 	double retourTemps = 0;
 	for (int i = chemin.first.size() - 1; i > 0; --i) {
+		int constantKAvantLeNoeud = robot->getConstanteK();
 		std::vector<int> minimums = getMin(commandeBase, chemin.first[i]);
 		commandeCollectee->augmenterNombreObjetA(minimums[0]);
 		commandeCollectee->augmenterNombreObjetB(minimums[1]);
@@ -100,7 +102,14 @@ std::pair<double, bool> Parcours::calculerTemps(Robot* robot)
 
 		int distanceVoisin = chemin.first[i]->cheminVoisin(chemin.first[i-1]);
 		robot->setConstanteK(commandeCollectee);
-		retourTemps += robot->getConstanteK() * distanceVoisin;
+		int constantKApresLeNoeud = robot->getConstanteK();
+		if (constantKAvantLeNoeud != constantKApresLeNoeud) {
+			retourTemps += (robot->getConstanteK() * distanceVoisin) + ((10*minimums[0])+(10*minimums[1])+(10*minimums[2]));
+		}
+		else {
+			retourTemps += robot->getConstanteK() * distanceVoisin;
+		};
+		//retourTemps += robot->getConstanteK() * distanceVoisin;
 		
 	}
 	
@@ -108,6 +117,7 @@ std::pair<double, bool> Parcours::calculerTemps(Robot* robot)
 	delete commandeCollectee;
 	delete commandeBase;
 	double tempsFinalOptionRetournant= allerTemps + retourTemps;
+	//std::cout <<"Le temps de l'option de collecter en retournant est "<< tempsFinalOptionRetournant << "\n";
 
 
 	// 2 eme option faire la commande en allant 
@@ -117,15 +127,27 @@ std::pair<double, bool> Parcours::calculerTemps(Robot* robot)
 	
 	double allerTempsOption2 = 0;
 	
-	for (int i = 0; i < chemin.first.size() - 1; ++i) {
+	for (int i = 0; i < chemin.first.size() ; ++i) {
+		int constantKAvantLeNoeud = robot->getConstanteK();
 		std::vector<int> minimums = getMin(commandeBaseOption2, chemin.first[i]);
 		commandeCollecteeOption2->augmenterNombreObjetA(minimums[0]);
 		commandeCollecteeOption2->augmenterNombreObjetB(minimums[1]);
 		commandeCollecteeOption2->augmenterNombreObjetC(minimums[2]);
-
-		int distanceVoisin = chemin.first[i]->cheminVoisin(chemin.first[i+1]);
+		int distanceVoisin = 0;
+		if (i != chemin.first.size() - 1) {
+			distanceVoisin = chemin.first[i]->cheminVoisin(chemin.first[i + 1]);
+		}
+		
+		
 		robot->setConstanteK(commandeCollecteeOption2);
-		allerTempsOption2 += robot->getConstanteK() * distanceVoisin;
+		int constantKApresLeNoeud = robot->getConstanteK();
+		if (constantKAvantLeNoeud!=constantKApresLeNoeud) {
+			allerTempsOption2 += (robot->getConstanteK() * distanceVoisin) + ((10 * minimums[0]) + (10 * minimums[1]) + (10 * minimums[2]));
+		}
+		else {
+			allerTempsOption2 += robot->getConstanteK() * distanceVoisin;
+		}
+		
 
 	}
 	robot->setConstanteK(commandeCollecteeOption2);
@@ -133,11 +155,14 @@ std::pair<double, bool> Parcours::calculerTemps(Robot* robot)
 	delete commandeCollecteeOption2;
 	delete commandeBaseOption2;
 	double tempsFinalOptionAllant = allerTempsOption2 + retourTempsOption2;
+	//std::cout <<"Le temps de l'option de collecter en allant est "<< tempsFinalOptionAllant << "\n";
 
 	if (tempsFinalOptionAllant <= tempsFinalOptionRetournant) {
+		
 		return std::pair<double, bool>(tempsFinalOptionAllant, false);
 	}
 	else {
+		
 		return std::pair<double,bool>(tempsFinalOptionRetournant,true);
 	}
 
