@@ -94,7 +94,7 @@ std::pair<double, bool> Parcours::calculerTemps(Robot* robot)
 	double allerTemps = robot->getConstanteK() * cheminPlusCourt.second;
 	double retourTemps = 0;
 	for (int i = chemin.first.size() - 1; i > 0; --i) {
-		int constantKAvantLeNoeud = robot->getConstanteK();
+		double constantKAvantLeNoeud = robot->getConstanteK();
 		std::vector<int> minimums = getMin(commandeBase, chemin.first[i]);
 		commandeCollectee->augmenterNombreObjetA(minimums[0]);
 		commandeCollectee->augmenterNombreObjetB(minimums[1]);
@@ -102,7 +102,7 @@ std::pair<double, bool> Parcours::calculerTemps(Robot* robot)
 
 		int distanceVoisin = chemin.first[i]->cheminVoisin(chemin.first[i-1]);
 		robot->setConstanteK(commandeCollectee);
-		int constantKApresLeNoeud = robot->getConstanteK();
+		double constantKApresLeNoeud = robot->getConstanteK();
 		if (constantKAvantLeNoeud != constantKApresLeNoeud) {
 			retourTemps += (robot->getConstanteK() * distanceVoisin) + ((10*minimums[0])+(10*minimums[1])+(10*minimums[2]));
 		}
@@ -128,7 +128,7 @@ std::pair<double, bool> Parcours::calculerTemps(Robot* robot)
 	double allerTempsOption2 = 0;
 	
 	for (int i = 0; i < chemin.first.size() ; ++i) {
-		int constantKAvantLeNoeud = robot->getConstanteK();
+		double constantKAvantLeNoeud = robot->getConstanteK();
 		std::vector<int> minimums = getMin(commandeBaseOption2, chemin.first[i]);
 		commandeCollecteeOption2->augmenterNombreObjetA(minimums[0]);
 		commandeCollecteeOption2->augmenterNombreObjetB(minimums[1]);
@@ -140,7 +140,7 @@ std::pair<double, bool> Parcours::calculerTemps(Robot* robot)
 		
 		
 		robot->setConstanteK(commandeCollecteeOption2);
-		int constantKApresLeNoeud = robot->getConstanteK();
+		double constantKApresLeNoeud = robot->getConstanteK();
 		if (constantKAvantLeNoeud!=constantKApresLeNoeud) {
 			allerTempsOption2 += (robot->getConstanteK() * distanceVoisin) + ((10 * minimums[0]) + (10 * minimums[1]) + (10 * minimums[2]));
 		}
