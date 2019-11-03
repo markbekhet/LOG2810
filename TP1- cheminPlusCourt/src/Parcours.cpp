@@ -207,6 +207,7 @@ bool Parcours::getException() const
 	return exception;
 }
 
+
 std::ostream& operator<<(std::ostream& os, Parcours* parcours)
 {
 	Commande* copie = new Commande(parcours->commande_);
@@ -224,9 +225,9 @@ std::ostream& operator<<(std::ostream& os, Parcours* parcours)
 	if (robotChoisi.second) {
 		os << "Au debut le robot passera par les noeud suivante sans rien collecter ";
 		for (auto noeud : cheminPlusCourt.first) {
-			os << noeud->getId() << " , ";
+			os << noeud->getId() << " -> ";
 		}
-		os << ". Ensuite en revenant , il collectera la commande \n";
+		os << "Ensuite en revenant , il collectera la commande \n";
 
 		for (int i = chemin.first.size() - 1; i >= 0; --i) {
 			auto noeud = chemin.first[i];
@@ -238,7 +239,7 @@ std::ostream& operator<<(std::ostream& os, Parcours* parcours)
 	}
 
 	else {
-		os << "Au debut le robot passera par les noeud suivante en collectant la commande "; 
+		os << "Au debut le robot passera par les noeud suivante en collectant la commande \n "; 
 		for (int i =0; i < chemin.first.size() ; ++i) {
 			auto noeud = chemin.first[i];
 			std::vector<int> minimes = parcours->getMin(copie, noeud);
@@ -247,10 +248,10 @@ std::ostream& operator<<(std::ostream& os, Parcours* parcours)
 				<< minimes[2] << " objets C." << "\n";
 		}
 
-		os << " Ensuite en revenant , il passera par les noeud suivante sans rien collecter \n";
+		os << "Ensuite en revenant , il passera par les noeud suivante sans rien collecter ";
 		for (int i = cheminPlusCourt.first.size()-1; i >= 0; --i) {
 			auto noeud = cheminPlusCourt.first[i];
-			os << noeud->getId() << " , ";
+			os << noeud->getId() << " -> ";
 		}
 		os << "\n";
 		

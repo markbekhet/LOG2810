@@ -28,11 +28,13 @@ public:
 	void afficher();
 	void diminuerNoeud(Graph* ungraph);
 	bool getException() const;
+
 	friend std::ostream& operator<<(std::ostream& os, Parcours* parcours);
 
 private:
 	Graph* graph_;
 	Commande* commande_;
+	
 	bool exception;
 	std::vector<Robot*> listeRobot_;
 

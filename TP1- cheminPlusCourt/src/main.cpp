@@ -106,6 +106,7 @@ int main() {
 			if (uneCommande != NULL) delete uneCommande;
 
 			uneCommande = entrerUneCommande();
+			start = std::chrono::system_clock::now();
 			try {
 				parcours = new Parcours(leGraph, uneCommande, robot);
 				parcours->diminuerNoeud(copieGraph);
