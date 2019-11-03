@@ -21,7 +21,7 @@ public:
 class Parcours{
 public:
 	Parcours(Graph* graph , Commande* commande, std::vector<Robot*> listeRobot);
-	void insererChemin(std::pair<std::vector<Noeud*>, int>& tousLesChemins, Noeud* noeudActuel,int distanceDeRetour ,std::vector<Noeud*>& previous, int& distancePrecedente, const Commande* commandeVoulue, Commande* commandeCollectee);
+	void insererChemin(std::pair<std::vector<Noeud*>, int>& tousLesChemins, Noeud* noeudActuel,int& distanceDeRetour ,std::vector<Noeud*>& previous, int& distancePrecedente, const Commande* commandeVoulue, Commande* commandeCollectee);
 	std::pair<std::vector<Noeud*>, int> plusCourtChemin();
 	std::pair<Robot*,bool> choisirRobotSelonMasse();
 

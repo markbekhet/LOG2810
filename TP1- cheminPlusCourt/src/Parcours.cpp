@@ -34,7 +34,7 @@ std::pair<std::vector<Noeud*>, int> Parcours::plusCourtChemin()
 	return tousLesChemins;
 }
 
-void Parcours::insererChemin(std::pair<std::vector<Noeud*>, int>& tousLesChemins, Noeud* noeudActuel ,int distanceDeRetour, std::vector<Noeud*>& precedent,  int& distancePrecedente, const Commande* commandeVoulue, Commande* commandeCollectee)
+void Parcours::insererChemin(std::pair<std::vector<Noeud*>, int>& tousLesChemins, Noeud* noeudActuel ,int& distanceDeRetour, std::vector<Noeud*>& precedent,  int& distancePrecedente, const Commande* commandeVoulue, Commande* commandeCollectee)
 {
 	Noeud* noeudZero = graph_->getNoeud(0);
 	if (commandeVoulue->getNombreObjetA() == 0 && commandeVoulue->getNombreObjetB() == 0 && commandeVoulue->getNombreObjetC() == 0) { tousLesChemins = std::make_pair(precedent, 0); }
