@@ -28,6 +28,7 @@ public:
 	void afficher();
 	void diminuerNoeud(Graph* ungraph);
 	bool getException() const;
+	void resetException();
 
 	friend std::ostream& operator<<(std::ostream& os, Parcours* parcours);
 

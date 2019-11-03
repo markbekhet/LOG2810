@@ -5,7 +5,9 @@ Parcours::Parcours(Graph* graph, Commande* commande, std::vector<Robot*> listeRo
 {
 	exception = false;
 	if (commande_->getMasseTotale() > std::max( listeRobot_[1]->getChargeMaximale(), listeRobot_[2]->getChargeMaximale())) {
+		exception = true;
 		throw PasDeRobot();
+
 	}
 	else {
 		
@@ -207,6 +209,11 @@ bool Parcours::getException() const
 	return exception;
 }
 
+void Parcours::resetException()
+{
+	exception = false;
+}
+
 
 std::ostream& operator<<(std::ostream& os, Parcours* parcours)
 {
@@ -239,7 +246,7 @@ std::ostream& operator<<(std::ostream& os, Parcours* parcours)
 	}
 
 	else {
-		os << "Au debut le robot passera par les noeud suivante en collectant la commande \n "; 
+		os << "Au debut le robot passera par les noeud suivante en collectant la commande \n"; 
 		for (int i =0; i < chemin.first.size() ; ++i) {
 			auto noeud = chemin.first[i];
 			std::vector<int> minimes = parcours->getMin(copie, noeud);

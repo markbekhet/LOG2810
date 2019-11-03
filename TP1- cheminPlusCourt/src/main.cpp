@@ -79,8 +79,8 @@ int main() {
 
 	// Le code pour le main
 	
-	Commande* uneCommande = NULL;
-	Parcours* parcours = NULL;
+	Commande* uneCommande = new Commande();
+	Parcours* parcours = new Parcours(leGraph,uneCommande,robot);
 	
 	
 	while (!quitter) {
@@ -98,9 +98,12 @@ int main() {
 			
 			
 			
-			if (parcours != NULL) {
-				parcours->diminuerNoeud(leGraph);
-				delete parcours;
+			if (parcours != NULL ) {
+				if (!parcours->getException()) {
+					parcours->diminuerNoeud(leGraph);
+					delete parcours;
+				}
+				
 				
 			}
 			if (uneCommande != NULL) delete uneCommande;
@@ -109,11 +112,18 @@ int main() {
 			start = std::chrono::system_clock::now();
 			try {
 				parcours = new Parcours(leGraph, uneCommande, robot);
-				parcours->diminuerNoeud(copieGraph);
+				
 			}
 			catch (PasDeRobot e) {
 				std::cout << e.what() << "\n";
 			}
+			if (parcours != NULL) {
+				if (!parcours->getException()) {
+
+					parcours->diminuerNoeud(copieGraph);
+				}
+			}
+			
 
 		}
 		else if (choix == 'c') {
@@ -141,6 +151,8 @@ int main() {
 			
 			quitter = true;
 		}
+		
+
 		end = std::chrono::system_clock::now();
 		std::chrono::duration<double> elapsed_seconds = end - start;
 		std::cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
