@@ -7,7 +7,7 @@ RobotZ::RobotZ()
 
 void RobotZ::setConstanteK(Commande* commande)
 {
-	constanteK_ = 2.5 + 0.2 * commande->getMasseTotale();
+	constanteK_ = 2.5 + (0.2 * commande->getMasseTotale());
 	
 }
 void RobotZ::afficher()

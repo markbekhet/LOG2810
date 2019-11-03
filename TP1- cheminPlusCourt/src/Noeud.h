@@ -15,14 +15,14 @@ public:
 	int getLeNombredeA() const;
 	int getLeNombredeB() const;
 	int getLeNombredeC() const;
-	std::map<Noeud*,int> getVoisins() const;
+	std::map<Noeud*,int> getVoisins() ;
 	void setVoisin(Noeud* unNoeud, int distance);
 	int getId() const;
 
 	int cheminVoisin( Noeud* but);
 	//Ces deux fonctions sont pour la commande Dijkstra
-	void insererChemin(std::pair<std::vector<Noeud*>, int>& tousLesChemins, std::vector<Noeud*>& previous,  int& distancePrecedente, const Commande* commandeVoulue, Commande* commandeCollectee);
-	std::pair<std::vector<Noeud*>, int> LesCheminsSelonLaCommande(  Commande* commande);
+	
+	
 	// Ces deux fonctions sont pour le noeud final Dijkstra
 	void insererChemin(std::pair<std::vector<Noeud*>, int>& tousLesChemins, std::vector<Noeud*>& previous, int& distancePrecedente, const Noeud* noeudFinal);
 	std::pair<std::vector<Noeud*>, int> LesCheminsSelonLeNoeudFinal( const Noeud* noeudFinal);
@@ -31,7 +31,9 @@ public:
 	void diminuerNombreObjetB(int facteur);
 	void diminuerNombreObjetC(int facteur);
 	~Noeud();
+	bool appartient(std::vector<Noeud*>& precedent, Noeud* noeud);
 	friend std::ostream& operator<<(std::ostream& os, const Noeud* unNoeud);
+	Noeud* operator = (Noeud* noeud);
 private:
 	std::map<Noeud*, int> lesVoisins_;
 	std::pair<std::vector<Noeud*>, int> analyserSelonCommande(std::map<std::vector<Noeud*>,int> map, Commande* commande);

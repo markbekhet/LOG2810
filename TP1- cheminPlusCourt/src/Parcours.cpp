@@ -19,15 +19,80 @@ Parcours::Parcours(Graph* graph, Commande* commande, std::vector<Robot*> listeRo
 
 std::pair<std::vector<Noeud*>, int> Parcours::plusCourtChemin()
 {
-	std::pair<std::vector<Noeud*>, int> resultat;
-	int distance = INT_MAX;
+
 	Noeud* noeudZero = graph_->getNoeud(0);
-	Commande* copieCommande = new Commande(commande_);
+	std::vector<Noeud*> precedent;
+	precedent.push_back(noeudZero);
+	int distance = 0;
+	int distanceDeRetour = INT_MAX;
+	Commande* commandeCollectee = new Commande();
+	std::pair<std::vector<Noeud*>, int> tousLesChemins = { {},INT_MAX };
 	
-	
-	resultat= noeudZero->LesCheminsSelonLaCommande(/*noeud,*/ copieCommande);
-	delete copieCommande;
-	return resultat;
+	insererChemin(tousLesChemins,noeudZero,distanceDeRetour, precedent, distance, commande_, commandeCollectee);
+
+
+	return tousLesChemins;
+}
+
+void Parcours::insererChemin(std::pair<std::vector<Noeud*>, int>& tousLesChemins, Noeud* noeudActuel ,int distanceDeRetour, std::vector<Noeud*>& precedent,  int& distancePrecedente, const Commande* commandeVoulue, Commande* commandeCollectee)
+{
+	Noeud* noeudZero = graph_->getNoeud(0);
+	if (commandeVoulue->getNombreObjetA() == 0 && commandeVoulue->getNombreObjetB() == 0 && commandeVoulue->getNombreObjetC() == 0) { tousLesChemins = std::make_pair(precedent, 0); }
+	else {
+		// Je fais une copie de la distance actuelle et des noeud precedent ainsi que la commande collectee pour savoir reutilisee la meme distance en faisant la recursivite
+		int copyDistance = distancePrecedente;
+		std::vector<Noeud*> copyPrecedent = precedent;
+		Commande* copyCommandeCollectee = new Commande(commandeCollectee);
+		Noeud* copyNoeudActuel = noeudActuel;
+		//std::cout << "Le noeud actuel a l'id suivant "<<noeudActuel->getId() << "\n";
+		for (std::pair<Noeud*,int> unVoisin : noeudActuel->getVoisins()) {
+			// Je veux garder une distance qui sera un repere en cas que la commande est realise par le voisin sinon on continue
+			//commande potentielle accumulee et commande voulue sont deux parametres necessaires
+
+
+			distancePrecedente = copyDistance;
+			precedent = copyPrecedent;
+			commandeCollectee = new Commande(copyCommandeCollectee);
+			noeudActuel = copyNoeudActuel;
+
+			if (!(unVoisin.first->appartient(precedent, unVoisin.first))) {
+				//Je recupere les informations precedentes
+
+				//std::cout <<unVoisin.first->getId()<<" Le pointeur ici est : " <<&commandeCollectee << std::endl;
+				//J'additionne les distances qinsi que je mets le voisin en precedent et j'a
+				distancePrecedente += unVoisin.second;
+				precedent.push_back(unVoisin.first);
+
+				
+				//Augmenter les donnees de la commande collectee
+				commandeCollectee->augmenterNombreObjetA(unVoisin.first->getLeNombredeA());
+				commandeCollectee->augmenterNombreObjetB(unVoisin.first->getLeNombredeB());
+				commandeCollectee->augmenterNombreObjetC(unVoisin.first->getLeNombredeC());
+
+				//Faire l'analyse selon la distance d'aller de la recherche de la commande
+				if (tousLesChemins.second >= distancePrecedente ) {
+					//Tenir compte de la distance de retour aussi
+					if (commandeCollectee->plusGrandOuEgal(commandeVoulue) && distanceDeRetour >= graph_->getLaDistanceDeZero(unVoisin.first)) {
+						tousLesChemins = std::make_pair(precedent, distancePrecedente);
+						distanceDeRetour = noeudZero->LesCheminsSelonLeNoeudFinal(unVoisin.first).second;
+
+					}
+
+					else {
+						//Noeud* noeudVoisin = unVoisin.first;
+						insererChemin(tousLesChemins , unVoisin.first, distanceDeRetour, precedent, distancePrecedente, commandeVoulue, commandeCollectee);
+					}
+				}
+
+
+			}
+
+
+		}
+		delete copyCommandeCollectee;
+	}
+
+
 }
 
 std::pair<Robot*,bool> Parcours::choisirRobotSelonMasse()
@@ -103,12 +168,8 @@ std::pair<double, bool> Parcours::calculerTemps(Robot* robot)
 		int distanceVoisin = chemin.first[i]->cheminVoisin(chemin.first[i-1]);
 		robot->setConstanteK(commandeCollectee);
 		double constantKApresLeNoeud = robot->getConstanteK();
-		if (constantKAvantLeNoeud != constantKApresLeNoeud) {
-			retourTemps += (robot->getConstanteK() * distanceVoisin) + ((10*minimums[0])+(10*minimums[1])+(10*minimums[2]));
-		}
-		else {
-			retourTemps += robot->getConstanteK() * distanceVoisin;
-		};
+		
+		retourTemps += (robot->getConstanteK() * distanceVoisin) + ((10 * minimums[0]) + (10 * minimums[1]) + (10 * minimums[2]));
 		//retourTemps += robot->getConstanteK() * distanceVoisin;
 		
 	}
@@ -133,20 +194,16 @@ std::pair<double, bool> Parcours::calculerTemps(Robot* robot)
 		commandeCollecteeOption2->augmenterNombreObjetA(minimums[0]);
 		commandeCollecteeOption2->augmenterNombreObjetB(minimums[1]);
 		commandeCollecteeOption2->augmenterNombreObjetC(minimums[2]);
-		int distanceVoisin = 0;
+		double distanceVoisin = 0;
 		if (i != chemin.first.size() - 1) {
 			distanceVoisin = chemin.first[i]->cheminVoisin(chemin.first[i + 1]);
 		}
 		
 		
 		robot->setConstanteK(commandeCollecteeOption2);
-		double constantKApresLeNoeud = robot->getConstanteK();
-		if (constantKAvantLeNoeud!=constantKApresLeNoeud) {
-			allerTempsOption2 += (robot->getConstanteK() * distanceVoisin) + ((10 * minimums[0]) + (10 * minimums[1]) + (10 * minimums[2]));
-		}
-		else {
-			allerTempsOption2 += robot->getConstanteK() * distanceVoisin;
-		}
+		int constantKApresLeNoeud = robot->getConstanteK();
+		
+		allerTempsOption2 += (robot->getConstanteK() * distanceVoisin) + ((10 * minimums[0]) + (10 * minimums[1]) + (10 * minimums[2]));
 		
 
 	}

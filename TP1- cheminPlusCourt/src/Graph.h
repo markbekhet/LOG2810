@@ -10,7 +10,9 @@ public:
 	void afficher() const;
 	Noeud* getNoeud(int index) const;
 	std::vector<Noeud*> getLesNoeuds() const;
+	int getLaDistanceDeZero(Noeud* noeud);
 	~Graph();
 private:
 	std::vector<Noeud*> lesNoeuds;
+	std::map<int, int> distanceDeZero;
 };

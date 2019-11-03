@@ -56,6 +56,12 @@ Graph::Graph(std::istream& fichier)
 		lesNoeuds[nodeTwo]->setVoisin(lesNoeuds[nodeOne], distance);
 		std::getline(fichier, ligne);
 	}
+	Noeud* noeudZero = lesNoeuds[0];
+	for (auto noeud : lesNoeuds) {
+		std::pair<std::vector<Noeud*>, int> chemin = noeudZero->LesCheminsSelonLeNoeudFinal(noeud);
+
+		distanceDeZero.insert({ noeud->getId(), chemin.second });
+	}
 }
 
 Graph::Graph(Graph* graph)
@@ -91,6 +97,13 @@ Noeud* Graph::getNoeud(int index) const
 std::vector<Noeud*> Graph::getLesNoeuds() const
 {
 	return lesNoeuds;
+}
+
+int Graph::getLaDistanceDeZero(Noeud* noeud)
+{
+	int distanceVoulue = (distanceDeZero.find(noeud->getId()))->second;
+	 
+	return distanceVoulue;
 }
 
 Graph::~Graph()
