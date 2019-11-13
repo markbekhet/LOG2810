@@ -1,3 +1,7 @@
+/*
+	* Noms: Cécile Hornecker, Marjorie Pomerleau , Mark Bekhet
+	* Matricules: 1783304_1959041_1949264
+*/
 #include "Objet.h"
 
 Objet::Objet(int nombre, int masse):nombre_(nombre), masse_(masse)

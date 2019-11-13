@@ -1,3 +1,7 @@
+/*
+	* Noms: Cécile Hornecker, Marjorie Pomerleau , Mark Bekhet
+	* Matricules: 1783304_1959041_1949264
+*/
 #include "Noeud.h"
 /*
 	*dans le constructeur je ne suis pas certain seulemtn du placement de la virgule apres 

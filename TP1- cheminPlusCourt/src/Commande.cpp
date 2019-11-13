@@ -1,3 +1,7 @@
+/*
+	* Noms: Cécile Hornecker, Marjorie Pomerleau , Mark Bekhet
+	* Matricules: 1783304_1959041_1949264
+*/
 #include "Commande.h"
 
 Commande::Commande():objetA(new ObjetA(0)), objetB(new ObjetB(0)), objetC(new ObjetC(0))
