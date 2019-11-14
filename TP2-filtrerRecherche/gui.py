@@ -1,6 +1,14 @@
 import tkinter as tk
+from tkinter import filedialog
 
 
+def NewFile():
+    print("New File!")
+def OpenFile():
+    name = filedialog.askopenfilename()
+    print(name)
+def About():
+    print("This is a simple example of a menu")
 # In this class , the attributes will be :
 # 1 - master : the main window
 # 2 - labelName : the label for the name entry
@@ -9,7 +17,7 @@ import tkinter as tk
 class GUI(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self)
-        
+        self.buildMenu()
         #this frame is for the Input frame in general
         self.frameInput = tk.Frame(self)
         self.frameInput.grid(row = 0, column = 0)
@@ -65,6 +73,19 @@ class GUI(tk.Tk):
         for item in DataList:
             self.textBox.insert(tk.END,item)
 
+    def buildMenu(self):
+        menu = tk.Menu(self)
+        self.config(menu=menu)
+        filemenu = tk.Menu(menu)
+        menu.add_cascade(label="File", menu=filemenu)
+        filemenu.add_command(label="New", command=NewFile)
+        filemenu.add_command(label="Open...", command=OpenFile)
+        filemenu.add_separator()
+        filemenu.add_command(label="Exit", command=self.quit)
+
+        helpmenu = tk.Menu(menu)
+        menu.add_cascade(label="Help", menu=helpmenu)
+        helpmenu.add_command(label="About...", command=About)
 
 
 
