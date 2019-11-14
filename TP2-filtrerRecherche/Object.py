@@ -1,10 +1,11 @@
 class Object:
+    DEFAULTMASS = 20
     #Constructeur et instanciation des attributs
     def __init__(self, type, id, name):
         self._type = type
         self._id = id
         self._name = name
-        self._mass = mass
+        self._mass = DEFAULTMASS
 
     def getType(self):
         return self._type
