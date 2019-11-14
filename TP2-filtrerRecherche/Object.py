@@ -1,4 +1,5 @@
 class Object:
+    global DEFAULTMASS
     DEFAULTMASS = 20
     #Constructeur et instanciation des attributs
     def __init__(self, type, id, name):
@@ -17,11 +18,11 @@ class Object:
         return self._name
 
     def getMass(self):
-        if type == "A":
+        if self._type == "A":
             self._mass = 1
-        elif type == "B":
+        elif self._type == "B":
             self._mass = 3
-        elif type == "C":
+        elif self._type == "C":
             self._mass = 5
         else:
             raise Exception("Type invalide")
@@ -36,4 +37,11 @@ class Object:
 
     def setName(self, name):
         self._name = name
+
+    def printObject(self):
+        print(self._type, self._id, self._name)
+
+object = Object("A", 5, "Allo")
+object.printObject()
+print(object.getMass())
 
