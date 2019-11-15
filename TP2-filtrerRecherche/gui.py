@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import filedialog
+from tkinter import Canvas
 items = ["Var" , "option"]
 
 def NewFile():
@@ -32,6 +33,7 @@ class GUI(tk.Tk):
         self.textBox = tk.Text(self)
         self.textBox.grid(row = 2, column =0, pady = 20)
         self.print_search_result(items)
+        
 
 
 
@@ -48,6 +50,8 @@ class GUI(tk.Tk):
     def print_search_result(self,DataList):
         for item in DataList:
             self.textBox.insert(tk.END,item+"\n")
+            
+            
             
 
     #building the GUI
