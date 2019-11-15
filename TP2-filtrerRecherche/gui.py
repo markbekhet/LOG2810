@@ -3,6 +3,7 @@ from tkinter import filedialog
 from tkinter import Canvas
 items = ["Var" , "option"]
 
+pressed = False
 def NewFile():
     print("New File!")
 def OpenFile():
@@ -10,6 +11,13 @@ def OpenFile():
     print(type(name))
 def About():
     print("This is a simple example of a menu")
+
+
+    
+        
+        
+        
+
 # In this class , the attributes will be :
 # 1 - master : the main window
 # 2 - labelName : the label for the name entry
@@ -30,7 +38,8 @@ class GUI(tk.Tk):
         self.buildTypeFrame()
         
         #This is the text box resulting from the search
-        self.textBox = tk.Text(self)
+        
+        self.textBox = tk.Text(self.frameInput)
         self.textBox.grid(row = 2, column =0, pady = 20)
         self.print_search_result(items)
         
@@ -49,7 +58,30 @@ class GUI(tk.Tk):
 
     def print_search_result(self,DataList):
         for item in DataList:
-            self.textBox.insert(tk.END,item+"\n")
+
+            button = tk.Button(self.textBox, text = str(item))
+            button['command'] = lambda idx=str(item), binst=button: self.double_click(idx, binst)
+            button.grid()
+            
+            
+            
+            
+                
+            
+                
+            
+    def double_click(self,idx,button):
+        '''  set the double click status flag
+        '''
+        
+        print(idx)
+        button.destroy()
+
+
+        
+            
+       
+            
             
             
             
