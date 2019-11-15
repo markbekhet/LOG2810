@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import Canvas
-items = ["Var" , "option"]
+itemsSearch = ["Var" , "option"]
+cartItems = []
 
 pressed = False
 def NewFile():
@@ -28,7 +29,9 @@ class GUI(tk.Tk):
         tk.Tk.__init__(self)
         self.buildMenu()
         #this frame is for the Input frame in general
-        self.frameInput = tk.Frame(self)
+        generalFrame = tk.Frame(self)
+        generalFrame.grid()
+        self.frameInput = tk.Frame(generalFrame)
         self.frameInput.grid(row = 0, column = 0)
         
         self.buildNameFrame()
@@ -38,10 +41,27 @@ class GUI(tk.Tk):
         self.buildTypeFrame()
         
         #This is the text box resulting from the search
+        searchResultFrame = tk.Frame(generalFrame)
+        searchResultFrame.grid(row = 1, column =0, ipady = 20, ipadx = 0)
+        labelSearch = tk.Label(searchResultFrame,text="Les resultats de la recherche ")
+        labelSearch.grid(row = 0, column = 0)
+        self.textBox = tk.Text(searchResultFrame)
+        self.textBox.grid(row = 1,column = 0)
+        self.SearchButtons = []
+
+        # this text box is for the cart
+        cartFrame = tk.Frame(generalFrame)
+        cartFrame.grid(row = 2, column = 0,  ipady = 0)
+        labelCart = tk.Label(cartFrame, text ="Le panier")
+        labelCart.grid(row = 0, column = 1)
+        self.cartBox = tk.Text(cartFrame)
+        self.cartBox.grid(row = 1, column = 1)
+        self.CartButtons = []
+
         
-        self.textBox = tk.Text(self.frameInput)
-        self.textBox.grid(row = 2, column =0, pady = 20)
-        self.print_search_result(items)
+        
+        self.print_search_result(itemsSearch)
+        
         
 
 
@@ -57,25 +77,60 @@ class GUI(tk.Tk):
         print(self.entryType.get())
 
     def print_search_result(self,DataList):
+        number = 0
         for item in DataList:
-
+            height = 50
             button = tk.Button(self.textBox, text = str(item))
-            button['command'] = lambda idx=str(item), binst=button: self.double_click(idx, binst)
-            button.grid()
+            self.SearchButtons.append(button)
+            button['command'] = lambda idx=str(item): self.onClickOptionToAddToCart(idx)
+            button.place(y = number*height , height=height, width = 200)
+            number +=1
+            
+    def print_cart_items(self,DataList):
+        number = 0
+        for item in DataList:
+            height = 50
+            button = tk.Button(self.cartBox, text = str(item))
+            self.CartButtons.append(button)
+            button['command'] = lambda idx=str(item): self.onClickOptionToRemoveFromCart(idx)
+            button.place(y = number*height , height=height, width = 200)
+            number +=1
+            
+        
+
             
             
-            
-            
-                
-            
-                
-            
-    def double_click(self,idx,button):
+    #I want to make the same action in both directions
+    # I have to manually destroy this button and manipulate the two lists        
+    #handling events   
+    def onClickOptionToAddToCart(self,idx):
         '''  set the double click status flag
         '''
+        for button in self.SearchButtons:
+            button.destroy()
+
+        cartItems.append(idx)
+        itemsSearch.remove(idx)
+        self.print_cart_items(cartItems)
+        self.print_search_result(itemsSearch)
         
-        print(idx)
-        button.destroy()
+
+
+    def onClickOptionToRemoveFromCart(self,idx):
+        '''  set the double click status flag
+        '''
+        for button in self.CartButtons:
+            button.destroy()
+
+        cartItems.remove(idx)
+        itemsSearch.append(idx)
+        self.print_search_result(itemsSearch)
+        self.print_cart_items(cartItems)
+        
+        
+        
+        
+        
 
 
         
