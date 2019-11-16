@@ -34,6 +34,7 @@ class GUI(tk.Tk):
         self.generalFrame.grid()
         self.inventorySection = tk.Frame(self.generalFrame)
         self.searchViewFrame = tk.Frame(self.generalFrame)
+        self.cartFrame = tk.Frame(self.generalFrame)
         
         
         
@@ -121,7 +122,10 @@ class GUI(tk.Tk):
         menu.add_cascade(label="Aide", menu=helpmenu)
         helpmenu.add_command(label="A propos", command=About)
 
-        searchMenu  =menu.add_cascade(label = "Vue recherche et commande",command= self.searchView)
+        searchMenu =tk.Menu(menu)
+        menu.add_cascade(label = "Vue recherche et commande", menu = searchMenu )
+        searchMenu.add_command(label = "vue Panier" , command = self.buildCartSection)
+        searchMenu.add_command(label = "vue recherche" , command = self.searchView)
         
         
         inventoryMenu = menu.add_cascade(label = "Vue inventaire", command = self.inventoryView)
@@ -171,17 +175,22 @@ class GUI(tk.Tk):
         self.SearchButtons = []
 
     def buildCartSection(self):
-         self.cartFrame = tk.Frame(self.searchViewFrame)
+         self.inventorySection.grid_forget()
+         self.searchViewFrame.grid_forget()
+
          self.cartFrame.grid(row = 2, column = 0,  ipady = 0)
          labelCart = tk.Label(self.cartFrame, text ="Le panier")
          labelCart.grid(row = 0, column = 1)
          self.cartBox = tk.Text(self.cartFrame)
          self.cartBox.grid(row = 1, column = 1)
          self.CartButtons = []
+         self.print_cart_items(cartItems)
 
 
     def searchView(self):
-        
+        self.inventorySection.grid_forget()
+        self.cartFrame.grid_forget()
+
         self.searchViewFrame.grid(row = 0, column = 0)
         self.frameInput = tk.Frame(self.searchViewFrame)
         self.frameInput.grid(row = 0, column = 0)
@@ -191,15 +200,16 @@ class GUI(tk.Tk):
         # This block is for the entry of the type
         self.buildTypeFrame()
         self.buildResultSearchSection()
-        # this text box is for the cart
-        self.buildCartSection()        
+        
+                
         self.print_search_result(itemsSearch)
         
         
 
     def inventoryView(self):
-        
-        self.inventorySection.grid(row = 0, column =1)
+        self.searchViewFrame.grid_forget()
+        self.cartFrame.grid_forget()
+        self.inventorySection.grid(row = 0, column =1, padx = 20)
         
         # This is the label of the inventory
         inventoryLabel= tk.Label(self.inventorySection, text = "Bienvenu a l'entrepot \n L'entrepot contient les elements suivants")
