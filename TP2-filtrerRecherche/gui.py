@@ -1,8 +1,13 @@
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import Canvas
+
+#this is supposed to be the search items from a search
+#right now that's a temporary test until the search class is done
 itemsSearch = ["Var" , "option"]
+# this is the items from the cart
 cartItems = []
+#this is supposed to be the inventory items
 inventoryItems =["Var" , "option"]
 
 pressed = False
@@ -17,14 +22,31 @@ def About():
 
     
         
-        
+
         
 
-# In this class , the attributes will be :
-# 1 - master : the main window
-# 2 - labelName : the label for the name entry
-# 3 - entryName: the name of the product is written here
-# 4 - 
+# In this class :
+# a -  attributes:
+# 1 - self : the main window
+# 2 - generalFrame : the general body has self as a parent
+# 3 - inventorySection: the inventory view which has the generalFrame as a parent
+# 4 - searchViewFrame: the search view which has the generalFrame as a parent
+# 5 - frameInput: the input frame has the searchViewFrame as a parent 
+# 6 - labelName : the label for the name entry has the frameName as a parent which has the frameInput as parent
+# 7 - entryName: the entry for the name entry has the frameName as a parent which has the frameInput as parent
+# 8 - buttonName: the button for the name entry has the frameName as a parent which has the frameInput as parent
+# 9 - labelCodeBar: the label for the code bar entry has the frameCodeBar as a parent which has the frameInput as parent
+# 10 - entryCodeBar: the entry for the code bar entry has the frameCodeBar as a parent which has the frameInput as parent
+# 11 - buttonCodeBar: the button for the code bar entry has the frameCodeBar as a parent which has the frameInput as parent
+# 12 - labelType: the label for the type entry has the frameType as a parent which has the frameInput as parent
+# 12 - entryType: the entry for the type entry has the frameType as a parent which has the frameInput as parent
+# 12 - buttonType: the label for the type entry has the frameType as a parent which has the frameInput as parent
+# 13 - CartButtons: the buttons for the cart to allow the possibility of a return stock
+# 14 - SearchButtons: the buttons for the search box
+# 15 - searchResultFrame: it has the searchViewFrame as a parent
+# 16 - textBox: a text box which contains all the search result items. it has the searchResultFrame as a parent
+# 17 - cartFrame: it has the generalView as a parent
+# 18 - cartBox: a text box which contains all the items in the cart. It has the cartFrame aa a parent  
 class GUI(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self, screenName = "Ineventaire", className="Inventaire")
