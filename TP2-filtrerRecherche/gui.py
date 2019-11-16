@@ -35,7 +35,8 @@ class GUI(tk.Tk):
         self.inventorySection = tk.Frame(self.generalFrame)
         self.searchViewFrame = tk.Frame(self.generalFrame)
         self.cartFrame = tk.Frame(self.generalFrame)
-        
+        self.cartBox = tk.Text(self.cartFrame)
+        self.CartButtons = []
         
         
 
@@ -181,9 +182,9 @@ class GUI(tk.Tk):
          self.cartFrame.grid(row = 2, column = 0,  ipady = 0)
          labelCart = tk.Label(self.cartFrame, text ="Le panier")
          labelCart.grid(row = 0, column = 1)
-         self.cartBox = tk.Text(self.cartFrame)
+         
          self.cartBox.grid(row = 1, column = 1)
-         self.CartButtons = []
+         
          self.print_cart_items(cartItems)
 
 
