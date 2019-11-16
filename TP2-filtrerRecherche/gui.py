@@ -50,6 +50,7 @@ def About():
 class GUI(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self, screenName = "Ineventaire", className="Inventaire")
+        self.attributes("-fullscreen", True)
         self.buildMenu()
         #this frame is for the Input frame in general
         self.generalFrame = tk.Frame(self)
@@ -146,9 +147,9 @@ class GUI(tk.Tk):
         helpmenu.add_command(label="A propos", command=About)
 
         searchMenu =tk.Menu(menu)
-        menu.add_cascade(label = "Vue recherche et commande", menu = searchMenu )
-        searchMenu.add_command(label = "vue Panier" , command = self.buildCartSection)
-        searchMenu.add_command(label = "vue recherche" , command = self.searchView)
+        
+        menu.add_command(label = "vue panier" , command = self.buildCartSection)
+        menu.add_command(label = "vue recherche" , command = self.searchView)
         
         
         inventoryMenu = menu.add_cascade(label = "Vue inventaire", command = self.inventoryView)
