@@ -2,6 +2,9 @@
 
 echo Hello!
 git add .
-git commit -m"was commited by my useless script"
+
+echo enter the message of your commit
+read message
+git commit -m message
 git push
 echo The script ran properly
