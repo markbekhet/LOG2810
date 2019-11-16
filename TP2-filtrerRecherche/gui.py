@@ -3,6 +3,7 @@ from tkinter import filedialog
 from tkinter import Canvas
 itemsSearch = ["Var" , "option"]
 cartItems = []
+inventoryItems =["Var" , "option"]
 
 pressed = False
 def NewFile():
@@ -26,41 +27,14 @@ def About():
 # 4 - 
 class GUI(tk.Tk):
     def __init__(self):
-        tk.Tk.__init__(self)
+        tk.Tk.__init__(self, screenName = "Ineventaire", className="Inventaire")
         self.buildMenu()
         #this frame is for the Input frame in general
-        generalFrame = tk.Frame(self)
-        generalFrame.grid()
-        self.frameInput = tk.Frame(generalFrame)
-        self.frameInput.grid(row = 0, column = 0)
+        self.generalFrame = tk.Frame(self)
+        self.generalFrame.grid()
+        self.inventorySection = tk.Frame(self.generalFrame)
+        self.searchViewFrame = tk.Frame(self.generalFrame)
         
-        self.buildNameFrame()
-
-        self.buildCodeFrame()
-        # This block is for the entry of the type
-        self.buildTypeFrame()
-        
-        #This is the text box resulting from the search
-        searchResultFrame = tk.Frame(generalFrame)
-        searchResultFrame.grid(row = 1, column =0, ipady = 20, ipadx = 0)
-        labelSearch = tk.Label(searchResultFrame,text="Les resultats de la recherche ")
-        labelSearch.grid(row = 0, column = 0)
-        self.textBox = tk.Text(searchResultFrame)
-        self.textBox.grid(row = 1,column = 0)
-        self.SearchButtons = []
-
-        # this text box is for the cart
-        cartFrame = tk.Frame(generalFrame)
-        cartFrame.grid(row = 2, column = 0,  ipady = 0)
-        labelCart = tk.Label(cartFrame, text ="Le panier")
-        labelCart.grid(row = 0, column = 1)
-        self.cartBox = tk.Text(cartFrame)
-        self.cartBox.grid(row = 1, column = 1)
-        self.CartButtons = []
-
-        
-        
-        self.print_search_result(itemsSearch)
         
         
 
@@ -126,21 +100,8 @@ class GUI(tk.Tk):
         itemsSearch.append(idx)
         self.print_search_result(itemsSearch)
         self.print_cart_items(cartItems)
-        
-        
-        
-        
-        
-
-
-        
+               
             
-       
-            
-            
-            
-            
-
     #building the GUI
     # 1- buildMenu()
     # 2- buildNameFrame()
@@ -151,15 +112,21 @@ class GUI(tk.Tk):
         menu = tk.Menu(self)
         self.config(menu=menu)
         filemenu = tk.Menu(menu)
-        menu.add_cascade(label="File", menu=filemenu)
-        filemenu.add_command(label="New", command=NewFile)
-        filemenu.add_command(label="Open...", command=OpenFile)
+        menu.add_cascade(label="Fichier", menu=filemenu)
+        filemenu.add_command(label="Nouveau", command=NewFile)
+        filemenu.add_command(label="Ouvrir", command=OpenFile)
         filemenu.add_separator()
-        filemenu.add_command(label="Exit", command=self.quit)
+        filemenu.add_command(label="Quitter", command=self.quit)
         helpmenu = tk.Menu(menu)
-        menu.add_cascade(label="Help", menu=helpmenu)
-        helpmenu.add_command(label="About...", command=About)
+        menu.add_cascade(label="Aide", menu=helpmenu)
+        helpmenu.add_command(label="A propos", command=About)
 
+        searchMenu  =menu.add_cascade(label = "Vue recherche et commande",command= self.searchView)
+        
+        
+        inventoryMenu = menu.add_cascade(label = "Vue inventaire", command = self.inventoryView)
+    
+    
     # This block is for the entry of the name of the product
     #  First i will do a name frame and insert the rest of the elements of this section in it
     def buildNameFrame(self):
@@ -192,6 +159,57 @@ class GUI(tk.Tk):
         self.entryType.grid(row = 0, column = 1)
         self.buttonType = tk.Button(frameType, text="Get", command=self.on_button_entryType)
         self.buttonType.grid(row = 0, column =2)
+
+    def buildResultSearchSection(self):
+        #This is the text box resulting from the search
+        self.searchResultFrame = tk.Frame(self.searchViewFrame)
+        self.searchResultFrame.grid(row = 1, column =0, ipady = 20, ipadx = 0)
+        labelSearch = tk.Label(self.searchResultFrame,text="Les resultats de la recherche ")
+        labelSearch.grid(row = 0, column = 0)
+        self.textBox = tk.Text(self.searchResultFrame)
+        self.textBox.grid(row = 1,column = 0)
+        self.SearchButtons = []
+
+    def buildCartSection(self):
+         self.cartFrame = tk.Frame(self.searchViewFrame)
+         self.cartFrame.grid(row = 2, column = 0,  ipady = 0)
+         labelCart = tk.Label(self.cartFrame, text ="Le panier")
+         labelCart.grid(row = 0, column = 1)
+         self.cartBox = tk.Text(self.cartFrame)
+         self.cartBox.grid(row = 1, column = 1)
+         self.CartButtons = []
+
+
+    def searchView(self):
+        
+        self.searchViewFrame.grid(row = 0, column = 0)
+        self.frameInput = tk.Frame(self.searchViewFrame)
+        self.frameInput.grid(row = 0, column = 0)
+        
+        self.buildNameFrame()
+        self.buildCodeFrame()
+        # This block is for the entry of the type
+        self.buildTypeFrame()
+        self.buildResultSearchSection()
+        # this text box is for the cart
+        self.buildCartSection()        
+        self.print_search_result(itemsSearch)
+        
+        
+
+    def inventoryView(self):
+        
+        self.inventorySection.grid(row = 0, column =1)
+        
+        # This is the label of the inventory
+        inventoryLabel= tk.Label(self.inventorySection, text = "Bienvenu a l'entrepot \n L'entrepot contient les elements suivants")
+        inventoryLabel.grid(row = 0, column = 0 , ipadx= 20)
+        inventoryTextBox = tk.Text(self.inventorySection)
+        inventoryTextBox.grid(row = 1, column = 0, ipadx= 20,ipady = 20)
+        for item in inventoryItems:
+            inventoryTextBox.insert(tk.END,item +"\n")
+
+        
 
 
 gui = GUI()
