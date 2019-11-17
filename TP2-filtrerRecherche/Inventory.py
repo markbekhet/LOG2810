@@ -1,4 +1,4 @@
-import Object
+from Object import * 
 import Cart
 #delete liste objects, get, add
 class Inventory:
@@ -11,17 +11,21 @@ class Inventory:
             fields = line.split(" ")
             name = fields[0]
             id = fields[1]
-            type = fields[2]
-            object = Object.Object(type, id, name)
-            self._objectList.append(object)
+            typeObject = fields[2]
+            objectInstance = Object(typeObject, id, name)
+            self._objectList.append(objectInstance)
         file.close()
 
 
 inventory = Inventory()
 inventory.fillInventory("inventaire.txt")
-print(inventory._objectList)
+for item in inventory._objectList:
+    item.printObject()
+    #print("Object type is "+item._type + " The code of the product "+item._id + " The name of the product is "+item._name)
+
+
 object1 = Object("A", 5, "Allo")
 
-print(object1)
+object1.printObject()
 
 

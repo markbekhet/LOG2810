@@ -2,8 +2,8 @@ class Object:
     global DEFAULTMASS
     DEFAULTMASS = 20
     #Constructeur et instanciation des attributs
-    def __init__(self, type, id, name):
-        self._type = type
+    def __init__(self, typeObject, id, name):
+        self._type = typeObject
         self._id = id
         self._name = name
         self._mass = DEFAULTMASS
@@ -41,7 +41,7 @@ class Object:
     def printObject(self):
         print(self._type, self._id, self._name)
 
-object = Object("A", 5, "Allo")
-object.printObject()
-print(object.getMass())
+#object = Object("A", 5, "Allo")
+#object.printObject()
+#print(object.getMass())
 

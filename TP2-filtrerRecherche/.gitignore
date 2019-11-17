@@ -1,5 +1,5 @@
 # Byte-compiled / optimized / DLL files
-__pycache__/
+__pycache__/*.pyc
 *.py[cod]
 *$py.class
 
@@ -94,7 +94,7 @@ ipython_config.py
 
 # pyflow
 __pypackages__/
-__pycache__/
+/__pycache__/
 
 # Celery stuff
 celerybeat-schedule
