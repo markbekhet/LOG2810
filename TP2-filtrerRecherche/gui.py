@@ -27,26 +27,57 @@ def About():
 
 # In this class :
 # a -  attributes:
-# 1 - self : the main window
-# 2 - generalFrame : the general body has self as a parent
-# 3 - inventorySection: the inventory view which has the generalFrame as a parent
-# 4 - searchViewFrame: the search view which has the generalFrame as a parent
-# 5 - frameInput: the input frame has the searchViewFrame as a parent 
-# 6 - labelName : the label for the name entry has the frameName as a parent which has the frameInput as parent
-# 7 - entryName: the entry for the name entry has the frameName as a parent which has the frameInput as parent
-# 8 - buttonName: the button for the name entry has the frameName as a parent which has the frameInput as parent
-# 9 - labelCodeBar: the label for the code bar entry has the frameCodeBar as a parent which has the frameInput as parent
-# 10 - entryCodeBar: the entry for the code bar entry has the frameCodeBar as a parent which has the frameInput as parent
-# 11 - buttonCodeBar: the button for the code bar entry has the frameCodeBar as a parent which has the frameInput as parent
-# 12 - labelType: the label for the type entry has the frameType as a parent which has the frameInput as parent
-# 12 - entryType: the entry for the type entry has the frameType as a parent which has the frameInput as parent
-# 12 - buttonType: the label for the type entry has the frameType as a parent which has the frameInput as parent
-# 13 - CartButtons: the buttons for the cart to allow the possibility of a return stock
-# 14 - SearchButtons: the buttons for the search box
-# 15 - searchResultFrame: it has the searchViewFrame as a parent
-# 16 - textBox: a text box which contains all the search result items. it has the searchResultFrame as a parent
-# 17 - cartFrame: it has the generalView as a parent
-# 18 - cartBox: a text box which contains all the items in the cart. It has the cartFrame aa a parent  
+#   1 - self : the main window
+#   2 - generalFrame : the general body has self as a parent
+#   3 - inventorySection: the inventory view which has the generalFrame as a parent
+#   4 - searchViewFrame: the search view which has the generalFrame as a parent
+#   5 - frameInput: the input frame has the searchViewFrame as a parent 
+#   6 - labelName : the label for the name entry has the frameName as a parent which has the frameInput as parent
+#   7 - entryName: the entry for the name entry has the frameName as a parent which has the frameInput as parent
+#   8 - buttonName: the button for the name entry has the frameName as a parent which has the frameInput as parent
+#   9 - labelCodeBar: the label for the code bar entry has the frameCodeBar as a parent which has the frameInput as parent
+#   10 - entryCodeBar: the entry for the code bar entry has the frameCodeBar as a parent which has the frameInput as parent
+#   11 - buttonCodeBar: the button for the code bar entry has the frameCodeBar as a parent which has the frameInput as parent
+#   12 - labelType: the label for the type entry has the frameType as a parent which has the frameInput as parent
+#   13 - entryType: the entry for the type entry has the frameType as a parent which has the frameInput as parent
+#   14 - buttonType: the label for the type entry has the frameType as a parent which has the frameInput as parent
+#   15 - CartButtons: the buttons for the cart to allow the possibility of a return stock
+#   16 - SearchButtons: the buttons for the search box
+#   17 - searchResultFrame: it has the searchViewFrame as a parent
+#   18 - textBox: a text box which contains all the search result items. it has the searchResultFrame as a parent
+#   19 - cartFrame: it has the generalView as a parent
+#   20 - cartBox: a text box which contains all the items in the cart. It has the cartFrame as a parent
+# 
+# 
+# 
+# b - methodes : overall description
+#   I - Controlers
+#       1- on_button_entryName(): this method gets the string which is entered in the text box . It must call the search method for the search by name
+#           and call the print_search_items function
+#       2- on_button_entryType(): this method gets the string which is entered in the text box . It must call the search method for the search by type
+#           and call the print_search_items function
+#       3- on_button_entryCode(): this method gets the string which is entered in the text box . It must call the search method for the search by code
+#           and call the print_search_items function
+#       TODO
+#       4 - confirmCommand(): this method calls the function to confirm the command and i will do it to delete the elements from the inventory
+#       5 - onClickToAddToCart(): it should delete the specified item from the "searchList" and add it in the "CartList"
+#       6 - onClickToRemoveFromCart(): it should delete the specified item from the "cartList" and add it in the "searchList"
+#  
+#    II - View
+#       1 - print_search_result(): creates the buttons for the search that are placed in the text box
+#       2 - print_cart_items(): creates the buttons for the items in the cart
+#       3- buildNameFrame()
+#       4- buildCodeFrame()
+#       5- buildTypeFrame()
+#       6- buildMenu()
+#       7- buildResultSearchSecton()
+#       8- buildCartSection()
+#       9- searchView()
+#       10 inventoryView()
+# 
+#
+
+
 class GUI(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self, screenName = "Ineventaire", className="Inventaire")
@@ -120,19 +151,16 @@ class GUI(tk.Tk):
         '''
         for button in self.CartButtons:
             button.destroy()
-
+        
+        # TODO latter
+        # cartItems will not be replaced only itemsSearch will be replaced by the search list
         cartItems.remove(idx)
         itemsSearch.append(idx)
         self.print_search_result(itemsSearch)
         self.print_cart_items(cartItems)
                
             
-    #building the GUI
-    # 1- buildMenu()
-    # 2- buildNameFrame()
-    # 3- buildCodeFrame()
-    # 4- buildTypeFrame()
-    #  
+    
     def buildMenu(self):
         menu = tk.Menu(self)
         self.config(menu=menu)

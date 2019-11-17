@@ -94,6 +94,7 @@ ipython_config.py
 
 # pyflow
 __pypackages__/
+__pycache__/
 
 # Celery stuff
 celerybeat-schedule
