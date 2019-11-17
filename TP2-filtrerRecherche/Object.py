@@ -38,12 +38,20 @@ class Object:
     def setName(self, name):
         self._name = name
 
+# this notation is used to indicate the return type not necessary but helps while debugging
+#This functio will help me while deleting from the inventory and even while deleting 
+    def correspondsToDescription(self, description)->bool:
+        if description == self.printObject() :
+            return True
+        
+        return False
+    
+
+
 #je vais avoir besoin du return de cette fonction pour l'impression des objets dans le gui
     def printObject(self):
         ret = "Le nom de l'objet est " + self._name + " son code est " + self._id +" et son type est " + self._type
         return ret
 
-#object = Object("A", 5, "Allo")
-#object.printObject()
-#print(object.getMass())
+
 
