@@ -3,7 +3,7 @@ import Cart
 #delete liste objects, get, add
 class Inventory:
     def __init__(self):
-        self._objectList = []
+        self.__objectList = []
         
 
     def fillInventory(self, textFile):
@@ -15,14 +15,14 @@ class Inventory:
             typeObject = fields[2]
 
             objectInstance = Object(typeObject, id, name)
-            self._objectList.append(objectInstance)
+            self.__objectList.append(objectInstance)
         file.close()
 
 
     def getIndexDependingOnDescription(self, description):
         index = 0
         
-        for items in self._objectList:
+        for items in self.__objectList:
             if items.correspondsToDescription(description):
                 return index
 
@@ -30,11 +30,13 @@ class Inventory:
 
         raise "cet element ne se trouve pas dans l'inventaire"
 
+    def getInventoryList(self):
+        return self.__objectList
 
-    def deleteFromInventory(self,description):
+    def deleteFromInventoryDependingOnDescription(self,description):
         try:
             index = self.getIndexDependingOnDescription(description)
-            self._objectList.remove(self._objectList[index])
+            self.__objectList.remove(self.__objectList[index])
         except:
             return False
 
@@ -42,7 +44,7 @@ class Inventory:
 
 inventory = Inventory()
 inventory.fillInventory("inventaire.txt")
-for item in inventory._objectList:
+for item in inventory.getInventoryList():
     print(item.printObject())
     
 
@@ -55,8 +57,8 @@ print("L'affichage apres elimination")
 print()
 #Ok Donc cela va etre regle automatiquement la fonction marche
 objectToRemove = Object("A\n","B16A49","avion")
-inventory.deleteFromInventory(objectToRemove.printObject())
-for item in inventory._objectList:
+inventory.deleteFromInventoryDependingOnDescription(objectToRemove.printObject())
+for item in inventory.getInventoryList():
     print(item.printObject())
 
 
