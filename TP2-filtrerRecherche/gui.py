@@ -1,21 +1,21 @@
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import Canvas
+from Inventory import *
 
 #this is supposed to be the search items from a search
 #right now that's a temporary test until the search class is done
-itemsSearch = ["Var" , "option"]
+
 # this is the items from the cart
 cartItems = []
+itemsSearch = ["Var" , "option"]
 #this is supposed to be the inventory items
-inventoryItems =["Var" , "option"]
+
 
 pressed = False
 def NewFile():
     print("New File!")
-def OpenFile():
-    name = filedialog.askopenfilename()
-    print(type(name))
+
 def About():
     print("This is a simple example of a menu")
 
@@ -91,6 +91,7 @@ class GUI(tk.Tk):
         self.cartFrame = tk.Frame(self.generalFrame)
         self.cartBox = tk.Text(self.cartFrame)
         self.CartButtons = []
+        self.inventory = Inventory()
         
         
 
@@ -160,6 +161,9 @@ class GUI(tk.Tk):
         self.print_cart_items(cartItems)
                
             
+    def OpenFile(self):
+        name = filedialog.askopenfilename()
+        self.inventory.fillInventory(name)
     
     def buildMenu(self):
         menu = tk.Menu(self)
@@ -167,7 +171,7 @@ class GUI(tk.Tk):
         filemenu = tk.Menu(menu)
         menu.add_cascade(label="Fichier", menu=filemenu)
         filemenu.add_command(label="Nouveau", command=NewFile)
-        filemenu.add_command(label="Ouvrir", command=OpenFile)
+        filemenu.add_command(label="Ouvrir", command=self.OpenFile)
         filemenu.add_separator()
         filemenu.add_command(label="Quitter", command=self.quit)
         helpmenu = tk.Menu(menu)
@@ -268,8 +272,8 @@ class GUI(tk.Tk):
         inventoryLabel.grid(row = 0, column = 0 , ipadx= 20)
         inventoryTextBox = tk.Text(self.inventorySection)
         inventoryTextBox.grid(row = 1, column = 0, ipadx= 20,ipady = 20)
-        for item in inventoryItems:
-            inventoryTextBox.insert(tk.END,item +"\n")
+        for item in self.inventory._objectList:
+            inventoryTextBox.insert(tk.END,item.printObject() +"\n")
 
         
 

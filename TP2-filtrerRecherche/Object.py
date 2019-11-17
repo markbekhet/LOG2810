@@ -29,8 +29,8 @@ class Object:
 
         return self._mass
 
-    def setType(self, type):
-        self._type = type
+    def setType(self, typeObject):
+        self._type = typeObject
 
     def setId(self, id):
         self._id = id
@@ -38,8 +38,10 @@ class Object:
     def setName(self, name):
         self._name = name
 
+#je vais avoir besoin du return de cette fonction pour l'impression des objets dans le gui
     def printObject(self):
-        print(self._type, self._id, self._name)
+        ret = "Le nom de l'objet est " + self._name + " son code est " + self._id +" et son type est " + self._type
+        return ret
 
 #object = Object("A", 5, "Allo")
 #object.printObject()

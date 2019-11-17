@@ -4,6 +4,7 @@ import Cart
 class Inventory:
     def __init__(self):
         self._objectList = []
+        
 
     def fillInventory(self, textFile):
         file = open(textFile, "r")
@@ -12,6 +13,7 @@ class Inventory:
             name = fields[0]
             id = fields[1]
             typeObject = fields[2]
+
             objectInstance = Object(typeObject, id, name)
             self._objectList.append(objectInstance)
         file.close()
@@ -20,12 +22,12 @@ class Inventory:
 inventory = Inventory()
 inventory.fillInventory("inventaire.txt")
 for item in inventory._objectList:
-    item.printObject()
-    #print("Object type is "+item._type + " The code of the product "+item._id + " The name of the product is "+item._name)
+    print(item.printObject())
+    
 
 
-object1 = Object("A", 5, "Allo")
+object1 = Object("A", "5", "Allo")
 
-object1.printObject()
+print(object1.printObject())
 
 
