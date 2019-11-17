@@ -129,9 +129,10 @@ class GUI(tk.Tk):
         number = 0
         for item in DataList:
             height = 50
-            #the problem is mainly here i am writing a text on 
+            #the problem is mainly here i am writing a text on the  button but it is solved because i did a function to return the object from the list corresponding to the description 
             button = tk.Button(self.cartBox, text = str(item))
             self.CartButtons.append(button)
+            # here the function will be called
             button['command'] = lambda idx=str(item): self.onClickOptionToRemoveFromCart(idx)
             button.place(y = number*height , height=height, width = 200)
             number +=1
