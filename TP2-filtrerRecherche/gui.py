@@ -119,7 +119,7 @@ class GUI(tk.Tk):
     def printSearchResult(self,DataList):
         number = 0
         for item in DataList:
-            height = 50
+            height = 20
             button = tk.Button(self.__searchResultBox, text = str(item))
             self.__searchButtons.append(button)
             button['command'] = lambda idx=str(item): self.onClickOptionToAddToCart(idx)
@@ -129,7 +129,7 @@ class GUI(tk.Tk):
     def printCartItems(self,DataList):
         number = 0
         for item in DataList:
-            height = 50
+            height = 20
             #the problem is mainly here i am writing a text on the  button but it is solved because i did a function to return the object from the list corresponding to the description 
             button = tk.Button(self.__cartBox, text = str(item))
             self.__cartButtons.append(button)
