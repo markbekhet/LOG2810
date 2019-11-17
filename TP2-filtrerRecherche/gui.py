@@ -241,6 +241,8 @@ class GUI(tk.Tk):
          self.cartBox.grid(row = 1, column = 1)
          
          self.print_cart_items(cartItems)
+         button = tk.Button(self.cartFrame,text ="confirmer")
+         button.grid(row = 2 , column = 1)
 
 
     def searchView(self):
