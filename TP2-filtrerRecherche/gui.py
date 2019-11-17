@@ -2,7 +2,9 @@ import tkinter as tk
 from tkinter import filedialog
 from tkinter import Canvas
 from Inventory import *
-
+from Object import *
+from Cart import *
+from Research import *
 #this is supposed to be the search items from a search
 #right now that's a temporary test until the search class is done
 
@@ -19,8 +21,14 @@ def NewFile():
 def About():
     print("This is a simple example of a menu")
 
+#the array in the parameters corresponds to an array of Object which is the most probable return in the arrays of the Research and the array of the Cart
+#i will need a function to delete an Object from the array of Reasearch and another one to delete an Object from the Cart 
+def gettingObjectCorrespondingFromList(array, objecctDescription)->Object:
+    for item in array:
+        if item.correspondsToDescription(objecctDescription):
+            return item
 
-    
+
         
 
         
@@ -121,6 +129,7 @@ class GUI(tk.Tk):
         number = 0
         for item in DataList:
             height = 50
+            #the problem is mainly here i am writing a text on 
             button = tk.Button(self.cartBox, text = str(item))
             self.CartButtons.append(button)
             button['command'] = lambda idx=str(item): self.onClickOptionToRemoveFromCart(idx)
@@ -155,6 +164,7 @@ class GUI(tk.Tk):
         
         # TODO latter
         # cartItems will not be replaced only itemsSearch will be replaced by the search list
+        #this will be an Object type so in the Cart class I need to put a function which removes 
         cartItems.remove(idx)
         itemsSearch.append(idx)
         self.print_search_result(itemsSearch)
