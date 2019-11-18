@@ -33,6 +33,10 @@ def gettingObjectCorrespondingFromList(array, objecctDescription)->Object:
         if item.correspondsToDescription(objecctDescription):
             return item
 
+def gettingElementFromList(array, itemDescription):
+    for item in array:
+        if str(item)+"\n" ==itemDescription:
+            return item
 
         
 
@@ -126,13 +130,11 @@ class GUI(tk.Tk):
         number = 0
         for item in DataList:
             height = 20
-            button = tk.Button(self.__searchResultBox, text = str(item))
-            self.__searchButtons.append(button)
-            self.__searchResultBox.window_create( self.__searchResultBox.index("end"), window = button)
+            self.__searchResultBox.insert(tk.END, str(item)+"\n")
             #self.__searchResultBox.window_create(self.__searchResultBox.index("end"),window = tk.Label(self.__searchResultBox, text = "\n"))
             
             #self.__searchResultBox.insert(tk.END, "\n")
-            button['command'] = lambda idx=str(item): self.onClickOptionToAddToCart(idx)
+            self.__searchResultBox.bind('<<ListboxSelect>>',self.onClickOptionToAddToCart)
             #button.place(y = number*height , height=height)
             number +=1
             
@@ -143,11 +145,9 @@ class GUI(tk.Tk):
         for item in DataList:
             height = 20
             #the problem is mainly here i am writing a text on the  button but it is solved because i did a function to return the object from the list corresponding to the description 
-            button = tk.Button(self.__cartBox, text = str(item))
-            self.__cartButtons.append(button)
-            self.__cartBox.window_create( self.__cartBox.index("end"), window = button)
+            self.__cartBox.insert(tk.END,str(item)+"\n")
             # here the function will be called
-            button['command'] = lambda idx=str(item): self.onClickOptionToRemoveFromCart(idx)
+            self.__cartBox.bind('<<ListboxSelect>>',self.onClickOptionToRemoveFromCart)
             #button.place(y = number*height , height=height)
             number +=1
             
@@ -158,30 +158,34 @@ class GUI(tk.Tk):
     #I want to make the same action in both directions
     # I have to manually destroy this button and manipulate the two lists        
     #handling events   
-    def onClickOptionToAddToCart(self,idx):
+    def onClickOptionToAddToCart(self,evt):
         '''  set the double click status flag
         '''
-        for button in self.__searchButtons:
-            button.destroy()
-
-        cartItems.append(idx)
-        itemsSearch.remove(idx)
+        w = evt.widget
+        index = int(w.curselection()[0])
+        value = w.get(index)
+        valueInArray = gettingElementFromList(itemsSearch,value)
+        self.__searchResultBox.delete(index, self.__searchResultBox.size()-1)
+        cartItems.append(valueInArray)
+        itemsSearch.remove(valueInArray)
         self.printCartItems(cartItems)
         self.printSearchResult(itemsSearch)
         
 
 
-    def onClickOptionToRemoveFromCart(self,idx):
+    def onClickOptionToRemoveFromCart(self,evt):
         '''  set the double click status flag
         '''
-        for button in self.__cartButtons:
-            button.destroy()
-        
+        w = evt.widget
+        index = int(w.curselection()[0])
+        value = w.get(index)
+        valueInArray = gettingElementFromList(cartItems,value)
+        self.__cartBox.delete(index,self.__cartBox.size()-1)
         # TODO latter
         # cartItems will not be replaced only itemsSearch will be replaced by the search list
         #this will be an Object type so in the Cart class I need to put a function which removes 
-        cartItems.remove(idx)
-        itemsSearch.append(idx)
+        cartItems.remove(valueInArray)
+        itemsSearch.append(valueInArray)
         self.printSearchResult(itemsSearch)
         self.printCartItems(cartItems)
                
@@ -254,7 +258,7 @@ class GUI(tk.Tk):
         scrollbV = ttk.Scrollbar(self.__searchViewFrame)
         scrollbH = ttk.Scrollbar(self.__searchViewFrame)
         
-        self.__searchResultBox = tk.Text(self.__searchResultFrame, yscrollcommand = scrollbV.set, xscrollcommand = scrollbH.set)
+        self.__searchResultBox = tk.Listbox(self.__searchResultFrame, yscrollcommand = scrollbV.set, xscrollcommand = scrollbH.set)
         self.__searchResultBox.grid(row = 1,column = 0,columnspan =10)
         
         scrollbV.grid(row = 1, column = 1,sticky='nsew')
@@ -276,7 +280,7 @@ class GUI(tk.Tk):
          scrollbV = ttk.Scrollbar(self.__cartFrame)
          scrollbH = ttk.Scrollbar(self.__cartFrame)
          
-         self.__cartBox = tk.Text(self.__cartFrame,yscrollcommand = scrollbV.set, xscrollcommand = scrollbH.set)
+         self.__cartBox = tk.Listbox(self.__cartFrame,yscrollcommand = scrollbV.set, xscrollcommand = scrollbH.set)
          self.__cartBox.grid(row = 1, column = 0)
 
          scrollbV.grid(row = 1, column = 1,sticky='nsew')
