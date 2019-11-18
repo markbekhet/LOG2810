@@ -12,8 +12,9 @@ from tkinter import ttk
 # this is the items from the cart
 cartItems = []
 itemsSearch = ["Var" , "option","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac"\
-        ,"kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac",\
+        ,"kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsacscsaV sV  zXZC zxv xzc xasxavshnABDNBbadnxxasadxajBJAbdjanxaNXmBxmxMZXsacksahC jasBcjszjNBxjabxjbajZBmjxz","kadkancaskcdsac",\
             "kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac"\
+                ,"Le nom de l'objet est divan son code est B421AC et son type est A","Le nom de l'objet est divan son code est B421AC et son type est A","kadkancaskcdsacscsaV sV  zXZC zxv xzc xasxavshnABDNBbadnxxasadxajBJAbdjanxaNXmBxmxMZXsacksahC jasBcjszjNBxjabxjbajZBmjxz","kadkancaskcdsacscsaV sV  zXZC zxv xzc xasxavshnABDNBbadnxxasadxajBJAbdjanxaNXmBxmxMZXsacksahC jasBcjszjNBxjabxjbajZBmjxz","kadkancaskcdsacscsaV sV  zXZC zxv xzc xasxavshnABDNBbadnxxasadxajBJAbdjanxaNXmBxmxMZXsacksahC jasBcjszjNBxjabxjbajZBmjxz","kadkancaskcdsacscsaV sV  zXZC zxv xzc xasxavshnABDNBbadnxxasadxajBJAbdjanxaNXmBxmxMZXsacksahC jasBcjszjNBxjabxjbajZBmjxz","kadkancaskcdsacscsaV sV  zXZC zxv xzc xasxavshnABDNBbadnxxasadxajBJAbdjanxaNXmBxmxMZXsacksahC jasBcjszjNBxjabxjbajZBmjxz","kadkancaskcdsacscsaV sV  zXZC zxv xzc xasxavshnABDNBbadnxxasadxajBJAbdjanxaNXmBxmxMZXsacksahC jasBcjszjNBxjabxjbajZBmjxz","kadkancaskcdsacscsaV sV  zXZC zxv xzc xasxavshnABDNBbadnxxasadxajBJAbdjanxaNXmBxmxMZXsacksahC jasBcjszjNBxjabxjbajZBmjxz"\
                 ,"kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac",]
 #this is supposed to be the inventory items
 
@@ -128,6 +129,7 @@ class GUI(tk.Tk):
             button = tk.Button(self.__searchResultBox, text = str(item))
             self.__searchButtons.append(button)
             self.__searchResultBox.window_create( self.__searchResultBox.index("end"), window = button)
+            #self.__searchResultBox.window_create(self.__searchResultBox.index("end"),window = tk.Label(self.__searchResultBox, text = "\n"))
             
             #self.__searchResultBox.insert(tk.END, "\n")
             button['command'] = lambda idx=str(item): self.onClickOptionToAddToCart(idx)
