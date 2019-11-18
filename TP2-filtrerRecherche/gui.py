@@ -5,12 +5,16 @@ from Inventory import *
 from Object import *
 from Cart import *
 from Research import *
+from tkinter import ttk
 #this is supposed to be the search items from a search
 #right now that's a temporary test until the search class is done
 
 # this is the items from the cart
 cartItems = []
-itemsSearch = ["Var" , "option"]
+itemsSearch = ["Var" , "option","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac"\
+        ,"kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac",\
+            "kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac"\
+                ,"kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac",]
 #this is supposed to be the inventory items
 
 
@@ -98,9 +102,10 @@ class GUI(tk.Tk):
         self.__inventorySection = tk.Frame(self.__generalFrame)
         self.__searchViewFrame = tk.Frame(self.__generalFrame)
         self.__cartFrame = tk.Frame(self.__generalFrame)
-        self.__cartBox = tk.Text(self.__cartFrame)
+        
         self.__cartButtons = []
         self.__inventory = Inventory()
+          
         
         
 
@@ -122,9 +127,14 @@ class GUI(tk.Tk):
             height = 20
             button = tk.Button(self.__searchResultBox, text = str(item))
             self.__searchButtons.append(button)
+            self.__searchResultBox.window_create( self.__searchResultBox.index("end"), window = button)
+            
+            #self.__searchResultBox.insert(tk.END, "\n")
             button['command'] = lambda idx=str(item): self.onClickOptionToAddToCart(idx)
-            button.place(y = number*height , height=height, width = 200)
+            #button.place(y = number*height , height=height)
             number +=1
+            
+            
             
     def printCartItems(self,DataList):
         number = 0
@@ -133,9 +143,10 @@ class GUI(tk.Tk):
             #the problem is mainly here i am writing a text on the  button but it is solved because i did a function to return the object from the list corresponding to the description 
             button = tk.Button(self.__cartBox, text = str(item))
             self.__cartButtons.append(button)
+            self.__cartBox.window_create( self.__cartBox.index("end"), window = button)
             # here the function will be called
             button['command'] = lambda idx=str(item): self.onClickOptionToRemoveFromCart(idx)
-            button.place(y = number*height , height=height, width = 200)
+            #button.place(y = number*height , height=height)
             number +=1
             
         
@@ -238,8 +249,18 @@ class GUI(tk.Tk):
         self.__searchResultFrame.grid(row = 1, column =0, ipady = 20, ipadx = 0)
         labelSearch = tk.Label(self.__searchResultFrame,text="Les resultats de la recherche ")
         labelSearch.grid(row = 0, column = 0)
-        self.__searchResultBox = tk.Text(self.__searchResultFrame)
-        self.__searchResultBox.grid(row = 1,column = 0)
+        scrollbV = ttk.Scrollbar(self.__searchViewFrame)
+        scrollbH = ttk.Scrollbar(self.__searchViewFrame)
+        
+        self.__searchResultBox = tk.Text(self.__searchResultFrame, yscrollcommand = scrollbV.set, xscrollcommand = scrollbH.set)
+        self.__searchResultBox.grid(row = 1,column = 0,columnspan =10)
+        
+        scrollbV.grid(row = 1, column = 1,sticky='nsew')
+        scrollbH.grid(row = 2, column = 0,sticky='nsew')
+        
+        scrollbV.config(command=self.__searchResultBox.yview)
+        scrollbH.config(command=self.__searchResultBox.xview)
+        
         self.__searchButtons = []
 
     def buildCartSection(self):
@@ -250,11 +271,21 @@ class GUI(tk.Tk):
          labelCart = tk.Label(self.__cartFrame, text ="Le panier")
          labelCart.grid(row = 0, column = 1)
          
-         self.__cartBox.grid(row = 1, column = 1)
+         scrollbV = ttk.Scrollbar(self.__cartFrame)
+         scrollbH = ttk.Scrollbar(self.__cartFrame)
+         
+         self.__cartBox = tk.Text(self.__cartFrame,yscrollcommand = scrollbV.set, xscrollcommand = scrollbH.set)
+         self.__cartBox.grid(row = 1, column = 0)
+
+         scrollbV.grid(row = 1, column = 1,sticky='nsew')
+         scrollbH.grid(row = 2, column = 0,sticky='nsew')
+        
+         scrollbV.config(command=self.__cartBox.yview)
+         scrollbH.config(command=self.__cartBox.xview)
          
          self.printCartItems(cartItems)
          button = tk.Button(self.__cartFrame,text ="confirmer")
-         button.grid(row = 2 , column = 1)
+         button.grid(row = 3 , column = 0)
 
 
     def searchView(self):
