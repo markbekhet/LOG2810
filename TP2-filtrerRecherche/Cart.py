@@ -6,7 +6,7 @@ class Cart:
         self._isValid = true
 
     def getTotalMass(self):
-        for object in range(len(_objectList)):
+        for object in range(len(self._objectList)):
             self._totalMass += object.getMass()
 
         return self._totalMass
