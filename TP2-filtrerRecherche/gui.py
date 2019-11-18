@@ -289,6 +289,7 @@ class GUI(tk.Tk):
 
 
     def searchView(self):
+        self.buildCartSection()
         self.__inventorySection.grid_forget()
         self.__cartFrame.grid_forget()
 
