@@ -95,7 +95,8 @@ def gettingObjectCorrespondingFromList(array, objecctDescription)->Object:
 class GUI(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self, screenName = "Ineventaire", className="Inventaire")
-        self.attributes("-fullscreen", True)
+        #self.attributes("-fullscreen", True)
+        self.geometry("1000x1000")
         self.buildMenu()
         #this frame is for the Input frame in general
         self.__generalFrame = tk.Frame(self)
@@ -211,7 +212,7 @@ class GUI(tk.Tk):
         menu.add_command(label = "vue panier" , command = self.buildCartSection)
         menu.add_command(label = "vue recherche" , command = self.searchView)
         
-        
+
         inventoryMenu = menu.add_cascade(label = "Vue inventaire", command = self.inventoryView)
     
     
