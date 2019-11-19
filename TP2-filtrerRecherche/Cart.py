@@ -2,10 +2,9 @@
 # on a besoin de manipuler une liste seulement dans cette classe c'est-à-dire add, delete
 
 class Cart:
-    DEFAULTTOTALMASS = 0
-    def __init__(self, objectList):
-        self._totalMass = DEFAULTTOTALMASS
-        self._objectList = objectList
+    def __init__(self):
+        self._totalMass = 0
+        self._objectList = []
         self._isValid = True
 
     def getTotalMass(self):
@@ -22,7 +21,7 @@ class Cart:
 
     def deleteFromCart(self, objectToDelete):
         for objectList in self._objectList:
-            if objectList.printObject() == objectToDelete.printObject:
+            if objectList.printObject() == objectToDelete.printObject():
                 self._objectList.remove(objectList)
 
     def orderValidation(self):

@@ -10,12 +10,12 @@ from tkinter import ttk
 #right now that's a temporary test until the search class is done
 
 # this is the items from the cart
-cartItems = []
-itemsSearch = ["Var" , "option","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac"\
-        ,"kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsacscsaV sV  zXZC zxv xzc xasxavshnABDNBbadnxxasadxajBJAbdjanxaNXmBxmxMZXsacksahC jasBcjszjNBxjabxjbajZBmjxz","kadkancaskcdsac",\
-            "kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac"\
-                ,"Le nom de l'objet est divan son code est B421AC et son type est A","Le nom de l'objet est divan son code est B421AC et son type est A","kadkancaskcdsacscsaV sV  zXZC zxv xzc xasxavshnABDNBbadnxxasadxajBJAbdjanxaNXmBxmxMZXsacksahC jasBcjszjNBxjabxjbajZBmjxz","kadkancaskcdsacscsaV sV  zXZC zxv xzc xasxavshnABDNBbadnxxasadxajBJAbdjanxaNXmBxmxMZXsacksahC jasBcjszjNBxjabxjbajZBmjxz","kadkancaskcdsacscsaV sV  zXZC zxv xzc xasxavshnABDNBbadnxxasadxajBJAbdjanxaNXmBxmxMZXsacksahC jasBcjszjNBxjabxjbajZBmjxz","kadkancaskcdsacscsaV sV  zXZC zxv xzc xasxavshnABDNBbadnxxasadxajBJAbdjanxaNXmBxmxMZXsacksahC jasBcjszjNBxjabxjbajZBmjxz","kadkancaskcdsacscsaV sV  zXZC zxv xzc xasxavshnABDNBbadnxxasadxajBJAbdjanxaNXmBxmxMZXsacksahC jasBcjszjNBxjabxjbajZBmjxz","kadkancaskcdsacscsaV sV  zXZC zxv xzc xasxavshnABDNBbadnxxasadxajBJAbdjanxaNXmBxmxMZXsacksahC jasBcjszjNBxjabxjbajZBmjxz","kadkancaskcdsacscsaV sV  zXZC zxv xzc xasxavshnABDNBbadnxxasadxajBJAbdjanxaNXmBxmxMZXsacksahC jasBcjszjNBxjabxjbajZBmjxz"\
-                ,"kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac",]
+#cartItems = []
+#itemsSearch = ["Var" , "option","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac"\
+#        ,"kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsacscsaV sV  zXZC zxv xzc xasxavshnABDNBbadnxxasadxajBJAbdjanxaNXmBxmxMZXsacksahC jasBcjszjNBxjabxjbajZBmjxz","kadkancaskcdsac",\
+#            "kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac"\
+#                ,"Le nom de l'objet est divan son code est B421AC et son type est A","Le nom de l'objet est divan son code est B421AC et son type est A","kadkancaskcdsacscsaV sV  zXZC zxv xzc xasxavshnABDNBbadnxxasadxajBJAbdjanxaNXmBxmxMZXsacksahC jasBcjszjNBxjabxjbajZBmjxz","kadkancaskcdsacscsaV sV  zXZC zxv xzc xasxavshnABDNBbadnxxasadxajBJAbdjanxaNXmBxmxMZXsacksahC jasBcjszjNBxjabxjbajZBmjxz","kadkancaskcdsacscsaV sV  zXZC zxv xzc xasxavshnABDNBbadnxxasadxajBJAbdjanxaNXmBxmxMZXsacksahC jasBcjszjNBxjabxjbajZBmjxz","kadkancaskcdsacscsaV sV  zXZC zxv xzc xasxavshnABDNBbadnxxasadxajBJAbdjanxaNXmBxmxMZXsacksahC jasBcjszjNBxjabxjbajZBmjxz","kadkancaskcdsacscsaV sV  zXZC zxv xzc xasxavshnABDNBbadnxxasadxajBJAbdjanxaNXmBxmxMZXsacksahC jasBcjszjNBxjabxjbajZBmjxz","kadkancaskcdsacscsaV sV  zXZC zxv xzc xasxavshnABDNBbadnxxasadxajBJAbdjanxaNXmBxmxMZXsacksahC jasBcjszjNBxjabxjbajZBmjxz","kadkancaskcdsacscsaV sV  zXZC zxv xzc xasxavshnABDNBbadnxxasadxajBJAbdjanxaNXmBxmxMZXsacksahC jasBcjszjNBxjabxjbajZBmjxz"\
+#                ,"kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac","kadkancaskcdsac",]
 #this is supposed to be the inventory items
 
 
@@ -28,7 +28,7 @@ def About():
 
 #the array in the parameters corresponds to an array of Object which is the most probable return in the arrays of the Research and the array of the Cart
 #i will need a function to delete an Object from the array of Reasearch and another one to delete an Object from the Cart 
-def gettingObjectCorrespondingFromList(array, objecctDescription)->Object:
+def gettingObjectCorrespondingFromList(array, objecctDescription):
     for item in array:
         if item.correspondsToDescription(objecctDescription):
             return item
@@ -109,7 +109,13 @@ class GUI(tk.Tk):
         self.__inventory = Inventory.Inventory()
 
         self.__inventoryTextBox = tk.Text(self.__inventorySection)
-        
+        self.__cart = Cart.Cart()
+        self.__search = Research.Research()
+
+        self.__searchResultFrame = tk.Frame(self.__searchViewFrame)
+        self.__searchResultBox = tk.Text(self.__searchResultFrame)
+        self.__cartBox = tk.Text(self.__cartFrame)
+        self.__searchButtons = []
 
 
 
@@ -117,40 +123,47 @@ class GUI(tk.Tk):
 
 
     def onButtonGet(self):
-        print(self.__entryName.get())
-        print(self.__entryCode.get())
-        print(self.__entryType.get())
+
+
+        self.__search.research(self.__entryName.get(), self.__entryCode.get(), self.__entryType.get())
+        self.printSearchResult(self.__search.getList())
 
 
 
 
 
     def printSearchResult(self,DataList):
+        for button in self.__searchButtons:
+            button.destroy()
         number = 0
         for item in DataList:
             height = 20
-            button = tk.Button(self.__searchResultBox, text = str(item))
+            button = tk.Button(self.__searchResultBox, text = item.printObject())
             self.__searchButtons.append(button)
             self.__searchResultBox.window_create( self.__searchResultBox.index("end"), window = button)
             #self.__searchResultBox.window_create(self.__searchResultBox.index("end"),window = tk.Label(self.__searchResultBox, text = "\n"))
             
             #self.__searchResultBox.insert(tk.END, "\n")
-            button['command'] = lambda idx=str(item): self.onClickOptionToAddToCart(idx)
+            button['command'] = lambda idx=item: self.onClickOptionToAddToCart(idx)
             #button.place(y = number*height , height=height)
             number +=1
             
             
             
     def printCartItems(self,DataList):
+        for button in self.__cartButtons:
+            button.destroy()
         number = 0
+        for button in self.__cartButtons:
+            button.destroy()
         for item in DataList:
             height = 20
             #the problem is mainly here i am writing a text on the  button but it is solved because i did a function to return the object from the list corresponding to the description 
-            button = tk.Button(self.__cartBox, text = str(item))
+            button = tk.Button(self.__cartBox, text = item.printObject())
             self.__cartButtons.append(button)
             self.__cartBox.window_create( self.__cartBox.index("end"), window = button)
             # here the function will be called
-            button['command'] = lambda idx=str(item): self.onClickOptionToRemoveFromCart(idx)
+            button['command'] = lambda idx=item: self.onClickOptionToRemoveFromCart(idx)
             #button.place(y = number*height , height=height)
             number +=1
             
@@ -165,12 +178,13 @@ class GUI(tk.Tk):
         '''  set the double click status flag
         '''
         for button in self.__searchButtons:
+
             button.destroy()
 
-        cartItems.append(idx)
-        itemsSearch.remove(idx)
-        self.printCartItems(cartItems)
-        self.printSearchResult(itemsSearch)
+        self.__cart.addInCart(idx)
+        self.__search.deleteObject(idx)
+        self.printCartItems(self.__cart.getObjectList())
+        self.printSearchResult(self.__search.getList())
         
 
 
@@ -183,16 +197,18 @@ class GUI(tk.Tk):
         # TODO latter
         # cartItems will not be replaced only itemsSearch will be replaced by the search list
         #this will be an Object type so in the Cart class I need to put a function which removes 
-        cartItems.remove(idx)
-        itemsSearch.append(idx)
-        self.printSearchResult(itemsSearch)
-        self.printCartItems(cartItems)
+        self.__cart.deleteFromCart(idx)
+        self.__search.addObject(idx)
+        self.printSearchResult(self.__search.getList())
+        self.printCartItems(self.__cart.getObjectList())
                
             
     def openFile(self):
         name = filedialog.askopenfilename()
         self.__inventory.fillInventory(name)
         self.printInventorySection()
+        self.__search = Research.Research(self.__inventory.getInventoryList())
+        self.printSearchResult(self.__search.getList())
     
     def buildMenu(self):
         menu = tk.Menu(self)
@@ -251,23 +267,24 @@ class GUI(tk.Tk):
 
     def buildResultSearchSection(self):
         #This is the text box resulting from the search
-        self.__searchResultFrame = tk.Frame(self.__searchViewFrame)
+
         self.__searchResultFrame.grid(row = 1, column =0, ipady = 20, ipadx = 0)
         labelSearch = tk.Label(self.__searchResultFrame,text="Les résultats de la recherche ")
         labelSearch.grid(row = 0, column = 0)
         scrollbV = ttk.Scrollbar(self.__searchViewFrame)
         scrollbH = ttk.Scrollbar(self.__searchViewFrame)
         
-        self.__searchResultBox = tk.Text(self.__searchResultFrame, yscrollcommand = scrollbV.set, xscrollcommand = scrollbH.set)
+
         self.__searchResultBox.grid(row = 1,column = 0,columnspan =10)
         
         scrollbV.grid(row = 1, column = 1,sticky='nsew')
         scrollbH.grid(row = 2, column = 0,sticky='nsew')
-        
+        self.__searchResultBox["yscrollcommand"] = scrollbV.set
+        self.__searchResultBox["xscrollcommand"] = scrollbH.set
         scrollbV.config(command=self.__searchResultBox.yview)
         scrollbH.config(command=self.__searchResultBox.xview)
         
-        self.__searchButtons = []
+
 
     def buildCartSection(self):
          self.__inventorySection.grid_forget()
@@ -280,16 +297,17 @@ class GUI(tk.Tk):
          scrollbV = ttk.Scrollbar(self.__cartFrame)
          scrollbH = ttk.Scrollbar(self.__cartFrame)
          
-         self.__cartBox = tk.Text(self.__cartFrame,yscrollcommand = scrollbV.set, xscrollcommand = scrollbH.set)
+
          self.__cartBox.grid(row = 1, column = 0,padx = 15)
 
          scrollbV.grid(row = 1, column = 1,sticky='nsew')
          scrollbH.grid(row = 2, column = 0,sticky='nsew')
-        
+         self.__cartBox["yscrollcommand"] = scrollbV.set
+         self.__cartBox["xscrollcommand"] = scrollbH.set
          scrollbV.config(command=self.__cartBox.yview)
          scrollbH.config(command=self.__cartBox.xview)
-         
-         self.printCartItems(cartItems)
+
+         self.printCartItems(self.__cart.getObjectList())
          button = tk.Button(self.__cartFrame,text ="Confirmer")
          button.grid(row = 3 , column = 0)
 
@@ -312,7 +330,7 @@ class GUI(tk.Tk):
         self.buildResultSearchSection()
         
                 
-        self.printSearchResult(itemsSearch)
+        self.printSearchResult(self.__search.getList())
         
         
 

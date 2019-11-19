@@ -14,7 +14,7 @@ import Inventory
 class Research:
 
     # Liste d'objet
-    def __init__(self, liste):
+    def __init__(self, liste=[]):
         self.__backgroundList = liste
         self.__researchList = liste
 
@@ -33,9 +33,15 @@ class Research:
     # Supprime un objet au liste
     def deleteObject(self, obj):
         for objectList in self.__researchList:
-            if objectList.printObject() == obj.printObject:
-                self.__backgroundList.remove(objectList)
+            if objectList.printObject() == obj.printObject():
                 self.__researchList.remove(objectList)
+
+        for objectList in self.__backgroundList:
+            if objectList.printObject() == obj.printObject():
+                self.__backgroundList.remove(objectList)
+
+
+
 
     def researchByName(self, name, liste):
         retList = []
@@ -74,10 +80,12 @@ class Research:
 
 
 
-#liste = Inventory.Inventory()
-#liste.fillInventory("inventaire.txt")
-#search = Research(liste.getInventoryList())
-#search.research("", "","")
-#for item in search.getList():
-#   print(item.printObject())
-#print(search.getCount())
+liste = Inventory.Inventory()
+liste.fillInventory("inventaire.txt")
+search = Research(liste.getInventoryList())
+search.research("", "","")
+for item in search.getList():
+   print(item.printObject())
+
+
+print(search.getCount())

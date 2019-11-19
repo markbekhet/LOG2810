@@ -40,7 +40,7 @@ class Object:
 
 # this notation is used to indicate the return type not necessary but helps while debugging
 #This functio will help me while deleting from the inventory and even while deleting 
-    def correspondsToDescription(self, description)->bool:
+    def correspondsToDescription(self, description):
         if description == self.printObject() :
             return True
         
