@@ -41,7 +41,9 @@ class Inventory:
             return False
 
     def deleteFromInventoryObject(self, object):
-        self.deleteFromInventoryDependingOnDescription(object.printObject())
+        for objectList in self.__objectList:
+            if objectList.printObject() == object.printObject():
+                self.__objectList.remove(objectList)
 
 #inventory = Inventory()
 #inventory.fillInventory("inventaire.txt")

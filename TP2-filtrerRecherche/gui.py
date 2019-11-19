@@ -177,22 +177,38 @@ class GUI(tk.Tk):
     def onClickOptionToAddToCart(self,idx):
         '''  set the double click status flag
         '''
-        for button in self.__searchButtons:
+        #for button in self.__searchButtons:
 
-            button.destroy()
+         #   button.destroy()
 
         self.__cart.addInCart(idx)
         self.__search.deleteObject(idx)
         self.printCartItems(self.__cart.getObjectList())
         self.printSearchResult(self.__search.getList())
         
+    def onConfirmButton(self):
+        if self.__cart.getTotalMass() > 25 :
+            label = tk.Label(self.__cartFrame,text =
+            "Le poids de votre commande est trop grande. Veuillez vider quelques element de votre panier")
+            label.grid(row = 4, column = 0)
+        else:
+            for object in self.__cart.getObjectList():
+                self.__inventory.deleteFromInventoryObject(object)
+                self.__cart.deleteFromCart(object)
+
+            self.__search = Research.Research(self.__inventory.getInventoryList())
+            for button in self.__cartButtons:
+                button.destroy()
+
+        self.printInventorySection(self.__inventory.getInventoryList())
+        self.buildCartSection()
 
 
     def onClickOptionToRemoveFromCart(self,idx):
         '''  set the double click status flag
         '''
-        for button in self.__cartButtons:
-            button.destroy()
+        #for button in self.__cartButtons:
+        #    button.destroy()
         
         # TODO latter
         # cartItems will not be replaced only itemsSearch will be replaced by the search list
@@ -206,7 +222,7 @@ class GUI(tk.Tk):
     def openFile(self):
         name = filedialog.askopenfilename()
         self.__inventory.fillInventory(name)
-        self.printInventorySection()
+        self.printInventorySection(self.__inventory.getInventoryList())
         self.__search = Research.Research(self.__inventory.getInventoryList())
         self.printSearchResult(self.__search.getList())
     
@@ -308,7 +324,7 @@ class GUI(tk.Tk):
          scrollbH.config(command=self.__cartBox.xview)
 
          self.printCartItems(self.__cart.getObjectList())
-         button = tk.Button(self.__cartFrame,text ="Confirmer")
+         button = tk.Button(self.__cartFrame,text ="Confirmer",command = self.onConfirmButton)
          button.grid(row = 3 , column = 0)
 
 
@@ -352,10 +368,11 @@ class GUI(tk.Tk):
         scrollbH.config(command=self.__inventoryTextBox.xview)
 
         self.__inventoryTextBox.grid(row = 1, column = 0, ipadx= 20,ipady = 20)
-        self.printInventorySection()
+        self.printInventorySection(self.__inventory.getInventoryList())
 
-    def printInventorySection(self):
-        for item in self.__inventory.getInventoryList():
+    def printInventorySection(self,dataList):
+        self.__inventoryTextBox.delete("1.0",tk.END)
+        for item in dataList:
             self.__inventoryTextBox.insert(tk.END, item.printObject() + "\n")
 
 

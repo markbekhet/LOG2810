@@ -24,8 +24,7 @@ class Object:
             self.__mass = 3
         elif self.__type == "C":
             self.__mass = 5
-        else:
-            raise Exception("Type invalide")
+
 
         return self.__mass
 

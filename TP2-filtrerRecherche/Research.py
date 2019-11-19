@@ -15,7 +15,10 @@ class Research:
 
     # Liste d'objet
     def __init__(self, liste=[]):
-        self.__backgroundList = liste
+        self.__backgroundList=[]
+        for item in liste:
+            self.__backgroundList.append(item)
+
         self.__researchList = liste
 
     # Retourne la liste d'objet
