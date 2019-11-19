@@ -40,7 +40,8 @@ class Inventory:
         except:
             return False
 
-
+    def deleteFromInventoryObject(self, object):
+        self.deleteFromInventoryDependingOnDescription(object.printObject())
 
 #inventory = Inventory()
 #inventory.fillInventory("inventaire.txt")
