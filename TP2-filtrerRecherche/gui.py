@@ -113,15 +113,16 @@ class GUI(tk.Tk):
 
 
     # those three functions are for the connectors between the graphic interface and the classes of the model
-    def onButtonEntryName(self):
+
+
+    def onButtonGet(self):
         print(self.__entryName.get())
-        print(type(self.__entryName.get()))
-
-    def onButtonEntryCode(self):
         print(self.__entryCode.get())
-
-    def onButtonEntryType(self):
         print(self.__entryType.get())
+
+
+
+
 
     def printSearchResult(self,DataList):
         number = 0
@@ -223,8 +224,8 @@ class GUI(tk.Tk):
         labelName.grid(row =0, column = 0)
         self.__entryName = tk.Entry(frameName)
         self.__entryName.grid(row = 0, column = 1)
-        buttonName = tk.Button(frameName, text="Get", command=self.onButtonEntryName)
-        buttonName.grid(row = 0, column =2)
+        #buttonName = tk.Button(frameName, text="Get", command=self.onButtonEntryName)
+        #buttonName.grid(row = 0, column =2)
 
     # This block is for the entry of the code bar I will do the same as the last one
     def buildCodeFrame(self):
@@ -234,8 +235,8 @@ class GUI(tk.Tk):
         labelCodeBar.grid(row =0, column = 0)
         self.__entryCode = tk.Entry(frameCodeBar)
         self.__entryCode.grid(row = 0, column = 1)
-        buttonCode = tk.Button(frameCodeBar, text="Get", command=self.onButtonEntryCode)
-        buttonCode.grid(row = 0, column =2)
+        #buttonCode = tk.Button(frameCodeBar, text="Get", command=self.onButtonEntryCode)
+        #buttonCode.grid(row = 0, column =2)
 
     def buildTypeFrame(self):
         frameType = tk.Frame(self.__frameInput)
@@ -244,8 +245,8 @@ class GUI(tk.Tk):
         labelType.grid(row =0, column = 0)
         self.__entryType = tk.Entry(frameType)
         self.__entryType.grid(row = 0, column = 1)
-        buttonType = tk.Button(frameType, text="Get", command=self.onButtonEntryType)
-        buttonType.grid(row = 0, column =2)
+        #buttonType = tk.Button(frameType, text="Get", command=self.onButtonEntryType)
+        #buttonType.grid(row = 0, column =2)
 
     def buildResultSearchSection(self):
         #This is the text box resulting from the search
@@ -273,13 +274,13 @@ class GUI(tk.Tk):
 
          self.__cartFrame.grid(row = 2, column = 0,  ipady = 0)
          labelCart = tk.Label(self.__cartFrame, text ="Le panier")
-         labelCart.grid(row = 0, column = 1)
+         labelCart.grid(row = 0, column = 0,ipady = 15)
          
          scrollbV = ttk.Scrollbar(self.__cartFrame)
          scrollbH = ttk.Scrollbar(self.__cartFrame)
          
          self.__cartBox = tk.Text(self.__cartFrame,yscrollcommand = scrollbV.set, xscrollcommand = scrollbH.set)
-         self.__cartBox.grid(row = 1, column = 0)
+         self.__cartBox.grid(row = 1, column = 0,padx = 15)
 
          scrollbV.grid(row = 1, column = 1,sticky='nsew')
          scrollbH.grid(row = 2, column = 0,sticky='nsew')
@@ -305,6 +306,8 @@ class GUI(tk.Tk):
         self.buildCodeFrame()
         # This block is for the entry of the type
         self.buildTypeFrame()
+        getButton = tk.Button(self.__frameInput, text="Get", command=self.onButtonGet)
+        getButton.grid(row = 0, column =3,ipadx = 15)
         self.buildResultSearchSection()
         
                 
@@ -316,10 +319,18 @@ class GUI(tk.Tk):
         self.__searchViewFrame.grid_forget()
         self.__cartFrame.grid_forget()
         self.__inventorySection.grid(row = 0, column =1, padx = 20)
-        
+        scrollbV = ttk.Scrollbar(self.__inventorySection)
+        scrollbH = ttk.Scrollbar(self.__inventorySection)
         # This is the label of the inventory
         inventoryLabel= tk.Label(self.__inventorySection, text = "Bienvenu a l'entrepot \n L'entrepot contient les elements suivants")
         inventoryLabel.grid(row = 0, column = 0 , ipadx= 20)
+        scrollbV.grid(row=1, column=1, sticky='nsew')
+        scrollbH.grid(row=2, column=0, sticky='nsew')
+        self.__inventoryTextBox["yscrollcommand"] = scrollbV.set
+        self.__inventoryTextBox["xscrollcommand"] = scrollbH.set
+
+        scrollbV.config(command=self.__inventoryTextBox.yview)
+        scrollbH.config(command=self.__inventoryTextBox.xview)
 
         self.__inventoryTextBox.grid(row = 1, column = 0, ipadx= 20,ipady = 20)
         self.printInventorySection()
