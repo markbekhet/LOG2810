@@ -116,7 +116,7 @@ class GUI(tk.Tk):
     # those three functions are for the connectors between the graphic interface and the classes of the model
 
 
-    def onButtonGet(self):
+    def onButtonGet(self,event):
         print(self.__entryName.get())
         print(self.__entryCode.get())
         print(self.__entryType.get())
@@ -225,6 +225,7 @@ class GUI(tk.Tk):
         labelName.grid(row =0, column = 0)
         self.__entryName = tk.Entry(frameName)
         self.__entryName.grid(row = 0, column = 1)
+        self.__entryName.bind("<Key>",self.onButtonGet)
         #buttonName = tk.Button(frameName, text="Get", command=self.onButtonEntryName)
         #buttonName.grid(row = 0, column =2)
 
@@ -236,6 +237,7 @@ class GUI(tk.Tk):
         labelCodeBar.grid(row =0, column = 0)
         self.__entryCode = tk.Entry(frameCodeBar)
         self.__entryCode.grid(row = 0, column = 1)
+        self.__entryCode.bind("<Key>", self.onButtonGet)
         #buttonCode = tk.Button(frameCodeBar, text="Get", command=self.onButtonEntryCode)
         #buttonCode.grid(row = 0, column =2)
 
@@ -246,6 +248,7 @@ class GUI(tk.Tk):
         labelType.grid(row =0, column = 0)
         self.__entryType = tk.Entry(frameType)
         self.__entryType.grid(row = 0, column = 1)
+        self.__entryType.bind("<Key>", self.onButtonGet)
         #buttonType = tk.Button(frameType, text="Get", command=self.onButtonEntryType)
         #buttonType.grid(row = 0, column =2)
 
@@ -307,8 +310,8 @@ class GUI(tk.Tk):
         self.buildCodeFrame()
         # This block is for the entry of the type
         self.buildTypeFrame()
-        getButton = tk.Button(self.__frameInput, text="Get", command=self.onButtonGet)
-        getButton.grid(row = 0, column =3,ipadx = 15)
+        #getButton = tk.Button(self.__frameInput, text="Get", command=self.onButtonGet)
+        #getButton.grid(row = 0, column =3,ipadx = 15)
         self.buildResultSearchSection()
         
                 
