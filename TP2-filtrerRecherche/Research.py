@@ -1,5 +1,7 @@
 import Object
 import Inventory
+
+
 # ok je pense que dans cette classe c'est mieux d'avoir deux listes. Les deux listes s'initialisent à une liste
 # passé en paramètre du constructeur
 # une liste sera changé avec chaque recherche et l'autre sera inchangé
@@ -16,16 +18,19 @@ class Research:
         self.__backgroundList = liste
         self.__researchList = liste
 
-    #Retourne la liste d'objet
+    # Retourne la liste d'objet
     def getList(self):
         return self.__researchList
 
-    #Ajoute un objet au liste
+    def getCount(self):
+        return len(self.__researchList)
+
+    # Ajoute un objet au liste
     def addObject(self, obj):
         self.__backgroundList.append(obj)
         self.__researchList.append(obj)
 
-    #Supprime un objet au liste
+    # Supprime un objet au liste
     def deleteObject(self, obj):
         for objectList in self.__researchList:
             if objectList.printObject() == obj.printObject:
@@ -44,7 +49,7 @@ class Research:
     def researchById(self, id, liste):
         retList = []
         for obj in liste:
-            #A faire dans object
+            # A faire dans object
             if obj.findId(id):
                 retList.append(obj)
 
@@ -54,15 +59,25 @@ class Research:
     def researchByType(self, type, liste):
         retList = []
         for obj in liste:
-            #A faire dans object
+            # A faire dans object
             if obj.findType(type):
                 retList.append(obj)
 
         return retList
 
     def research(self, name, id, type):
-    #reseach global appelle les trois
-        self.__researchList = self.researchByName(name, self.__backgroundListe)
+        # reseach global appelle les trois
+        self.__researchList = self.researchByName(name, self.__backgroundList)
         self.__researchList = self.researchById(id, self.__researchList)
         self.__researchList = self.researchByType(type, self.__researchList)
 
+
+
+
+#liste = Inventory.Inventory()
+#liste.fillInventory("inventaire.txt")
+#search = Research(liste.getInventoryList())
+#search.research("", "","")
+#for item in search.getList():
+#   print(item.printObject())
+#print(search.getCount())

@@ -42,24 +42,24 @@ class Inventory:
 
 
 
-inventory = Inventory()
-inventory.fillInventory("inventaire.txt")
-for item in inventory.getInventoryList():
-    print(item.printObject())
+#inventory = Inventory()
+#inventory.fillInventory("inventaire.txt")
+#for item in inventory.getInventoryList():
+#    print(item.printObject())
     
 
 
 #object1 = Object("A", "5", "Allo")
 
 #print(object1.printObject())
-print()
-print("L'affichage apres elimination")
-print()
+#print()
+#print("L'affichage apres elimination")
+#print()
 #Ok Donc cela va etre regle automatiquement la fonction marche
-objectToRemove = Object("A\n","B16A49","avion")
-inventory.deleteFromInventoryDependingOnDescription(objectToRemove.printObject())
-for item in inventory.getInventoryList():
-    print(item.printObject())
+#objectToRemove = Object("A\n","B16A49","avion")
+#inventory.deleteFromInventoryDependingOnDescription(objectToRemove.printObject())
+#for item in inventory.getInventoryList():
+#    print(item.printObject())
 
 
 
