@@ -46,9 +46,35 @@ class Object:
         
         return False
 
-     
-    
+    def findName(self, name):
+        if name == "":
+            return True
+        else:
+            for index in range(0, len(name)):
+                if name[index] != self.__name[index]:
+                    return False
 
+        return True
+
+    def findId(self, id):
+        if id == "":
+            return True
+        else:
+            for index in range(0, len(id)):
+                if id[index] != self.__id[index]:
+                    return False
+
+        return True
+
+    def findType(self, type):
+        if type == "":
+            return True
+        else:
+            for index in range(0, len(type)):
+                if type[index] != self.__type[index]:
+                    return False
+
+        return True
 
 #je vais avoir besoin du return de cette fonction pour l'impression des objets dans le gui
     def printObject(self):

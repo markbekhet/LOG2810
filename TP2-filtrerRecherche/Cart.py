@@ -6,7 +6,7 @@ class Cart:
     def __init__(self, objectList):
         self._totalMass = DEFAULTTOTALMASS
         self._objectList = objectList
-        self._isValid = true
+        self._isValid = True
 
     def getTotalMass(self):
         for object in range(len(self._objectList)):
@@ -27,7 +27,7 @@ class Cart:
 
     def orderValidation(self):
         if self._totalMass > 25:
-            self._isValid = false
+            self._isValid = False
             raise Exception("La commande est trop lourde.")
 
 

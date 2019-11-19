@@ -11,44 +11,58 @@ import Inventory
 # Les fonctions de la recherche actuelle c'est mieux de le faire
 class Research:
 
-    # Recherche dans la liste d'objet de type inventaire un nom
+    # Liste d'objet
+    def __init__(self, liste):
+        self.__backgroundList = liste
+        self.__researchList = liste
+
+    #Retourne la liste d'objet
+    def getList(self):
+        return self.__researchList
+
+    #Ajoute un objet au liste
+    def addObject(self, obj):
+        self.__backgroundList.append(obj)
+        self.__researchList.append(obj)
+
+    #Supprime un objet au liste
+    def deleteObject(self, obj):
+        for objectList in self.__researchList:
+            if objectList.printObject() == obj.printObject:
+                self.__backgroundList.remove(objectList)
+                self.__researchList.remove(objectList)
+
     def researchByName(self, name, liste):
-        for object in liste:
-            if object.getName() != name:
-                #Retire tout les elements de la liste qui ne possède pas le bon nom
-                liste.remove(object)
-        return liste
+        retList = []
+        for obj in liste:
+            if obj.findName(name):
+                retList.append(obj)
 
-    # Recherche dans la liste d'objet de type inventaire un identifiant
+        return retList
+
+    # Recherche dans la liste d'objet de un identifiant
     def researchById(self, id, liste):
-        for object in liste:
-            if object.getId() != id:
-                # Recherche dans la liste objet un identifiant
-                liste.remove(object)
-        return liste
+        retList = []
+        for obj in liste:
+            #A faire dans object
+            if obj.findId(id):
+                retList.append(obj)
 
-    # Recherche dans la liste d'objet de type inventaire un type d'objet
+        return retList
+
+    # Recherche dans la liste d'objet de type  un type d'objet
     def researchByType(self, type, liste):
-        for object in liste:
-            if object.getType() != type:
-                #Recherche dans la liste objet un type
-                liste.remove(object)
-        return liste
+        retList = []
+        for obj in liste:
+            #A faire dans object
+            if obj.findType(type):
+                retList.append(obj)
 
-    # Affiche la list d'objet qui correspond au recherche
-   # def printResearch(self):
-    #    for object in self._objectList:
-    #        object.printObject()
+        return retList
 
-    #Ajoute la commande au panier et supprime les objets correspondant dans l'inventaire
-    #def confirmCommand(self):
-     #   self._cart.addInCart(self._objectList)
-      #  inventary.deleteObject(self._objectList)
-
-    #Supprime les objets du panier et les ajoute dans l'inventaire
-    #def deleteCommand(self):
-     #   self._cart.deleteInCart(self._objectList)
-      #  inventary.addObject(self._objectList)
-
-
+    def research(self, name, id, type):
+    #reseach global appelle les trois
+        self.__researchList = self.researchByName(name, self.__backgroundListe)
+        self.__researchList = self.researchById(id, self.__researchList)
+        self.__researchList = self.researchByType(type, self.__researchList)
 
