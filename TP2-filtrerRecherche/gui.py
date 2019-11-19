@@ -1,10 +1,10 @@
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import Canvas
-from Inventory import *
-from Object import *
-from Cart import *
-from Research import *
+import Inventory
+import Object
+import Cart
+import Research
 from tkinter import ttk
 #this is supposed to be the search items from a search
 #right now that's a temporary test until the search class is done
@@ -59,7 +59,7 @@ def gettingObjectCorrespondingFromList(array, objecctDescription)->Object:
 #   12 - textBox: a text box which contains all the search result items. it has the searchResultFrame as a parent
 #   13 - cartFrame: it has the generalView as a parent
 #   14 - cartBox: a text box which contains all the items in the cart. It has the cartFrame as a parent
-# 
+#   15-  inventoryTextBox: a text box which parent is inventorySection
 # 
 # 
 # b - methodes : overall description
@@ -105,16 +105,17 @@ class GUI(tk.Tk):
         self.__cartFrame = tk.Frame(self.__generalFrame)
         
         self.__cartButtons = []
-        self.__inventory = Inventory()
-          
-        
+        self.__inventory = Inventory.Inventory()
+
+        self.__inventoryTextBox = tk.Text(self.__inventorySection)
         
 
 
 
     # those three functions are for the connectors between the graphic interface and the classes of the model
     def onButtonEntryName(self):
-        print(self.entryName.get())
+        print(self.__entryName.get())
+        print(type(self.__entryName.get()))
 
     def onButtonEntryCode(self):
         print(self.__entryCode.get())
@@ -189,6 +190,7 @@ class GUI(tk.Tk):
     def openFile(self):
         name = filedialog.askopenfilename()
         self.__inventory.fillInventory(name)
+        self.printInventorySection()
     
     def buildMenu(self):
         menu = tk.Menu(self)
@@ -318,12 +320,15 @@ class GUI(tk.Tk):
         # This is the label of the inventory
         inventoryLabel= tk.Label(self.__inventorySection, text = "Bienvenu a l'entrepot \n L'entrepot contient les elements suivants")
         inventoryLabel.grid(row = 0, column = 0 , ipadx= 20)
-        inventoryTextBox = tk.Text(self.__inventorySection)
-        inventoryTextBox.grid(row = 1, column = 0, ipadx= 20,ipady = 20)
-        for item in self.__inventory.getInventoryList():
-            inventoryTextBox.insert(tk.END,item.printObject() +"\n")
 
-        
+        self.__inventoryTextBox.grid(row = 1, column = 0, ipadx= 20,ipady = 20)
+        self.printInventorySection()
+
+    def printInventorySection(self):
+        for item in self.__inventory.getInventoryList():
+            self.__inventoryTextBox.insert(tk.END, item.printObject() + "\n")
+
+
 
 
 gui = GUI()

@@ -1,6 +1,14 @@
 import Object
 import Inventory
-
+# ok je pense que dans cette classe c'est mieux d'avoir deux listes. Les deux listes s'initialisent à une liste
+# passé en paramètre du constructeur
+# une liste sera changé avec chaque recherche et l'autre sera inchangé
+# exemple d'utilité:
+# On décide de mdifier notre recherche en enlevant un caractère, dans ce cas, on a besoin de savoir l'état de la liste
+# précédente. Avec une seule liste on peut pas faire cela.
+# Il y aura une fonction pour get la liste qui change. La liste inchangé sera plutôt utilisé dans la recherche
+# En plus j'ai besoin d'une fonction pour add et delete des éléments des deux listes
+# Les fonctions de la recherche actuelle c'est mieux de le faire
 class Research:
 
     # Recherche dans la liste d'objet de type inventaire un nom

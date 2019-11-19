@@ -1,3 +1,6 @@
+# pourquoi voulez vous initialisez le panier avec un objectList
+# on a besoin de manipuler une liste seulement dans cette classe c'est-à-dire add, delete
+
 class Cart:
     DEFAULTTOTALMASS = 0
     def __init__(self, objectList):
