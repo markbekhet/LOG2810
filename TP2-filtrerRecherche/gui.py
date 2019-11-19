@@ -94,7 +94,7 @@ def gettingObjectCorrespondingFromList(array, objecctDescription)->Object:
 
 class GUI(tk.Tk):
     def __init__(self):
-        tk.Tk.__init__(self, screenName = "Ineventaire", className="Inventaire")
+        tk.Tk.__init__(self, screenName = "Inventaire", className="Inventaire")
         #self.attributes("-fullscreen", True)
         self.geometry("1000x1000")
         self.buildMenu()
@@ -205,12 +205,12 @@ class GUI(tk.Tk):
         filemenu.add_command(label="Quitter", command=self.quit)
         helpmenu = tk.Menu(menu)
         menu.add_cascade(label="Aide", menu=helpmenu)
-        helpmenu.add_command(label="A propos", command=About)
+        helpmenu.add_command(label="À propos", command=About)
 
         searchMenu =tk.Menu(menu)
         
-        menu.add_command(label = "vue panier" , command = self.buildCartSection)
-        menu.add_command(label = "vue recherche" , command = self.searchView)
+        menu.add_command(label = "Vue panier" , command = self.buildCartSection)
+        menu.add_command(label = "Vue recherche" , command = self.searchView)
         
 
         inventoryMenu = menu.add_cascade(label = "Vue inventaire", command = self.inventoryView)
@@ -253,7 +253,7 @@ class GUI(tk.Tk):
         #This is the text box resulting from the search
         self.__searchResultFrame = tk.Frame(self.__searchViewFrame)
         self.__searchResultFrame.grid(row = 1, column =0, ipady = 20, ipadx = 0)
-        labelSearch = tk.Label(self.__searchResultFrame,text="Les resultats de la recherche ")
+        labelSearch = tk.Label(self.__searchResultFrame,text="Les résultats de la recherche ")
         labelSearch.grid(row = 0, column = 0)
         scrollbV = ttk.Scrollbar(self.__searchViewFrame)
         scrollbH = ttk.Scrollbar(self.__searchViewFrame)
@@ -290,7 +290,7 @@ class GUI(tk.Tk):
          scrollbH.config(command=self.__cartBox.xview)
          
          self.printCartItems(cartItems)
-         button = tk.Button(self.__cartFrame,text ="confirmer")
+         button = tk.Button(self.__cartFrame,text ="Confirmer")
          button.grid(row = 3 , column = 0)
 
 
@@ -323,7 +323,7 @@ class GUI(tk.Tk):
         scrollbV = ttk.Scrollbar(self.__inventorySection)
         scrollbH = ttk.Scrollbar(self.__inventorySection)
         # This is the label of the inventory
-        inventoryLabel= tk.Label(self.__inventorySection, text = "Bienvenu a l'entrepot \n L'entrepot contient les elements suivants")
+        inventoryLabel= tk.Label(self.__inventorySection, text = "Bienvenue a l'entrepôt \n L'entrepôt contient les éléments suivants")
         inventoryLabel.grid(row = 0, column = 0 , ipadx= 20)
         scrollbV.grid(row=1, column=1, sticky='nsew')
         scrollbH.grid(row=2, column=0, sticky='nsew')
