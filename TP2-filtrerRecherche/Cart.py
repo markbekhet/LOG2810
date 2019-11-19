@@ -9,7 +9,7 @@ class Cart:
         self._isValid = True
 
     def getTotalMass(self):
-        for object in range(len(self._objectList)):
+        for object in self._objectList:
             self._totalMass += object.getMass()
 
         return self._totalMass
@@ -17,13 +17,13 @@ class Cart:
     def getObjectList(self):
         return self._objectList
 
-    def addInCart(self, objectList):
-        for object in range(len(objectList)):
-            self._objectList.append(object)
+    def addInCart(self, objectToAdd):
+            self._objectList.append(objectToAdd)
 
-    def deleteFromCart(self, objectList):
-        for object in range(len(objectList)):
-            self._objectList.remove(object)
+    def deleteFromCart(self, objectToDelete):
+        for objectList in self._objectList:
+            if objectList.printObject() == objectToDelete.printObject:
+                self._objectList.remove(objectList)
 
     def orderValidation(self):
         if self._totalMass > 25:

@@ -1,6 +1,6 @@
 from Object import * 
 import Cart
-#delete liste objects, get, add
+
 class Inventory:
     def __init__(self):
         self.__objectList = []
