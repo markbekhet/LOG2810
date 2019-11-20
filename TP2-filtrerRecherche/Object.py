@@ -17,13 +17,13 @@ class Object:
         return self.__name
 
     def getMass(self):
-        if self.__type == "A":
+        if self.__type == "A\n":
             self.__mass = 1
             
-        elif self.__type == "B":
+        elif self.__type == "B\n":
             self.__mass = 3
             
-        elif self.__type == "C":
+        elif self.__type == "C\n":
             self.__mass = 5
         
         return self.__mass

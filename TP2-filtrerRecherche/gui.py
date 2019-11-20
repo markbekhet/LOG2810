@@ -197,11 +197,14 @@ class GUI(tk.Tk):
             self.__search = Research.Research(self.__inventory.getInventoryList())
 
         else:
-            label = tk.Label(self.__cartFrame,text = "Le poids de votre commande est trop grande. Veuillez vider quelques element de votre panier")
-            label.grid(row = 4, column = 0)    
+            label = tk.Label(self.__cartFrame,text = "Le poids de votre commande est trop grande. Veuillez choisir autre elements")
+            label.grid(row = 4, column = 0)
+            for objectItem in self.__cart.getObjectList():
+                self.__search.addObject(objectItem)
+                self.__cart.deleteFromCart(objectItem)    
 
         #self.printInventorySection(self.__inventory.getInventoryList())
-        self.printCartItems(self.__cart.getObjectList())
+        self.buildCartSection()
 
 
     def onClickOptionToRemoveFromCart(self,idx):
