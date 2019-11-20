@@ -332,7 +332,9 @@ class GUI(tk.Tk):
             label.grid_forget()
             button = tk.Button(self.__cartFrame,text ="Confirmer",command = self.onConfirmButton)
             button.grid(row = 3 , column = 0)
+            
 
+        
 
 
     def searchView(self):
