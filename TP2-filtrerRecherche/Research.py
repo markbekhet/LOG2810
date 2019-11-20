@@ -16,10 +16,12 @@ class Research:
     # Liste d'objet
     def __init__(self, liste=[]):
         self.__backgroundList=[]
+        self.__researchList = []
         for item in liste:
             self.__backgroundList.append(item)
 
-        self.__researchList = self.__backgroundList
+        for item in liste:
+            self.__researchList.append(item)
 
     # Retourne la liste d'objet
     def getList(self):
