@@ -148,11 +148,11 @@ class GUI(tk.Tk):
             #button.place(y = number*height , height=height)
             number +=1
             
-            
+        searchCount = tk.Label(self.__searchViewFrame, text = "Le nombre d'items résultantes de votre liste est " + str(self.__search.getCount()))
+        searchCount.grid(row = 5, column = 0) 
             
     def printCartItems(self,DataList):
-        for button in self.__cartButtons:
-            button.destroy()
+        
         number = 0
         for button in self.__cartButtons:
             button.destroy()
@@ -180,31 +180,24 @@ class GUI(tk.Tk):
         #for button in self.__searchButtons:
 
          #   button.destroy()
-
         self.__cart.addInCart(idx)
         self.__search.deleteObject(idx)
         self.printCartItems(self.__cart.getObjectList())
         self.printSearchResult(self.__search.getList())
         
     def onConfirmButton(self):
-        if self.__cart.orderValidation():
-            label = tk.Label(self.__cartFrame,text = "ok")
-            label.grid(row = 4, column = 0)
-            for objectItem in self.__cart.getObjectList():
-                self.__inventory.deleteFromInventoryObject(objectItem)
-                self.__cart.deleteFromCart(objectItem)
+    
+        
+        for objectItem in self.__cart.getObjectList():
+            #self.__cart.deleteFromCart(objectItem)
+            self.__inventory.deleteFromInventoryObject(objectItem)
+            
+        self.__cart = Cart.Cart()
 
-            self.__search = Research.Research(self.__inventory.getInventoryList())
-
-        else:
-            label = tk.Label(self.__cartFrame,text = "Le poids de votre commande est trop grande. Veuillez choisir autre elements")
-            label.grid(row = 4, column = 0)
-            for objectItem in self.__cart.getObjectList():
-                self.__search.addObject(objectItem)
-                self.__cart.deleteFromCart(objectItem)    
+        self.__search = Research.Research(self.__inventory.getInventoryList())
 
         #self.printInventorySection(self.__inventory.getInventoryList())
-        self.buildCartSection()
+        self.buildCartItems()
 
 
     def onClickOptionToRemoveFromCart(self,idx):
@@ -219,9 +212,9 @@ class GUI(tk.Tk):
         self.__cart.deleteFromCart(idx)
         self.__search.addObject(idx)
         self.printSearchResult(self.__search.getList())
-        self.printCartItems(self.__cart.getObjectList())
-               
+        self.buildCartItems()
             
+
     def openFile(self):
         name = filedialog.askopenfilename()
         self.__inventory.fillInventory(name)
@@ -325,10 +318,21 @@ class GUI(tk.Tk):
          self.__cartBox["xscrollcommand"] = scrollbH.set
          scrollbV.config(command=self.__cartBox.yview)
          scrollbH.config(command=self.__cartBox.xview)
+         self.buildCartItems()
+         
+         
 
-         self.printCartItems(self.__cart.getObjectList())
-         button = tk.Button(self.__cartFrame,text ="Confirmer",command = self.onConfirmButton)
-         button.grid(row = 3 , column = 0)
+    def buildCartItems(self):
+        self.printCartItems(self.__cart.getObjectList())
+        label = tk.Label(self.__cartFrame,text = "Votre commande est trop lourde. Veuillez choisir autre elements")
+        if self.__cart.getTotalMass()> 25 :
+            
+            label.grid(row = 3, column = 0)
+        else:
+            label.grid_forget()
+            button = tk.Button(self.__cartFrame,text ="Confirmer",command = self.onConfirmButton)
+            button.grid(row = 3 , column = 0)
+
 
 
     def searchView(self):
