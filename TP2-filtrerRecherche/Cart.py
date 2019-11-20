@@ -28,7 +28,8 @@ class Cart:
         if self.getTotalMass() > 25:
             return  False
             
-        else: return True
+        elif self.getTotalMass() <= 25:
+            return True
 
 
 

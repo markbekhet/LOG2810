@@ -187,9 +187,9 @@ class GUI(tk.Tk):
         self.printSearchResult(self.__search.getList())
         
     def onConfirmButton(self):
-        
-            
-        if self.__cart.getTotalMass()<= 25:
+        if self.__cart.orderValidation():
+            label = tk.Label(self.__cartFrame,text = "ok")
+            label.grid(row = 4, column = 0)
             for objectItem in self.__cart.getObjectList():
                 self.__inventory.deleteFromInventoryObject(objectItem)
                 self.__cart.deleteFromCart(objectItem)

@@ -19,7 +19,7 @@ class Research:
         for item in liste:
             self.__backgroundList.append(item)
 
-        self.__researchList = liste
+        self.__researchList = self.__backgroundList
 
     # Retourne la liste d'objet
     def getList(self):
