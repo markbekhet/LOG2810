@@ -40,9 +40,9 @@ class Inventory:
         except:
             return False
 
-    def deleteFromInventoryObject(self, object):
+    def deleteFromInventoryObject(self, objectToDelete):
         for objectList in self.__objectList:
-            if objectList.printObject() == object.printObject():
+            if objectList.printObject() == objectToDelete.printObject():
                 self.__objectList.remove(objectList)
 
 #inventory = Inventory()

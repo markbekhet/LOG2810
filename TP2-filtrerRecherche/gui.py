@@ -187,21 +187,21 @@ class GUI(tk.Tk):
         self.printSearchResult(self.__search.getList())
         
     def onConfirmButton(self):
-        if self.__cart.getTotalMass() > 25 :
-            label = tk.Label(self.__cartFrame,text =
-            "Le poids de votre commande est trop grande. Veuillez vider quelques element de votre panier")
-            label.grid(row = 4, column = 0)
-        else:
-            for object in self.__cart.getObjectList():
-                self.__inventory.deleteFromInventoryObject(object)
-                self.__cart.deleteFromCart(object)
+        
+            
+        if self.__cart.getTotalMass()<= 25:
+            for objectItem in self.__cart.getObjectList():
+                self.__inventory.deleteFromInventoryObject(objectItem)
+                self.__cart.deleteFromCart(objectItem)
 
             self.__search = Research.Research(self.__inventory.getInventoryList())
-            for button in self.__cartButtons:
-                button.destroy()
 
-        self.printInventorySection(self.__inventory.getInventoryList())
-        self.buildCartSection()
+        else:
+            label = tk.Label(self.__cartFrame,text = "Le poids de votre commande est trop grande. Veuillez vider quelques element de votre panier")
+            label.grid(row = 4, column = 0)    
+
+        #self.printInventorySection(self.__inventory.getInventoryList())
+        self.printCartItems(self.__cart.getObjectList())
 
 
     def onClickOptionToRemoveFromCart(self,idx):
@@ -329,6 +329,7 @@ class GUI(tk.Tk):
 
 
     def searchView(self):
+        self.buildCartSection()
         self.buildCartSection()
         self.__inventorySection.grid_forget()
         self.__cartFrame.grid_forget()
