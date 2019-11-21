@@ -301,6 +301,8 @@ class GUI(tk.Tk):
     def buildCartSection(self):
          self.__inventorySection.grid_forget()
          self.__searchViewFrame.grid_forget()
+         
+         self.__search.research("","","")
 
          self.__cartFrame.grid(row = 2, column = 0,  ipady = 0)
          labelCart = tk.Label(self.__cartFrame, text ="Le panier")
