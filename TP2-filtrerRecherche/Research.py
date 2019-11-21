@@ -18,10 +18,10 @@ class Research:
         self.__backgroundList=[]
         self.__researchList = []
         for item in liste:
-            self.__backgroundList.append(item)
+            self.__backgroundList.append(liste[item])
 
         for item in liste:
-            self.__researchList.append(item)
+            self.__researchList.append(liste[item])
 
     # Retourne la liste d'objet
     def getList(self):

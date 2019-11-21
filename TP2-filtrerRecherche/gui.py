@@ -385,7 +385,7 @@ class GUI(tk.Tk):
     def printInventorySection(self,dataList):
         self.__inventoryTextBox.delete("1.0",tk.END)
         for item in dataList:
-            self.__inventoryTextBox.insert(tk.END, item.printObject() + "\n")
+            self.__inventoryTextBox.insert(tk.END, self.__inventory.getInventoryList()[item].printObject() + "\n")
 
 
 
