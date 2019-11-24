@@ -55,9 +55,7 @@ class Object:
                 if index >= len(self.__name):
                     return False
 
-                if name[index] != self.__name[index]:
-                    return False
-
+                
                 elif name[index] != self.__name[index]:
                     return False
 
