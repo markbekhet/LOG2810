@@ -205,7 +205,7 @@ class GUI(tk.Tk):
         valueInArray = gettingObjectCorrespondingFromList(self.__search.getList(),value)
         self.__cart.addInCart(valueInArray)
         self.__search.deleteObject(valueInArray)
-        self.printCartItems(self.__cart.getObjectList())
+        #self.printCartItems(self.__cart.getObjectList())
         self.printSearchResult(self.__search.getList())
         
     
@@ -247,7 +247,7 @@ class GUI(tk.Tk):
         self.__inventory.fillInventory(name)
         self.printInventorySection(self.__inventory.getInventoryList())
         self.__search = Research.Research(self.__inventory.getInventoryList())
-        self.__search.research("","","")
+        #self.__search.research("","","")
         self.printSearchResult(self.__search.getList())
     
     def buildMenu(self):
@@ -330,7 +330,7 @@ class GUI(tk.Tk):
          self.__inventorySection.grid_forget()
          self.__searchViewFrame.grid_forget()
          
-         self.__search.research("","","")
+         #self.__search.research("","","")
 
          self.__cartFrame.grid(row = 2, column = 0,  ipady = 0)
          labelCart = tk.Label(self.__cartFrame, text ="Le panier")
