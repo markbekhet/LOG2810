@@ -55,6 +55,9 @@ class Object:
                 if index >= len(self.__name):
                     return False
 
+                if name[index] != self.__name[index]:
+                    return False
+
                 elif name[index] != self.__name[index]:
                     return False
 
@@ -69,20 +72,20 @@ class Object:
                 if index >= len(self.__id):
                     return False
 
-                elif id[index] != self.__id[index]:
+                if id[index] != self.__id[index]:
                     return False
 
         return True
 
-    def findType(self, type):
-        if type == "":
+    def findType(self, typeObj):
+        if typeObj == "":
             return True
         else:
-            for index in range(0, len(type)):
+            for index in range(0, len(typeObj)):
                 if index >= len(self.__type):
                     return False
 
-                elif type[index] != self.__type[index]:
+                if typeObj[index] != self.__type[index]:
                     return False
 
         return True

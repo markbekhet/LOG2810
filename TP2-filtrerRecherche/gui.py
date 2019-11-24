@@ -5,6 +5,7 @@ import Inventory
 import Object
 import Cart
 import Research
+import time
 from tkinter import ttk
 import time
 #this is supposed to be the search items from a search
@@ -36,7 +37,10 @@ def gettingObjectCorrespondingFromList(array, objecctDescription):
 
 
         
-
+def gettingElementFromList(array, itemDescription):
+    for item in array:
+        if str(item)+"\n" ==itemDescription:
+            return item
         
 
 # In this class :
@@ -114,8 +118,8 @@ class GUI(tk.Tk):
         self.__search = Research.Research()
 
         self.__searchResultFrame = tk.Frame(self.__searchViewFrame)
-        self.__searchResultBox = tk.Text(self.__searchResultFrame)
-        self.__cartBox = tk.Text(self.__cartFrame)
+        self.__searchResultBox = tk.Listbox(self.__searchResultFrame, width = 50,height = 30)
+        self.__cartBox = tk.Listbox(self.__cartFrame,width = 50, height = 30)
         self.__searchButtons = []
 
 
@@ -135,49 +139,53 @@ class GUI(tk.Tk):
 
     def printSearchResult(self,DataList):
         startTime = time.time()
-        for button in self.__searchButtons:
-            button.destroy()
+        self.__searchResultBox.delete(0,tk.END)
+
         number = 0
         for item in DataList:
-            if number < 10:
-                height = 20
-                button = tk.Button(self.__searchResultBox, text = item.printObject())
-                self.__searchButtons.append(button)
-                self.__searchResultBox.window_create( self.__searchResultBox.index("end"), window = button)
+            if number<10:
+                #button = tk.Button(self.__searchResultBox, text = item.printObject())
+                #self.__searchButtons.append(button)
+                self.__searchResultBox.insert(tk.END, item.printObject())
                 #self.__searchResultBox.window_create(self.__searchResultBox.index("end"),window = tk.Label(self.__searchResultBox, text = "\n"))
-            
+                self.__searchResultBox.bind('<<ListboxSelect>>',self.onClickOptionToAddToCart)
                 #self.__searchResultBox.insert(tk.END, "\n")
-                button['command'] = lambda idx=item: self.onClickOptionToAddToCart(idx)
+                #button['command'] = lambda idx=item: self.onClickOptionToAddToCart(idx)
                 #button.place(y = number*height , height=height)
                 number +=1
 
             else:
                 break
 
-        elspsedTime = time.time() - startTime
-        print("La creation des bouttons est terminee pour la recherche. Le temps pris est de " + str(
-            elspsedTime) + " secondes")
-        searchCount = tk.Label(self.__searchViewFrame,
-                               text="Le nombre d'items possibles résultantes de votre recherche est " + str(
-                                   self.__search.getCount()))
+        elspsedTime = time.time()-startTime
+        print("La creation des bouttons est terminee pour la recherche. Le temps pris est de " + str(elspsedTime)+" secondes")
+        searchCount = tk.Label(self.__searchViewFrame, text = "Le nombre d'items possibles résultantes de votre recherche est " + str(self.__search.getCount()))
         searchCount.grid(row = 5, column = 0) 
             
     def printCartItems(self,DataList):
-        
+        startTime = time.time()
         number = 0
-        for button in self.__cartButtons:
-            button.destroy()
+        self.__cartBox.delete(0,tk.END)
+        
         for item in DataList:
-            height = 20
-            #the problem is mainly here i am writing a text on the  button but it is solved because i did a function to return the object from the list corresponding to the description 
-            button = tk.Button(self.__cartBox, text = item.printObject())
-            self.__cartButtons.append(button)
-            self.__cartBox.window_create( self.__cartBox.index("end"), window = button)
-            # here the function will be called
-            button['command'] = lambda idx=item: self.onClickOptionToRemoveFromCart(idx)
-            #button.place(y = number*height , height=height)
-            number +=1
-            
+            if number<10 :
+                height = 20
+                #the problem is mainly here i am writing a text on the  button but it is solved because i did a function to return the object from the list corresponding to the description
+                #button = tk.Button(self.__cartBox, text = item.printObject())
+                #self.__cartButtons.append(button)
+                self.__cartBox.insert( tk.END, item.printObject())
+                self.__cartBox.bind('<<ListboxSelect>>',self.onClickOptionToRemoveFromCart)
+                # here the function will be called
+                #button['command'] = lambda idx=item: self.onClickOptionToRemoveFromCart(idx)
+                #button.place(y = number*height , height=height)
+                number +=1
+
+            else:
+                break
+
+            elspsedTime = time.time() - startTime
+            print("La creation des bouttons pour le panier est terminee. Le temps pris est de " + str(elspsedTime) + " secondes")
+
         
 
             
@@ -185,17 +193,22 @@ class GUI(tk.Tk):
     #I want to make the same action in both directions
     # I have to manually destroy this button and manipulate the two lists        
     #handling events   
-    def onClickOptionToAddToCart(self,idx):
+    def onClickOptionToAddToCart(self,evt):
         '''  set the double click status flag
         '''
         #for button in self.__searchButtons:
 
          #   button.destroy()
-        self.__cart.addInCart(idx)
-        self.__search.deleteObject(idx)
+        w = evt.widget
+        index = int(w.curselection()[0])
+        value = w.get(index)
+        valueInArray = gettingObjectCorrespondingFromList(self.__search.getList(),value)
+        self.__cart.addInCart(valueInArray)
+        self.__search.deleteObject(valueInArray)
         self.printCartItems(self.__cart.getObjectList())
         self.printSearchResult(self.__search.getList())
         
+    
     def onConfirmButton(self):
     
         
@@ -207,10 +220,10 @@ class GUI(tk.Tk):
 
         self.__search = Research.Research(self.__inventory.getInventoryList())
         #self.printInventorySection(self.__inventory.getInventoryList())
-        self.buildCartItems()
+        #self.buildCartItems()
 
 
-    def onClickOptionToRemoveFromCart(self,idx):
+    def onClickOptionToRemoveFromCart(self,evt):
         '''  set the double click status flag
         '''
         #for button in self.__cartButtons:
@@ -218,10 +231,14 @@ class GUI(tk.Tk):
         
         # TODO latter
         # cartItems will not be replaced only itemsSearch will be replaced by the search list
-        #this will be an Object type so in the Cart class I need to put a function which removes 
-        self.__cart.deleteFromCart(idx)
-        self.__search.addObject(idx)
-        self.printSearchResult(self.__search.getList())
+        #this will be an Object type so in the Cart class I need to put a function which removes
+        w = evt.widget
+        index = int(w.curselection()[0])
+        value = w.get(index)
+        valueInArray = gettingObjectCorrespondingFromList(self.__cart.getObjectList(),value) 
+        self.__cart.deleteFromCart(valueInArray)
+        self.__search.addObject(valueInArray)
+        #self.printSearchResult(self.__search.getList())
         self.buildCartItems()
             
 
@@ -299,7 +316,7 @@ class GUI(tk.Tk):
         
 
         self.__searchResultBox.grid(row = 1,column = 0,columnspan =10)
-        
+
         scrollbV.grid(row = 1, column = 1,sticky='nsew')
         scrollbH.grid(row = 2, column = 0,sticky='nsew')
         self.__searchResultBox["yscrollcommand"] = scrollbV.set

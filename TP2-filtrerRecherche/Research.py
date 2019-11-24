@@ -84,8 +84,10 @@ class Research:
         self.__researchList = self.researchById(id, self.__researchList)
         self.__researchList = self.researchByType(type, self.__researchList)
         elapsedTime = time.time() - startTime
-        print("La recherche est terminee. Le temps necessaire pour faire la recherche est " + str(
-            elapsedTime) + " secondes")
+        print("La recherche est terminee. Le temps necessaire pour faire la recherche est " + str(elapsedTime)+" secondes")
+
+
+
 
 #liste = Inventory.Inventory()
 #liste.fillInventory("inventaire.txt")
