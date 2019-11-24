@@ -15,6 +15,7 @@ class Inventory:
 
             objectInstance = Object(typeObject, id, name)
             self.__objectList[objectInstance.getId()] = objectInstance
+        print("la lecture du fichier est termine")
         file.close()
 
     def getInventoryList(self):

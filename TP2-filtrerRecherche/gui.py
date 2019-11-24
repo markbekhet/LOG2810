@@ -147,7 +147,8 @@ class GUI(tk.Tk):
             button['command'] = lambda idx=item: self.onClickOptionToAddToCart(idx)
             #button.place(y = number*height , height=height)
             number +=1
-            
+
+        print("La creation des bouttons est terminee")    
         searchCount = tk.Label(self.__searchViewFrame, text = "Le nombre d'items résultantes de votre liste est " + str(self.__search.getCount()))
         searchCount.grid(row = 5, column = 0) 
             
@@ -195,7 +196,6 @@ class GUI(tk.Tk):
         self.__cart = Cart.Cart()
 
         self.__search = Research.Research(self.__inventory.getInventoryList())
-
         #self.printInventorySection(self.__inventory.getInventoryList())
         self.buildCartItems()
 

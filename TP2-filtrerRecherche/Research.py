@@ -20,8 +20,8 @@ class Research:
         for item in liste:
             self.__backgroundList.append(liste[item])
 
-        for item in liste:
-            self.__researchList.append(liste[item])
+        #for item in liste:
+        #    self.__researchList.append(liste[item])
 
     # Retourne la liste d'objet
     def getList(self):
@@ -81,16 +81,17 @@ class Research:
         self.__researchList = self.researchByName(name, self.__backgroundList)
         self.__researchList = self.researchById(id, self.__researchList)
         self.__researchList = self.researchByType(type, self.__researchList)
+        print("La recherche est terminee")
 
 
 
 
-liste = Inventory.Inventory()
-liste.fillInventory("inventaire.txt")
-search = Research(liste.getInventoryList())
-search.research("", "","")
-for item in search.getList():
-   print(item.printObject())
+#liste = Inventory.Inventory()
+#liste.fillInventory("inventaire.txt")
+#search = Research(liste.getInventoryList())
+#search.research("", "","")
+#for item in search.getList():
+#   print(item.printObject())
 
 
-print(search.getCount())
+#print(search.getCount())
