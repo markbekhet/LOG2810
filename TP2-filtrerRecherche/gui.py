@@ -117,8 +117,8 @@ class GUI(tk.Tk):
         self.__search = Research.Research()
 
         self.__searchResultFrame = tk.Frame(self.__searchViewFrame)
-        self.__searchResultBox = tk.Listbox(self.__searchResultFrame)
-        self.__cartBox = tk.Listbox(self.__cartFrame)
+        self.__searchResultBox = tk.Listbox(self.__searchResultFrame, width = 50,height = 30)
+        self.__cartBox = tk.Listbox(self.__cartFrame,width = 50, height = 30)
         self.__searchButtons = []
 
 
@@ -219,7 +219,7 @@ class GUI(tk.Tk):
 
         self.__search = Research.Research(self.__inventory.getInventoryList())
         #self.printInventorySection(self.__inventory.getInventoryList())
-        self.buildCartItems()
+        #self.buildCartItems()
 
 
     def onClickOptionToRemoveFromCart(self,evt):
@@ -237,7 +237,7 @@ class GUI(tk.Tk):
         valueInArray = gettingObjectCorrespondingFromList(self.__cart.getObjectList(),value) 
         self.__cart.deleteFromCart(valueInArray)
         self.__search.addObject(valueInArray)
-        self.printSearchResult(self.__search.getList())
+        #self.printSearchResult(self.__search.getList())
         self.buildCartItems()
             
 
@@ -246,6 +246,7 @@ class GUI(tk.Tk):
         self.__inventory.fillInventory(name)
         self.printInventorySection(self.__inventory.getInventoryList())
         self.__search = Research.Research(self.__inventory.getInventoryList())
+        self.__search.research("","","")
         self.printSearchResult(self.__search.getList())
     
     def buildMenu(self):
