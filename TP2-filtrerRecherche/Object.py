@@ -67,12 +67,12 @@ class Object:
 
         return True
 
-    def findType(self, type):
+    def findType(self, typeObj):
         if type == "":
             return True
         else:
-            for index in range(0, len(type)):
-                if type[index] != self.__type[index]:
+            for index in range(0, len(typeObj)):
+                if typeObj[index] != self.__type[index]:
                     return False
 
         return True
