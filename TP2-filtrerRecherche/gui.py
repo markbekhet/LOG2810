@@ -220,7 +220,7 @@ class GUI(tk.Tk):
 
         self.__search = Research.Research(self.__inventory.getInventoryList())
         #self.printInventorySection(self.__inventory.getInventoryList())
-        #self.buildCartItems()
+        self.buildCartItems()
 
 
     def onClickOptionToRemoveFromCart(self,evt):
