@@ -1,5 +1,6 @@
 import Object
 import Inventory
+import time
 
 
 # ok je pense que dans cette classe c'est mieux d'avoir deux listes. Les deux listes s'initialisent à une liste
@@ -77,14 +78,14 @@ class Research:
         return retList
 
     def research(self, name, id, type):
+        startTime = time.time()
         # reseach global appelle les trois
         self.__researchList = self.researchByName(name, self.__backgroundList)
         self.__researchList = self.researchById(id, self.__researchList)
         self.__researchList = self.researchByType(type, self.__researchList)
-        print("La recherche est terminee")
-
-
-
+        elapsedTime = time.time() - startTime
+        print("La recherche est terminee. Le temps necessaire pour faire la recherche est " + str(
+            elapsedTime) + " secondes")
 
 #liste = Inventory.Inventory()
 #liste.fillInventory("inventaire.txt")

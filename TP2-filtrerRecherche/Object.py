@@ -17,13 +17,13 @@ class Object:
         return self.__name
 
     def getMass(self):
-        if self.__type == "A\n":
+        if "A" in self.__type:
             self.__mass = 1
             
-        elif self.__type == "B\n":
+        elif "B" in self.__type:
             self.__mass = 3
             
-        elif self.__type == "C\n":
+        elif "C" in self.__type:
             self.__mass = 5
         
         return self.__mass
@@ -52,8 +52,12 @@ class Object:
             return True
         else:
             for index in range(0, len(name)):
-                if name[index] != self.__name[index]:
+                if index >= len(self.__name):
                     return False
+
+                elif name[index] != self.__name[index]:
+                    return False
+
 
         return True
 
@@ -62,7 +66,10 @@ class Object:
             return True
         else:
             for index in range(0, len(id)):
-                if id[index] != self.__id[index]:
+                if index >= len(self.__id):
+                    return False
+
+                elif id[index] != self.__id[index]:
                     return False
 
         return True
@@ -72,7 +79,10 @@ class Object:
             return True
         else:
             for index in range(0, len(type)):
-                if type[index] != self.__type[index]:
+                if index >= len(self.__type):
+                    return False
+
+                elif type[index] != self.__type[index]:
                     return False
 
         return True

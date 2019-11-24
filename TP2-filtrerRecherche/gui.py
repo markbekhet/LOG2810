@@ -6,6 +6,7 @@ import Object
 import Cart
 import Research
 from tkinter import ttk
+import time
 #this is supposed to be the search items from a search
 #right now that's a temporary test until the search class is done
 
@@ -133,23 +134,32 @@ class GUI(tk.Tk):
 
 
     def printSearchResult(self,DataList):
+        startTime = time.time()
         for button in self.__searchButtons:
             button.destroy()
         number = 0
         for item in DataList:
-            height = 20
-            button = tk.Button(self.__searchResultBox, text = item.printObject())
-            self.__searchButtons.append(button)
-            self.__searchResultBox.window_create( self.__searchResultBox.index("end"), window = button)
-            #self.__searchResultBox.window_create(self.__searchResultBox.index("end"),window = tk.Label(self.__searchResultBox, text = "\n"))
+            if number < 10:
+                height = 20
+                button = tk.Button(self.__searchResultBox, text = item.printObject())
+                self.__searchButtons.append(button)
+                self.__searchResultBox.window_create( self.__searchResultBox.index("end"), window = button)
+                #self.__searchResultBox.window_create(self.__searchResultBox.index("end"),window = tk.Label(self.__searchResultBox, text = "\n"))
             
-            #self.__searchResultBox.insert(tk.END, "\n")
-            button['command'] = lambda idx=item: self.onClickOptionToAddToCart(idx)
-            #button.place(y = number*height , height=height)
-            number +=1
+                #self.__searchResultBox.insert(tk.END, "\n")
+                button['command'] = lambda idx=item: self.onClickOptionToAddToCart(idx)
+                #button.place(y = number*height , height=height)
+                number +=1
 
-        print("La creation des bouttons est terminee")    
-        searchCount = tk.Label(self.__searchViewFrame, text = "Le nombre d'items résultantes de votre liste est " + str(self.__search.getCount()))
+            else:
+                break
+
+        elspsedTime = time.time() - startTime
+        print("La creation des bouttons est terminee pour la recherche. Le temps pris est de " + str(
+            elspsedTime) + " secondes")
+        searchCount = tk.Label(self.__searchViewFrame,
+                               text="Le nombre d'items possibles résultantes de votre recherche est " + str(
+                                   self.__search.getCount()))
         searchCount.grid(row = 5, column = 0) 
             
     def printCartItems(self,DataList):
@@ -220,6 +230,7 @@ class GUI(tk.Tk):
         self.__inventory.fillInventory(name)
         self.printInventorySection(self.__inventory.getInventoryList())
         self.__search = Research.Research(self.__inventory.getInventoryList())
+        self.__search.research("","","")
         self.printSearchResult(self.__search.getList())
     
     def buildMenu(self):
@@ -331,7 +342,7 @@ class GUI(tk.Tk):
             
             label.grid(row = 3, column = 0)
         else:
-            label.grid_forget()
+            #label.grid_forget()
             button = tk.Button(self.__cartFrame,text ="Confirmer",command = self.onConfirmButton)
             button.grid(row = 3 , column = 0)
             
