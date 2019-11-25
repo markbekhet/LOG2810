@@ -384,7 +384,7 @@ class GUI(tk.Tk):
         getButton = tk.Button(self.__frameInput, text="Get", command=self.onButtonGet)
         getButton.grid(row = 0, column =3,ipadx = 15)
         self.buildResultSearchSection()
-        
+        self.__search.research("","","")
                 
         self.printSearchResult(self.__search.getList())
         

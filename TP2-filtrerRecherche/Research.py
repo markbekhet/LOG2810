@@ -50,32 +50,41 @@ class Research:
 
 
     def researchByName(self, name, liste):
-        retList = []
-        for obj in liste:
-            if obj.findName(name):
-                retList.append(obj)
+        if name =="":
+            return liste
+        else:
+            retList = []
+            for obj in liste:
+                if obj.findName(name):
+                    retList.append(obj)
 
-        return retList
+            return retList
 
     # Recherche dans la liste d'objet de un identifiant
     def researchById(self, id, liste):
-        retList = []
-        for obj in liste:
-            # A faire dans object
-            if obj.findId(id):
-                retList.append(obj)
+        if id =="":
+            return liste
+        else:
+            retList = []
+            for obj in liste:
+                # A faire dans object
+                if obj.findId(id):
+                    retList.append(obj)
 
-        return retList
+            return retList
 
     # Recherche dans la liste d'objet de type  un type d'objet
-    def researchByType(self, type, liste):
-        retList = []
-        for obj in liste:
-            # A faire dans object
-            if obj.findType(type):
-                retList.append(obj)
+    def researchByType(self, typeObj, liste):
+        if typeObj == "":
+            return liste
+        else:
+            retList = []
+            for obj in liste:
+                # A faire dans object
+                if obj.findType(typeObj):
+                    retList.append(obj)
 
-        return retList
+            return retList
 
     def research(self, name, id, type):
         startTime = time.time()
