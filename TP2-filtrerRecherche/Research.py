@@ -86,12 +86,12 @@ class Research:
 
             return retList
 
-    def research(self, name, id, type):
+    def research(self, name, id, typeObj):
         startTime = time.time()
         # reseach global appelle les trois
         self.__researchList = self.researchByName(name, self.__backgroundList)
         self.__researchList = self.researchById(id, self.__researchList)
-        self.__researchList = self.researchByType(type, self.__researchList)
+        self.__researchList = self.researchByType(typeObj, self.__researchList)
         elapsedTime = time.time() - startTime
         print("La recherche est terminee. Le temps necessaire pour faire la recherche est " + str(elapsedTime)+" secondes")
 
