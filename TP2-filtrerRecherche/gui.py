@@ -141,21 +141,20 @@ class GUI(tk.Tk):
         startTime = time.time()
         self.__searchResultBox.delete(0,tk.END)
 
-        number = 0
-        for item in DataList:
-            if number<10:
-                #button = tk.Button(self.__searchResultBox, text = item.printObject())
-                #self.__searchButtons.append(button)
-                self.__searchResultBox.insert(tk.END, item.printObject())
-                #self.__searchResultBox.window_create(self.__searchResultBox.index("end"),window = tk.Label(self.__searchResultBox, text = "\n"))
-                self.__searchResultBox.bind('<<ListboxSelect>>',self.onClickOptionToAddToCart)
-                #self.__searchResultBox.insert(tk.END, "\n")
-                #button['command'] = lambda idx=item: self.onClickOptionToAddToCart(idx)
-                #button.place(y = number*height , height=height)
-                number +=1
+        
+        for number in range(0,10):
+            
+            #button = tk.Button(self.__searchResultBox, text = item.printObject())
+            #self.__searchButtons.append(button)
+            self.__searchResultBox.insert(tk.END, DataList[number].printObject())
+            #self.__searchResultBox.window_create(self.__searchResultBox.index("end"),window = tk.Label(self.__searchResultBox, text = "\n"))
+            self.__searchResultBox.bind('<<ListboxSelect>>',self.onClickOptionToAddToCart)
+            #self.__searchResultBox.insert(tk.END, "\n")
+            #button['command'] = lambda idx=item: self.onClickOptionToAddToCart(idx)
+            #button.place(y = number*height , height=height)
+            
 
-            else:
-                break
+            
 
         elspsedTime = time.time()-startTime
         print("La creation des bouttons est terminee pour la recherche. Le temps pris est de " + str(elspsedTime)+" secondes")
@@ -168,20 +167,19 @@ class GUI(tk.Tk):
         self.__cartBox.delete(0,tk.END)
         
         for item in DataList:
-            if number<10 :
-                height = 20
-                #the problem is mainly here i am writing a text on the  button but it is solved because i did a function to return the object from the list corresponding to the description
-                #button = tk.Button(self.__cartBox, text = item.printObject())
-                #self.__cartButtons.append(button)
-                self.__cartBox.insert( tk.END, item.printObject())
-                self.__cartBox.bind('<<ListboxSelect>>',self.onClickOptionToRemoveFromCart)
-                # here the function will be called
-                #button['command'] = lambda idx=item: self.onClickOptionToRemoveFromCart(idx)
-                #button.place(y = number*height , height=height)
-                number +=1
+            
+            height = 20
+            #the problem is mainly here i am writing a text on the  button but it is solved because i did a function to return the object from the list corresponding to the description
+            #button = tk.Button(self.__cartBox, text = item.printObject())
+            #self.__cartButtons.append(button)
+            self.__cartBox.insert( tk.END, item.printObject())
+            self.__cartBox.bind('<<ListboxSelect>>',self.onClickOptionToRemoveFromCart)
+            # here the function will be called
+            #button['command'] = lambda idx=item: self.onClickOptionToRemoveFromCart(idx)
+            #button.place(y = number*height , height=height)
+            number +=1
 
-            else:
-                break
+            
 
             elspsedTime = time.time() - startTime
             print("La creation des bouttons pour le panier est terminee. Le temps pris est de " + str(elspsedTime) + " secondes")
