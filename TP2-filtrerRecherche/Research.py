@@ -41,10 +41,12 @@ class Research:
         for objectList in self.__researchList:
             if objectList.printObject() == obj.printObject():
                 self.__researchList.remove(objectList)
+                break
 
         for objectList in self.__backgroundList:
             if objectList.printObject() == obj.printObject():
                 self.__backgroundList.remove(objectList)
+                break
 
 
 

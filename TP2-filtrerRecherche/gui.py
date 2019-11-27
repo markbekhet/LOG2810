@@ -149,6 +149,7 @@ class GUI(tk.Tk):
                 self.__searchResultBox.insert(tk.END, item.printObject())
                 #self.__searchResultBox.window_create(self.__searchResultBox.index("end"),window = tk.Label(self.__searchResultBox, text = "\n"))
                 self.__searchResultBox.bind('<<ListboxSelect>>',self.onClickOptionToAddToCart)
+                self.__searchResultBox.insert(tk.END,"\n")
                 #self.__searchResultBox.insert(tk.END, "\n")
                 #button['command'] = lambda idx=item: self.onClickOptionToAddToCart(idx)
                 #button.place(y = number*height , height=height)
@@ -157,10 +158,11 @@ class GUI(tk.Tk):
             else:
                 break
 
-        elspsedTime = time.time()-startTime
-        print("La creation des bouttons est terminee pour la recherche. Le temps pris est de " + str(elspsedTime)+" secondes")
+        
         searchCount = tk.Label(self.__searchViewFrame, text = "Le nombre d'items possibles résultantes de votre recherche est " + str(self.__search.getCount()))
-        searchCount.grid(row = 5, column = 0) 
+        searchCount.grid(row = 5, column = 0)
+        elspsedTime = time.time()-startTime
+        print("La creation des bouttons est terminee pour la recherche. Le temps pris est de " + str(elspsedTime)+" secondes") 
             
     def printCartItems(self,DataList):
         startTime = time.time()
@@ -168,23 +170,23 @@ class GUI(tk.Tk):
         self.__cartBox.delete(0,tk.END)
         
         for item in DataList:
-            if number<10 :
-                height = 20
-                #the problem is mainly here i am writing a text on the  button but it is solved because i did a function to return the object from the list corresponding to the description
-                #button = tk.Button(self.__cartBox, text = item.printObject())
-                #self.__cartButtons.append(button)
-                self.__cartBox.insert( tk.END, item.printObject())
-                self.__cartBox.bind('<<ListboxSelect>>',self.onClickOptionToRemoveFromCart)
-                # here the function will be called
-                #button['command'] = lambda idx=item: self.onClickOptionToRemoveFromCart(idx)
-                #button.place(y = number*height , height=height)
-                number +=1
+    
+            height = 20
+            #the problem is mainly here i am writing a text on the  button but it is solved because i did a function to return the object from the list corresponding to the description
+            #button = tk.Button(self.__cartBox, text = item.printObject())
+            #self.__cartButtons.append(button)
+            self.__cartBox.insert( tk.END, item.printObject())
+            self.__cartBox.bind('<<ListboxSelect>>',self.onClickOptionToRemoveFromCart)
+            self.__cartBox.insert(tk.END,"\n")
+            # here the function will be called
+            #button['command'] = lambda idx=item: self.onClickOptionToRemoveFromCart(idx)
+            #button.place(y = number*height , height=height)
+            number +=1
 
-            else:
-                break
+        
 
-            elspsedTime = time.time() - startTime
-            print("La creation des bouttons pour le panier est terminee. Le temps pris est de " + str(elspsedTime) + " secondes")
+        elspsedTime = time.time() - startTime
+        print("La creation des bouttons pour le panier est terminee. Le temps pris est de " + str(elspsedTime) + " secondes")
 
         
 
@@ -201,11 +203,14 @@ class GUI(tk.Tk):
          #   button.destroy()
         w = evt.widget
         if len(w.curselection()) != 0:
+            startTime = time.time()
             index = int(w.curselection()[0])
             value = w.get(index)
             valueInArray = gettingObjectCorrespondingFromList(self.__search.getList(),value)
             self.__cart.addInCart(valueInArray)
+            startTime = time.time()
             self.__search.deleteObject(valueInArray)
+            print("Le temps pris pour enlever un element de la liste de la recherche est " + str(time.time()-startTime))
         #self.printCartItems(self.__cart.getObjectList())
         self.printSearchResult(self.__search.getList())
         
