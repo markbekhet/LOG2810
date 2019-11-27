@@ -118,8 +118,8 @@ class GUI(tk.Tk):
         self.__search = Research.Research()
 
         self.__searchResultFrame = tk.Frame(self.__searchViewFrame)
-        self.__searchResultBox = tk.Listbox(self.__searchResultFrame, width = 50,height = 30)
-        self.__cartBox = tk.Listbox(self.__cartFrame,width = 50, height = 30)
+        self.__searchResultBox = tk.Listbox(self.__searchResultFrame, width = 100,height = 30)
+        self.__cartBox = tk.Listbox(self.__cartFrame,width = 100, height = 30)
         self.__searchButtons = []
 
 
@@ -200,11 +200,12 @@ class GUI(tk.Tk):
 
          #   button.destroy()
         w = evt.widget
-        index = int(w.curselection()[0])
-        value = w.get(index)
-        valueInArray = gettingObjectCorrespondingFromList(self.__search.getList(),value)
-        self.__cart.addInCart(valueInArray)
-        self.__search.deleteObject(valueInArray)
+        if len(w.curselection()) != 0:
+            index = int(w.curselection()[0])
+            value = w.get(index)
+            valueInArray = gettingObjectCorrespondingFromList(self.__search.getList(),value)
+            self.__cart.addInCart(valueInArray)
+            self.__search.deleteObject(valueInArray)
         #self.printCartItems(self.__cart.getObjectList())
         self.printSearchResult(self.__search.getList())
         
@@ -223,6 +224,13 @@ class GUI(tk.Tk):
         self.buildCartItems()
 
 
+    def onResetButton(self):
+        self.__search= Research.Research(self.__inventory.getInventoryList())
+            
+        self.__cart = Cart.Cart()
+        self.buildCartItems() 
+
+
     def onClickOptionToRemoveFromCart(self,evt):
         '''  set the double click status flag
         '''
@@ -233,11 +241,12 @@ class GUI(tk.Tk):
         # cartItems will not be replaced only itemsSearch will be replaced by the search list
         #this will be an Object type so in the Cart class I need to put a function which removes
         w = evt.widget
-        index = int(w.curselection()[0])
-        value = w.get(index)
-        valueInArray = gettingObjectCorrespondingFromList(self.__cart.getObjectList(),value) 
-        self.__cart.deleteFromCart(valueInArray)
-        self.__search.addObject(valueInArray)
+        if len(w.curselection())!= 0:
+            index = int(w.curselection()[0])
+            value = w.get(index)
+            valueInArray = gettingObjectCorrespondingFromList(self.__cart.getObjectList(),value) 
+            self.__cart.deleteFromCart(valueInArray)
+            self.__search.addObject(valueInArray)
         #self.printSearchResult(self.__search.getList())
         self.buildCartItems()
             
@@ -354,15 +363,18 @@ class GUI(tk.Tk):
 
     def buildCartItems(self):
         self.printCartItems(self.__cart.getObjectList())
-        label = tk.Label(self.__cartFrame,text = "Votre commande est trop lourde. Veuillez choisir autre elements")
         if self.__cart.getTotalMass()> 25 :
-            
+            label = tk.Label(self.__cartFrame,text = "Votre commande est trop lourde. Veuillez choisir autre elements")
             label.grid(row = 3, column = 0)
         else:
             #label.grid_forget()
             button = tk.Button(self.__cartFrame,text ="Confirmer",command = self.onConfirmButton)
             button.grid(row = 3 , column = 0)
             
+
+        cancelButton = tk.Button(self.__cartFrame,text = "Annuler", command = self.onResetButton)
+        cancelButton.grid(row = 4, column = 0)
+
 
         
 
