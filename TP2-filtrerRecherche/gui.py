@@ -121,6 +121,7 @@ class GUI(tk.Tk):
         self.__searchResultBox = tk.Listbox(self.__searchResultFrame, width = 100,height = 30)
         self.__cartBox = tk.Listbox(self.__cartFrame,width = 100, height = 30)
         self.__searchButtons = []
+        self.__selectedView = ""
 
 
 
@@ -259,10 +260,13 @@ class GUI(tk.Tk):
     def openFile(self):
         name = filedialog.askopenfilename()
         self.__inventory.fillInventory(name)
-        self.printInventorySection(self.__inventory.getInventoryList())
         self.__search = Research.Research(self.__inventory.getInventoryList())
+        if self.__selectedView == "Inventory":
+            self.printInventorySection(self.__inventory.getInventoryList())
+        
+        elif self.__selectedView == "Search":
         #self.__search.research("","","")
-        self.printSearchResult(self.__search.getList())
+            self.printSearchResult(self.__search.getList())
     
     def buildMenu(self):
         menu = tk.Menu(self)
@@ -343,7 +347,7 @@ class GUI(tk.Tk):
     def buildCartSection(self):
          self.__inventorySection.grid_forget()
          self.__searchViewFrame.grid_forget()
-         
+         self.__selectedView = "Cart"
          #self.__search.research("","","")
 
          self.__cartFrame.grid(row = 2, column = 0,  ipady = 0)
@@ -389,6 +393,7 @@ class GUI(tk.Tk):
         self.buildCartSection()
         self.__inventorySection.grid_forget()
         self.__cartFrame.grid_forget()
+        self.__selectedView = "Search"
 
         self.__searchViewFrame.grid(row = 0, column = 0)
         self.__frameInput = tk.Frame(self.__searchViewFrame)
@@ -410,6 +415,7 @@ class GUI(tk.Tk):
     def inventoryView(self):
         self.__searchViewFrame.grid_forget()
         self.__cartFrame.grid_forget()
+        self.__selectedView = "Inventory"
         self.__inventorySection.grid(row = 0, column =1, padx = 20)
         scrollbV = ttk.Scrollbar(self.__inventorySection)
         scrollbH = ttk.Scrollbar(self.__inventorySection)
@@ -428,10 +434,18 @@ class GUI(tk.Tk):
         self.printInventorySection(self.__inventory.getInventoryList())
 
     def printInventorySection(self,dataList):
+        startTime = time.time()
         self.__inventoryTextBox.delete("1.0",tk.END)
+        number = 0 
         for item in dataList:
-            self.__inventoryTextBox.insert(tk.END, self.__inventory.getInventoryList()[item].printObject() + "\n")
+            if number < 10:
+                self.__inventoryTextBox.insert(tk.END, self.__inventory.getInventoryList()[item].printObject() + "\n")
+            else: break
+            number +=1
 
+            
+        elapsedTime =time.time() - startTime
+        print("Le temps pris pour imprimer tous les elements de l'inventaire est " + str(elapsedTime) + " s \n")
 
 
 
