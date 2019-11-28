@@ -440,9 +440,9 @@ class GUI(tk.Tk):
         self.__inventoryTextBox.delete("1.0",tk.END)
         number = 0 
         for item in dataList:
-            if number < 10:
-                self.__inventoryTextBox.insert(tk.END, self.__inventory.getInventoryList()[item].printObject() + "\n")
-            else: break
+            
+            self.__inventoryTextBox.insert(tk.END, self.__inventory.getInventoryList()[item].printObject() + "\n")
+            
             number +=1
 
             
