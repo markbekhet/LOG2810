@@ -267,6 +267,8 @@ class GUI(tk.Tk):
         elif self.__selectedView == "Search":
         #self.__search.research("","","")
             self.printSearchResult(self.__search.getList())
+
+        print("Vous pouvez commencer a faire vos recherches ")
     
     def buildMenu(self):
         menu = tk.Menu(self)
