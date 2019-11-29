@@ -1,3 +1,8 @@
+# Auteurs:
+# Cécile Hornecker 1783304
+# Marjorie Pomerleau 1959041
+# Mark Bekhet 1949264
+
 class Object:
     
     #Constructeur et instanciation des attributs

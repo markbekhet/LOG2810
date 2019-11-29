@@ -1,3 +1,8 @@
+# Auteurs:
+# Cécile Hornecker 1783304
+# Marjorie Pomerleau 1959041
+# Mark Bekhet 1949264
+
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import Canvas
@@ -451,5 +456,3 @@ class GUI(tk.Tk):
 
 
 
-gui = GUI()
-gui.mainloop()

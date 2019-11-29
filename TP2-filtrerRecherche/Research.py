@@ -1,3 +1,8 @@
+# Auteurs:
+# Cécile Hornecker 1783304
+# Marjorie Pomerleau 1959041
+# Mark Bekhet 1949264
+
 import Object
 import Inventory
 import time
@@ -34,7 +39,7 @@ class Research:
     # Ajoute un objet au liste
     def addObject(self, obj):
         self.__backgroundList.append(obj)
-        self.__researchList.append(obj)
+        
 
     # Supprime un objet au liste
     def deleteObject(self, obj):

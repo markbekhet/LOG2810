@@ -1,5 +1,9 @@
 # pourquoi voulez vous initialisez le panier avec un objectList
 # on a besoin de manipuler une liste seulement dans cette classe c'est-à-dire add, delete
+# Auteurs:
+# Cécile Hornecker 1783304
+# Marjorie Pomerleau 1959041
+# Mark Bekhet 1949264
 
 class Cart:
     def __init__(self):
